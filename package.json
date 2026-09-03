@@ -1,0 +1,27 @@
+{
+  "name": "rishav-web-studio-hero",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/archivo-black": "^5.2.6",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/inter": "^5.2.6",
+    "@fontsource/inter-tight": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.1.1",
+    "typescript": "~5.8.3",
+    "vite": "^7.1.2"
+  }
+}
