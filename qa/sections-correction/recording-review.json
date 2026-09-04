@@ -1,0 +1,122 @@
+{
+  "intro": {
+    "duration": 10.12,
+    "frames": [
+      {
+        "fraction": 0.04,
+        "time": 0.4048,
+        "filename": "intro-04.png"
+      },
+      {
+        "fraction": 0.18,
+        "time": 1.8215999999999999,
+        "filename": "intro-18.png"
+      },
+      {
+        "fraction": 0.34,
+        "time": 3.4408,
+        "filename": "intro-34.png"
+      },
+      {
+        "fraction": 0.5,
+        "time": 5.06,
+        "filename": "intro-50.png"
+      },
+      {
+        "fraction": 0.66,
+        "time": 6.6792,
+        "filename": "intro-66.png"
+      },
+      {
+        "fraction": 0.82,
+        "time": 8.298399999999999,
+        "filename": "intro-82.png"
+      },
+      {
+        "fraction": 0.96,
+        "time": 9.7152,
+        "filename": "intro-96.png"
+      }
+    ]
+  },
+  "work": {
+    "duration": 7.56,
+    "frames": [
+      {
+        "fraction": 0.04,
+        "time": 0.3024,
+        "filename": "work-04.png"
+      },
+      {
+        "fraction": 0.18,
+        "time": 1.3607999999999998,
+        "filename": "work-18.png"
+      },
+      {
+        "fraction": 0.34,
+        "time": 2.5704000000000002,
+        "filename": "work-34.png"
+      },
+      {
+        "fraction": 0.5,
+        "time": 3.78,
+        "filename": "work-50.png"
+      },
+      {
+        "fraction": 0.66,
+        "time": 4.9896,
+        "filename": "work-66.png"
+      },
+      {
+        "fraction": 0.82,
+        "time": 6.199199999999999,
+        "filename": "work-82.png"
+      },
+      {
+        "fraction": 0.96,
+        "time": 7.257599999999999,
+        "filename": "work-96.png"
+      }
+    ]
+  },
+  "aesthetics": {
+    "duration": 7.12,
+    "frames": [
+      {
+        "fraction": 0.04,
+        "time": 0.2848,
+        "filename": "aesthetics-04.png"
+      },
+      {
+        "fraction": 0.18,
+        "time": 1.2816,
+        "filename": "aesthetics-18.png"
+      },
+      {
+        "fraction": 0.34,
+        "time": 2.4208000000000003,
+        "filename": "aesthetics-34.png"
+      },
+      {
+        "fraction": 0.5,
+        "time": 3.56,
+        "filename": "aesthetics-50.png"
+      },
+      {
+        "fraction": 0.66,
+        "time": 4.6992,
+        "filename": "aesthetics-66.png"
+      },
+      {
+        "fraction": 0.82,
+        "time": 5.8384,
+        "filename": "aesthetics-82.png"
+      },
+      {
+        "fraction": 0.96,
+        "time": 6.8351999999999995,
+        "filename": "aesthetics-96.png"
+      }
+    ]
+  }
+}

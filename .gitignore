@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+.agents/mcp_config.json
+.agents/mcp_config.json.bak
+
+# Logs / OS junk
+*.log
+.DS_Store
+Thumbs.db
+
+_audit-archives/

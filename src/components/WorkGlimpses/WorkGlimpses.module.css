@@ -1,0 +1,1037 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   WorkGlimpses — Art-directed Work section
+   Font system: Inter Tight (heading, counter, label) + Manrope (category)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Work-section font tokens (scoped, Hero/Intro untouched) ── */
+.work {
+  --wk-font-heading: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --wk-font-meta: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Carousel geometry — LOCKED */
+  --carousel-gap: clamp(.75rem, 1.2vw, 1.25rem);
+  --carousel-window-width: 100vw;
+  --panel-width: min(52vw, 58rem, calc(50svh * 1.88), calc((100svh - 15rem) * 1.8));
+  --panel-tuck: clamp(1.75rem, 2.6vw, 2.5rem);
+
+  /* Scroll choreography props */
+  --work-content-reveal: 0;
+  --work-exit-progress: 0;
+  --work-title-opacity: 0;
+  --work-title-scale: 1;
+  --work-title-y: 0px;
+  --work-stack-travel: 0;
+  --work-stack-settle: 0;
+  --work-stack-visibility: 0;
+  --work-copy-reveal: 0;
+
+  position: relative;
+  isolation: isolate;
+  min-height: 430svh;
+  overflow: clip;
+  background-color: #010205;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Sticky stage — the viewport-locked canvas
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.stickyStage {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  /* Layer A — BASE DEPTH: near-black to dark navy, darker outer edges.
+     Many small color stops avoid visible banding. */
+  background:
+    linear-gradient(
+      178deg,
+      #010205 0%,
+      #010306 6%,
+      #020408 14%,
+      #02050b 24%,
+      #03060e 34%,
+      #030812 44%,
+      #040a16 54%,
+      #050c1c 64%,
+      #060f24 74%,
+      #07122c 84%,
+      #081536 94%,
+      #091838 100%
+    );
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BACKGROUND LIGHTING — continuous nocturnal environment
+   Core rule: BLACK IS THE SURFACE; BLUE IS THE LIGHT
+   3 layers: base depth + royal blue energy + icy/frost pointer-reactive
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.workLightField {
+  --ptr-x: 0.5;
+  --ptr-y: 0.5;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Layer A: broad dark-navy base with deeper outer edges ── */
+.lightLayerA {
+  position: absolute;
+  inset: 0;
+  background:
+    /* primary dark-navy-to-royal depth — lower center bias */
+    radial-gradient(
+      ellipse 130% 70% at 54% 88%,
+      rgb(11 36 82 / 0.52) 0%,
+      rgb(8 26 64 / 0.42) 18%,
+      rgb(6 18 50 / 0.30) 38%,
+      rgb(4 12 36 / 0.18) 58%,
+      rgb(3 8 24 / 0.08) 78%,
+      transparent 100%
+    ),
+    /* darken upper zone */
+    linear-gradient(
+      180deg,
+      rgb(1 2 5 / 0.6) 0%,
+      transparent 42%
+    ),
+    /* darken left/right for vignette */
+    linear-gradient(
+      90deg,
+      rgb(1 2 5 / 0.5) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgb(1 2 5 / 0.5) 100%
+    );
+  transform: translate3d(
+    calc((var(--ptr-x) - 0.5) * 1.2vw),
+    calc((var(--ptr-y) - 0.5) * 0.5vh),
+    0
+  );
+  will-change: transform;
+  animation: lightDriftA 42s ease-in-out infinite;
+}
+
+/* ── Layer B: royal/cobalt blue energy — asymmetric, organic ── */
+.lightLayerB {
+  position: absolute;
+  inset: 0;
+  background:
+    /* main royal blue field — lower-right bias for asymmetry */
+    radial-gradient(
+      ellipse 80% 56% at 62% 82%,
+      rgb(16 60 159 / 0.38) 0%,
+      rgb(14 50 130 / 0.30) 20%,
+      rgb(10 36 100 / 0.20) 42%,
+      rgb(6 22 68 / 0.10) 64%,
+      rgb(4 14 42 / 0.04) 82%,
+      transparent 100%
+    ),
+    /* secondary cobalt glow — left/lower for counterbalance */
+    radial-gradient(
+      ellipse 58% 44% at 26% 74%,
+      rgb(20 56 148 / 0.24) 0%,
+      rgb(12 38 108 / 0.16) 32%,
+      rgb(6 20 64 / 0.08) 62%,
+      transparent 100%
+    );
+  transform: translate3d(
+    calc((var(--ptr-x) - 0.5) * -1.4vw),
+    calc((var(--ptr-y) - 0.5) * 0.8vh),
+    0
+  );
+  will-change: transform;
+  animation: lightDriftB 56s ease-in-out infinite;
+}
+
+/* ── Layer C: icy/frost highlight — pointer-reactive, most visible movement ── */
+.lightLayerC {
+  position: absolute;
+  inset: 0;
+  background:
+    /* primary frost field — elongated, directional */
+    radial-gradient(
+      ellipse 60% 34% at 58% 68%,
+      rgb(142 201 255 / 0.09) 0%,
+      rgb(110 170 240 / 0.06) 28%,
+      rgb(80 140 220 / 0.035) 52%,
+      rgb(50 100 190 / 0.015) 74%,
+      transparent 100%
+    ),
+    /* secondary subtle frost accent — high left */
+    radial-gradient(
+      ellipse 40% 28% at 32% 56%,
+      rgb(184 222 255 / 0.05) 0%,
+      rgb(140 190 240 / 0.03) 40%,
+      transparent 80%
+    ),
+    /* very bottom icy lift */
+    radial-gradient(
+      ellipse 100% 20% at 50% 108%,
+      rgb(180 215 245 / 0.055) 0%,
+      rgb(120 170 220 / 0.035) 36%,
+      rgb(80 130 190 / 0.015) 66%,
+      transparent 100%
+    ),
+    /* cinematic upper vignette */
+    radial-gradient(
+      ellipse 150% 50% at 50% -6%,
+      rgb(1 2 5 / 0.94) 0%,
+      rgb(1 2 5 / 0.72) 28%,
+      rgb(1 2 5 / 0.32) 54%,
+      transparent 78%
+    );
+  /* Strongest pointer displacement — this is the interactive frost layer */
+  transform: translate3d(
+    calc((var(--ptr-x) - 0.5) * 4vw),
+    calc((var(--ptr-y) - 0.5) * 3vh),
+    0
+  );
+  will-change: transform;
+  animation: lightDriftC 48s ease-in-out infinite;
+}
+
+/* ── Autonomous light drift — extremely slow, non-obvious loop ── */
+@keyframes lightDriftA {
+  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
+  22%  { opacity: 0.94; transform: translate3d(0.8vw, -0.3vh, 0); }
+  48%  { opacity: 1.02; transform: translate3d(-0.5vw, 0.4vh, 0); }
+  71%  { opacity: 0.97; transform: translate3d(0.6vw, 0.15vh, 0); }
+  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lightDriftB {
+  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
+  28%  { opacity: 1.05; transform: translate3d(-1.1vw, 0.6vh, 0); }
+  55%  { opacity: 0.92; transform: translate3d(0.8vw, -0.35vh, 0); }
+  80%  { opacity: 1.02; transform: translate3d(-0.4vw, 0.2vh, 0); }
+  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
+}
+
+@keyframes lightDriftC {
+  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
+  20%  { opacity: 0.88; transform: translate3d(1.4vw, 0.6vh, 0); }
+  45%  { opacity: 1.10; transform: translate3d(-1.6vw, -0.5vh, 0); }
+  68%  { opacity: 0.94; transform: translate3d(0.8vw, 0.8vh, 0); }
+  88%  { opacity: 1.04; transform: translate3d(-0.5vw, -0.2vh, 0); }
+  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HEADING ZONE — large counter backdrop + centered section heading
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.headingStage {
+  position: absolute;
+  z-index: 3;
+  top: clamp(2.5rem, 5svh, 4rem);
+  right: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding-inline: 1.25rem;
+  pointer-events: none;
+  transform: translate3d(calc(var(--work-exit-progress) * 28vw), 0, 0);
+  will-change: transform;
+}
+
+/* ── Large background counter: structural typographic backdrop ── */
+.backgroundCounter {
+  /* Positioned absolutely within the heading grid to layer behind the h2 */
+  grid-area: 1 / 1;
+  color: rgb(160 180 220 / 0.07);
+  font-family: var(--wk-font-heading);
+  font-size: clamp(5.5rem, 10vw, 9rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  /* Hidden during intro-only phase, fades in with gallery content, fades out on exit */
+  opacity: calc(var(--work-content-reveal) * (1 - var(--work-exit-progress)));
+  text-align: center;
+  transition: opacity 400ms ease-out;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Main section heading: editorial, refined, warm off-white ── */
+.headingStage h2 {
+  grid-area: 1 / 1;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: #f2eee6;
+  font-family: var(--wk-font-heading);
+  font-size: clamp(1rem, 1.5vw, 1.38rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+  opacity: var(--work-title-opacity);
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate3d(0, calc(var(--work-title-y) - (var(--work-exit-progress) * 12px)), 0) scale(var(--work-title-scale));
+  transform-origin: center center;
+  will-change: opacity, transform;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXHIBITION STAGE — project metadata + carousel viewport
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.exhibitionStage {
+  position: absolute;
+  z-index: 2;
+  top: clamp(8.75rem, 16svh, 10.5rem);
+  right: 0;
+  left: 0;
+  opacity: var(--work-content-reveal);
+  transform: translate3d(0, calc((1 - var(--work-content-reveal)) * 24px), 0);
+  will-change: opacity, transform;
+}
+
+
+/* ── Active project metadata: centered above active card ── */
+.activeProjectMeta {
+  display: grid;
+  place-items: center;
+  min-height: clamp(2rem, 3.5svh, 2.5rem);
+  margin-bottom: clamp(.55rem, 1.1svh, .8rem);
+  padding-inline: 1.25rem;
+  text-align: center;
+  opacity: calc(1 - var(--work-exit-progress));
+  transform: translate3d(calc(var(--work-exit-progress) * 24vw), 0, 0);
+  will-change: opacity, transform;
+}
+
+.activeProjectMetaContent {
+  display: grid;
+  justify-items: center;
+  animation: metaSettle 180ms ease-out both;
+}
+
+/* ── Project label: restrained modern uppercase grotesk ── */
+.activeProjectMeta h3 {
+  margin: 0;
+  color: #ddd8cf;
+  font-family: var(--wk-font-heading);
+  font-size: clamp(0.72rem, 0.82vw, 0.84rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* ── Category: smaller, quieter, wider tracked ── */
+.activeProjectMeta p {
+  margin: .28rem 0 0;
+  color: rgb(158 168 180 / 0.52);
+  font-family: var(--wk-font-meta);
+  font-size: clamp(0.56rem, 0.6vw, 0.62rem);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+@keyframes metaSettle {
+  from {
+    opacity: .2;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CAROUSEL — all geometry and mechanics LOCKED
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.visualStage {
+  position: relative;
+  width: 100%;
+  isolation: isolate;
+}
+
+.carouselViewport {
+  width: var(--carousel-window-width);
+  margin-inline: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-padding-inline: calc((var(--carousel-window-width) - var(--panel-width)) / 2);
+  scroll-snap-type: x mandatory;
+  touch-action: pan-x pan-y;
+  opacity: calc(1 - var(--work-stack-visibility));
+  transform: translate3d(calc(var(--work-stack-travel) * 28vw), 0, 0) scale(calc(1 - (var(--work-stack-travel) * .18)));
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.carouselViewport::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselViewport:focus-visible {
+  outline: 1px solid rgb(255 244 219 / 72%);
+  outline-offset: -3px;
+}
+
+.carouselViewport[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.carouselTrack {
+  display: flex;
+  gap: var(--carousel-gap);
+  align-items: flex-start;
+  width: max-content;
+  padding-inline: calc((var(--carousel-window-width) - var(--panel-width)) / 2);
+}
+
+.panel {
+  --panel-focus: 0;
+  --panel-origin-x: 50%;
+  --project-tint: 131 151 163;
+  position: relative;
+  z-index: calc(1 + (var(--panel-focus) * 10));
+  flex: 0 0 var(--panel-width);
+  min-width: 0;
+  opacity: calc(.52 + (var(--panel-focus) * .48));
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  transform: translate3d(calc(var(--panel-direction, 0) * (var(--panel-focus) - 1) * var(--panel-tuck)), calc((1 - var(--panel-focus)) * 6px), 0) scale(calc(.93 + (var(--panel-focus) * .07)));
+  transform-origin: var(--panel-origin-x) center;
+  transition: opacity 120ms linear, transform 120ms linear;
+  will-change: opacity, transform;
+}
+
+.clinic {
+  --project-tint: 143 154 146;
+}
+
+.motorsport {
+  --project-tint: 157 139 119;
+}
+
+.real-estate {
+  --project-tint: 142 126 141;
+}
+
+.previewImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: rgb(6 10 16 / 92%);
+  transition: transform 300ms ease-out;
+}
+
+.restaurant .previewImage {
+  object-position: center 45%;
+}
+
+.clinic .previewImage {
+  object-position: center 25%;
+}
+
+.motorsport .previewImage {
+  object-position: center 65%;
+}
+
+.real-estate .previewImage {
+  object-position: center 50%;
+}
+
+.projectPreview {
+  width: 100%;
+  aspect-ratio: 1.88 / 1;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgb(6 10 16 / 92%);
+  box-shadow: 0 10px 24px rgb(0 3 14 / 0.16);
+  filter: brightness(calc(.84 + (var(--panel-focus) * .16))) saturate(calc(.82 + (var(--panel-focus) * .18)));
+  transition: box-shadow 180ms ease-out, filter 120ms linear;
+}
+
+.panel[data-active="true"] .projectPreview {
+  box-shadow:
+    0 10px 24px rgb(0 3 14 / 0.16),
+    0 24px 56px rgb(0 3 14 / calc(var(--panel-focus) * .34)),
+    0 12px 34px rgb(34 78 184 / calc(var(--panel-focus) * .08));
+}
+
+.panel[data-active="true"] .projectPreview::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, transparent 0%, rgb(205 229 250 / 0.72) 18%, rgb(235 243 248 / 0.84) 50%, rgb(205 229 250 / 0.72) 82%, transparent 100%) top / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent 0%, rgb(180 214 245 / 0.62) 18%, rgb(224 238 248 / 0.76) 50%, rgb(180 214 245 / 0.62) 82%, transparent 100%) bottom / 100% 1px no-repeat;
+  opacity: calc(var(--panel-focus) * .72);
+  pointer-events: none;
+  transition: opacity 120ms linear;
+}
+
+.projectPreview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgb(215 227 243 / calc(.012 + (var(--panel-focus) * .038))) 0%, transparent 24%),
+    linear-gradient(0deg, rgb(40 92 214 / calc(.025 + (var(--panel-focus) * .055))) 0%, transparent 38%),
+    linear-gradient(142deg, rgb(var(--project-tint) / 4%), transparent 58%);
+  transition: background 120ms linear;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CAROUSEL PAGINATION — editorial thin dash indicator
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.carouselPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: clamp(.75rem, 1.6svh, 1.1rem);
+  padding: 0;
+  list-style: none;
+  opacity: calc(1 - var(--work-exit-progress));
+  transform: translate3d(calc(var(--work-exit-progress) * 24vw), 0, 0);
+  will-change: opacity, transform;
+}
+
+.paginationTick {
+  display: block;
+  padding: 6px 2px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.paginationTick::after {
+  content: "";
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgb(166 194 220 / 0.24);
+  transition: width 280ms ease, height 280ms ease, border-radius 280ms ease, background 280ms ease, box-shadow 280ms ease;
+}
+
+.paginationTick:hover::after {
+  background: rgb(160 200 240 / 0.38);
+}
+
+.paginationTick:focus-visible {
+  outline: 1px solid rgb(142 201 255 / 0.5);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.paginationTick[data-active="true"]::after {
+  width: 20px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: rgb(196 222 244 / 0.72);
+  box-shadow: 0 0 5px rgb(142 201 255 / 0.14);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ARROWS — LOCKED
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.sideArrow {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.625rem;
+  min-width: 42px;
+  height: 2.625rem;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid rgb(181 204 232 / 8%);
+  border-radius: 50%;
+  background: rgb(3 8 18 / 16%);
+  color: var(--ink-warm);
+  cursor: pointer;
+  opacity: calc((1 - var(--work-exit-progress)) * .54);
+  transform: translate3d(calc(var(--work-exit-progress) * 24vw), -50%, 0);
+  transition: border-color 200ms ease, background-color 200ms ease, opacity 200ms ease;
+}
+
+.previousArrow {
+  --arrow-hover-shift: -2px;
+  left: clamp(.75rem, 2.6vw, 3rem);
+}
+
+.nextArrow {
+  --arrow-hover-shift: 2px;
+  right: clamp(.75rem, 2.6vw, 3rem);
+}
+
+.arrowMotion {
+  display: block;
+  line-height: 0;
+  transform-origin: center;
+  transition: transform 200ms ease;
+}
+
+.arrowIcon {
+  display: block;
+  width: .8125rem;
+  height: 1.25rem;
+  overflow: visible;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.previousArrow .arrowIcon {
+  transform: rotate(180deg);
+}
+
+.sideArrow:hover {
+  border-color: rgb(198 218 241 / 20%);
+  background: rgb(7 15 31 / 32%);
+  opacity: calc((1 - var(--work-exit-progress)) * .88);
+  transform: translate3d(calc(var(--work-exit-progress) * 24vw), -50%, 0);
+}
+
+.sideArrow:hover .arrowMotion {
+  transform: translateX(var(--arrow-hover-shift));
+}
+
+.sideArrow:focus-visible {
+  outline: 1px solid var(--ink-warm);
+  outline-offset: 3px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   WORK → AESTHETICS HANDOFF — data-derived editorial card stack
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.handoffScene {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+}
+
+.handoffCopy {
+  position: absolute;
+  top: 50%;
+  left: clamp(2.5rem, 7vw, 8rem);
+  width: min(38vw, 38rem);
+  color: #f2eee6;
+  opacity: var(--work-copy-reveal);
+  text-align: center;
+  transform: translate3d(0, calc(-50% + ((1 - var(--work-copy-reveal)) * 24px)), 0);
+  will-change: opacity, transform;
+}
+
+.handoffEyebrow {
+  margin: 0 0 clamp(1rem, 2.2svh, 1.4rem);
+  color: rgb(218 220 219 / 68%);
+  font-family: var(--wk-font-meta);
+  font-size: clamp(.65rem, .72vw, .75rem);
+  font-weight: 500;
+  letter-spacing: .2em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.handoffCopy h3 {
+  margin: 0;
+  color: #f2eee6;
+  font-family: var(--wk-font-heading);
+  font-size: clamp(2.7rem, 4.3vw, 4.7rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .98;
+  text-wrap: balance;
+}
+
+.handoffSupport {
+  width: min(100%, 32rem);
+  margin: clamp(1.3rem, 2.8svh, 1.8rem) auto 0;
+  color: rgb(224 216 203 / 72%);
+  font-family: var(--wk-font-meta);
+  font-size: clamp(.92rem, 1.05vw, 1.04rem);
+  font-weight: 400;
+  line-height: 1.7;
+  text-wrap: balance;
+}
+
+.handoffStack {
+  position: absolute;
+  top: 52%;
+  left: 89%;
+  width: clamp(25rem, 31vw, 35rem);
+  aspect-ratio: 1.88 / 1;
+  opacity: var(--work-stack-visibility);
+  transform: translate3d(calc(-50% - ((1 - var(--work-stack-travel)) * 35vw)), -50%, 0) scale(calc(1 + ((1 - var(--work-stack-travel)) * .42)));
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.stackCard {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(222 230 239 / 10%);
+  border-radius: 5px;
+  background: #050912;
+  box-shadow: 0 18px 50px rgb(0 2 10 / 32%);
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.stackCard[data-depth="0"] {
+  z-index: 4;
+  opacity: 1;
+  box-shadow:
+    0 22px 62px rgb(0 2 10 / 42%),
+    0 8px 26px rgb(24 65 146 / 10%);
+}
+
+.stackCard[data-depth="1"] {
+  z-index: 3;
+  opacity: calc(var(--work-stack-settle) * .78);
+  filter: brightness(.78) saturate(.8);
+  transform: translate3d(calc(var(--work-stack-settle) * -16px), calc(var(--work-stack-settle) * -14px), 0) rotate(calc(var(--work-stack-settle) * -.7deg));
+}
+
+.stackCard[data-depth="2"] {
+  z-index: 2;
+  opacity: calc(var(--work-stack-settle) * .56);
+  filter: brightness(.64) saturate(.72);
+  transform: translate3d(calc(var(--work-stack-settle) * -31px), calc(var(--work-stack-settle) * -26px), 0) rotate(calc(var(--work-stack-settle) * 1deg));
+}
+
+.stackCard[data-depth="3"] {
+  z-index: 1;
+  opacity: calc(var(--work-stack-settle) * .38);
+  filter: brightness(.52) saturate(.65);
+  transform: translate3d(calc(var(--work-stack-settle) * -46px), calc(var(--work-stack-settle) * -38px), 0) rotate(calc(var(--work-stack-settle) * -1.35deg));
+}
+
+.stackCard .previewImage {
+  position: absolute;
+  inset: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FLOW MODE (reduced motion / short landscape)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.work[data-flow="true"] {
+  min-height: auto;
+}
+
+.work[data-flow="true"] .stickyStage {
+  position: relative;
+  height: auto;
+  min-height: auto;
+  padding: clamp(5rem, 10vw, 8rem) 0 clamp(6rem, 12vw, 10rem);
+  overflow: hidden;
+}
+
+.work[data-flow="true"] .headingStage {
+  position: relative;
+  top: auto;
+  right: auto;
+  left: auto;
+  transform: none;
+}
+
+.work[data-flow="true"] .headingStage h2 {
+  opacity: 1;
+  transform: none;
+}
+
+.work[data-flow="true"] .exhibitionStage {
+  position: relative;
+  top: auto;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  opacity: 1;
+  transform: none;
+}
+
+.work[data-flow="true"] .handoffScene {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, .9fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: center;
+  min-height: 90svh;
+  padding: clamp(5rem, 10vw, 9rem) var(--page-gutter);
+}
+
+.work[data-flow="true"] .handoffCopy,
+.work[data-flow="true"] .handoffStack {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  opacity: 1;
+  transform: none;
+}
+
+.work[data-flow="true"] .handoffStack {
+  width: min(100%, 34rem);
+  justify-self: end;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (hover: hover) and (pointer: fine) {
+  .carouselViewport {
+    cursor: grab;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .sideArrow {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .work {
+    --carousel-window-width: 100vw;
+    --panel-width: min(72vw, 42rem, calc(50svh * 1.88), calc((100svh - 13rem) * 1.8));
+  }
+
+  .handoffCopy {
+    left: 5vw;
+    width: 44vw;
+  }
+
+  .handoffStack {
+    left: 87%;
+    width: min(42vw, 30rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .work {
+    --carousel-gap: .375rem;
+    --carousel-window-width: 100vw;
+    --panel-width: 82vw;
+    min-height: 410svh;
+  }
+
+  .headingStage {
+    top: clamp(2rem, 5svh, 3rem);
+  }
+
+  .backgroundCounter {
+    font-size: clamp(3.5rem, 16vw, 5.5rem);
+  }
+
+  .headingStage h2 {
+    font-size: clamp(0.74rem, 3.2vw, 0.9rem);
+    letter-spacing: 0.18em;
+  }
+
+  .exhibitionStage {
+    top: clamp(7.25rem, 16.5svh, 8.75rem);
+  }
+
+  .activeProjectMeta {
+    min-height: 3rem;
+    margin-bottom: .5rem;
+  }
+
+  .activeProjectMeta h3 {
+    font-size: clamp(0.62rem, 2.6vw, 0.72rem);
+  }
+
+  .activeProjectMeta p {
+    margin-top: .22rem;
+    font-size: 0.52rem;
+  }
+
+  .sideArrow {
+    display: none;
+  }
+
+  .carouselPagination {
+    gap: 5px;
+    margin-top: clamp(.6rem, 1.4svh, .9rem);
+  }
+
+  .handoffCopy {
+    top: 25%;
+    left: 8vw;
+    width: 84vw;
+    transform: translate3d(0, calc(-50% + ((1 - var(--work-copy-reveal)) * 18px)), 0);
+  }
+
+  .handoffCopy h3 {
+    font-size: clamp(2.3rem, 11vw, 3.55rem);
+    line-height: .96;
+  }
+
+  .handoffSupport {
+    width: min(100%, 30rem);
+    font-size: clamp(.88rem, 3.8vw, .98rem);
+    line-height: 1.62;
+  }
+
+  .handoffStack {
+    top: 70%;
+    left: 57%;
+    width: min(76vw, 28rem);
+    transform: translate3d(calc(-50% - ((1 - var(--work-stack-travel)) * 7vw)), -50%, 0) scale(calc(1 + ((1 - var(--work-stack-travel)) * .12)));
+  }
+
+  .stackCard[data-depth="3"] {
+    display: none;
+  }
+
+  .work[data-flow="true"] .handoffScene {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3.5rem, 9svh, 6rem);
+    min-height: auto;
+    padding: 6rem max(1.25rem, 8vw) 7rem;
+  }
+
+  .work[data-flow="true"] .handoffCopy {
+    width: 100%;
+    transform: none;
+  }
+
+  .work[data-flow="true"] .handoffStack {
+    width: min(82vw, 29rem);
+    transform: none;
+  }
+
+  .paginationTick::after {
+    width: 3px;
+  }
+
+  .paginationTick[data-active="true"]::after {
+    width: 18px;
+  }
+
+  .work[data-flow="true"] .stickyStage {
+    padding-top: 5rem;
+    padding-bottom: 6rem;
+  }
+
+  .work[data-flow="true"] .exhibitionStage {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-height: 620px) and (orientation: landscape) {
+  .work {
+    --carousel-window-width: 100vw;
+    --panel-width: min(64vw, 42rem, calc(50svh * 1.88), calc((100svh - 4rem) * 1.8));
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION — tasteful static state
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselViewport {
+    scroll-behavior: auto;
+  }
+
+  .panel {
+    transform: none;
+    opacity: .52;
+  }
+
+  .panel[data-active="true"] {
+    opacity: 1;
+  }
+
+  .panel,
+  .sideArrow,
+  .arrowMotion,
+  .activeProjectMetaContent {
+    transition: none;
+    animation: none;
+  }
+
+  /* Static lighting — no animation, no pointer perturbation */
+  .lightLayerA,
+  .lightLayerB,
+  .lightLayerC {
+    animation: none;
+    transform: none;
+  }
+
+  .backgroundCounter {
+    animation: none;
+    transition: none;
+  }
+
+  .handoffCopy,
+  .handoffStack,
+  .stackCard {
+    transition: none;
+    animation: none;
+  }
+
+  /* Pagination keeps its smooth transition for active state */
+}

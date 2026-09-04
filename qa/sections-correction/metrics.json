@@ -1,0 +1,216 @@
+{
+  "consoleErrors": [],
+  "pageErrors": [],
+  "viewports": {
+    "1440x900": {
+      "intro": {
+        "welcome": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 455.1328125,
+            "bottom": 570.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "business",
+              "top": 455.1328125,
+              "bottom": 570.2109375
+            }
+          ]
+        },
+        "business": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 435.1328125,
+            "bottom": 550.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "business",
+              "top": 435.1328125,
+              "bottom": 550.2109375
+            }
+          ]
+        },
+        "work": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 435.1328125,
+            "bottom": 550.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "work",
+              "top": 435.1328125,
+              "bottom": 550.2109375
+            }
+          ]
+        },
+        "brand": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 435.1328125,
+            "bottom": 550.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "brand",
+              "top": 435.1328125,
+              "bottom": 550.2109375
+            }
+          ]
+        },
+        "self": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 435.1328125,
+            "bottom": 550.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "self",
+              "top": 435.1328125,
+              "bottom": 550.2109375
+            }
+          ]
+        },
+        "resolved": {
+          "copyCentreDeltaX": 0,
+          "copyCentreDeltaY": 0,
+          "mask": {
+            "top": 427.1328125,
+            "bottom": 542.2109375,
+            "height": 115.078125
+          },
+          "visibleWords": [
+            {
+              "text": "self",
+              "top": 427.1328125,
+              "bottom": 542.2109375
+            }
+          ]
+        }
+      },
+      "carousel": {},
+      "aesthetics": {
+        "opening": {
+          "centreDeltaX": -0.0078125,
+          "centreDeltaY": 0
+        },
+        "formed": {
+          "heading": {
+            "top": 134.630615234375,
+            "right": 1157.1751708984375,
+            "bottom": 189.36936950683594,
+            "left": 282.8092041015625
+          },
+          "plant": {
+            "top": 252,
+            "right": 1382.40625,
+            "bottom": 864,
+            "left": 726.40625
+          },
+          "provide": {
+            "top": 401.984375,
+            "right": 609.59375,
+            "bottom": 418.171875,
+            "left": 57.59375
+          }
+        }
+      }
+    },
+    "1366x768": {
+      "layout": {
+        "documentClientWidth": 1366,
+        "documentScrollWidth": 1366,
+        "bodyClientWidth": 1366,
+        "bodyScrollWidth": 1366,
+        "flowFallback": "false"
+      }
+    },
+    "768x800": {
+      "layout": {
+        "documentClientWidth": 768,
+        "documentScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "bodyScrollWidth": 768,
+        "flowFallback": "true"
+      }
+    },
+    "390x844": {
+      "layout": {
+        "documentClientWidth": 390,
+        "documentScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "bodyScrollWidth": 390,
+        "flowFallback": "true"
+      }
+    },
+    "844x390": {
+      "layout": {
+        "documentClientWidth": 844,
+        "documentScrollWidth": 844,
+        "bodyClientWidth": 844,
+        "bodyScrollWidth": 844,
+        "flowFallback": "true"
+      }
+    }
+  },
+  "interactions": {
+    "boundaries": {
+      "atStart": {
+        "previousDisabled": true,
+        "nextDisabled": false
+      },
+      "atEnd": {
+        "previousDisabled": false,
+        "nextDisabled": true
+      }
+    },
+    "keyboard": [
+      {
+        "key": "ArrowRight",
+        "status": "02 / 04\nCLINIC"
+      },
+      {
+        "key": "ArrowRight",
+        "status": "03 / 04\nMOTORSPORT"
+      },
+      {
+        "key": "ArrowLeft",
+        "status": "02 / 04\nCLINIC"
+      },
+      {
+        "key": "End",
+        "status": "04 / 04\nSALON"
+      },
+      {
+        "key": "Home",
+        "status": "01 / 04\nRESTAURANT"
+      }
+    ],
+    "pointerDragStatus": "02 / 04\nCLINIC",
+    "carousel": {
+      "carouselCount": 1,
+      "articleCount": 4,
+      "previousDisabled": false,
+      "nextDisabled": false
+    },
+    "reducedMotion": {
+      "introHeight": 900,
+      "introStatic": "true",
+      "carouselBehavior": "auto",
+      "aestheticsFlow": "true"
+    }
+  }
+}

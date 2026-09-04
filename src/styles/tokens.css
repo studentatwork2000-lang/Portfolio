@@ -1,0 +1,17 @@
+:root {
+  --night-00: #04090e;
+  --night-10: #050b12;
+  --night-20: #08131f;
+  --ink-warm: #f1eee6;
+  --ink-muted: #aeb6bf;
+  --ink-utility: #d7d4cc;
+  --line-grid: #c4d8e6;
+  --line-doodle: #d5e5ed;
+  --light-warm: #dfae63;
+  --light-core: #fff4ce;
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-text: "Inter", Arial, sans-serif;
+  --font-utility: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --page-gutter: clamp(1.25rem, 4vw, 3.75rem);
+  --utility-size: clamp(.625rem, .76vw, .72rem);
+}

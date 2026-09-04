@@ -1,0 +1,2640 @@
+{
+  "consoleErrors": [],
+  "pageErrors": [],
+  "desktopStates": {
+    "welcome": {
+      "phase": "0",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": null,
+        "style": null
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    },
+    "business": {
+      "phase": "1",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "business"
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    },
+    "work": {
+      "phase": "2",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1049.125,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 231.71875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "work"
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    },
+    "brand": {
+      "phase": "3",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1081.546875,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 264.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "brand"
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    },
+    "yourself": {
+      "phase": "4",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": null,
+        "style": null
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    },
+    "resolved": {
+      "phase": "5",
+      "sectionHeight": 3375,
+      "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+      "rotatingWords": [
+        "business",
+        "work",
+        "brand"
+      ],
+      "lead": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 797.296875,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 580.140625,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "block",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        },
+        "text": "Present your"
+      },
+      "slot": {
+        "rect": {
+          "x": 817.40625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 817.40625,
+          "width": 405.4375,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "grid",
+          "visibility": "hidden",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "activeWord": {
+        "rect": null,
+        "style": null
+      },
+      "presentation": {
+        "rect": {
+          "x": 217.15625,
+          "y": 406.5703125,
+          "top": 406.5703125,
+          "right": 1222.84375,
+          "bottom": 493.4296875,
+          "left": 217.15625,
+          "width": 1005.6875,
+          "height": 86.859375
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "hidden",
+          "opacity": "0",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "91.44px",
+          "fontWeight": "400",
+          "lineHeight": "86.868px",
+          "letterSpacing": "-4.572px"
+        }
+      },
+      "resolutionMain": {
+        "rect": {
+          "x": 270.796875,
+          "y": 368.671875,
+          "top": 368.671875,
+          "right": 1169.203125,
+          "bottom": 457.4375,
+          "left": 270.796875,
+          "width": 898.40625,
+          "height": 88.765625
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+          "fontSize": "98.64px",
+          "fontWeight": "400",
+          "lineHeight": "88.776px",
+          "letterSpacing": "-0.8px"
+        }
+      },
+      "resolutionSub": {
+        "rect": {
+          "x": 571.21875,
+          "y": 489.109375,
+          "top": 489.109375,
+          "right": 868.78125,
+          "bottom": 531.328125,
+          "left": 571.21875,
+          "width": 297.5625,
+          "height": 42.21875
+        },
+        "style": {
+          "display": "block",
+          "visibility": "visible",
+          "opacity": "1",
+          "fontFamily": "Inter, Arial, sans-serif",
+          "fontSize": "36.72px",
+          "fontWeight": "400",
+          "lineHeight": "42.228px",
+          "letterSpacing": "-0.918px"
+        }
+      },
+      "chapter": {
+        "rect": {
+          "x": 57.59375,
+          "y": 43.1875,
+          "top": 43.1875,
+          "right": 142.921875,
+          "bottom": 56.3125,
+          "left": 57.59375,
+          "width": 85.328125,
+          "height": 13.125
+        }
+      },
+      "overflow": {
+        "viewportWidth": 1440,
+        "documentClientWidth": 1440,
+        "documentScrollWidth": 1440,
+        "bodyScrollWidth": 1440
+      },
+      "background": {
+        "color": "rgb(3, 5, 7)",
+        "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+      },
+      "before": {
+        "content": "none",
+        "width": "auto",
+        "backgroundImage": "none"
+      }
+    }
+  },
+  "viewports": {
+    "1366x768": {
+      "business": {
+        "phase": "1",
+        "sectionHeight": 2880,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 204.3203125,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 757.2890625,
+            "bottom": 425.1796875,
+            "left": 204.3203125,
+            "width": 552.96875,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 776.3671875,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 1161.6796875,
+            "bottom": 425.1796875,
+            "left": 776.3671875,
+            "width": 385.3125,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          }
+        },
+        "activeWord": {
+          "rect": {
+            "x": 776.3671875,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 1161.6796875,
+            "bottom": 425.1796875,
+            "left": 776.3671875,
+            "width": 385.3125,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          },
+          "text": "business"
+        },
+        "presentation": {
+          "rect": {
+            "x": 204.3203125,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 1161.6796875,
+            "bottom": 425.1796875,
+            "left": 204.3203125,
+            "width": 957.359375,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 259.296875,
+            "y": 306.828125,
+            "top": 306.828125,
+            "right": 1106.703125,
+            "bottom": 391.046875,
+            "left": 259.296875,
+            "width": 847.40625,
+            "height": 84.21875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "93.571px",
+            "fontWeight": "400",
+            "lineHeight": "84.2139px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 541.765625,
+            "y": 421.09375,
+            "top": 421.09375,
+            "right": 824.234375,
+            "bottom": 461.140625,
+            "left": 541.765625,
+            "width": 282.46875,
+            "height": 40.046875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "34.833px",
+            "fontWeight": "400",
+            "lineHeight": "40.0579px",
+            "letterSpacing": "-0.870825px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 54.625,
+            "y": 36.859375,
+            "top": 36.859375,
+            "right": 129.171875,
+            "bottom": 49.296875,
+            "left": 54.625,
+            "width": 74.546875,
+            "height": 12.4375
+          }
+        },
+        "overflow": {
+          "viewportWidth": 1366,
+          "documentClientWidth": 1366,
+          "documentScrollWidth": 1366,
+          "bodyScrollWidth": 1366
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      },
+      "resolved": {
+        "phase": "5",
+        "sectionHeight": 2880,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 204.3203125,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 757.2890625,
+            "bottom": 425.1796875,
+            "left": 204.3203125,
+            "width": 552.96875,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 776.3671875,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 1161.6796875,
+            "bottom": 425.1796875,
+            "left": 776.3671875,
+            "width": 385.3125,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          }
+        },
+        "activeWord": {
+          "rect": null,
+          "style": null
+        },
+        "presentation": {
+          "rect": {
+            "x": 204.3203125,
+            "y": 342.7890625,
+            "top": 342.7890625,
+            "right": 1161.6796875,
+            "bottom": 425.1796875,
+            "left": 204.3203125,
+            "width": 957.359375,
+            "height": 82.390625
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "86.741px",
+            "fontWeight": "400",
+            "lineHeight": "82.4039px",
+            "letterSpacing": "-4.33705px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 259.296875,
+            "y": 306.828125,
+            "top": 306.828125,
+            "right": 1106.703125,
+            "bottom": 391.046875,
+            "left": 259.296875,
+            "width": 847.40625,
+            "height": 84.21875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "93.571px",
+            "fontWeight": "400",
+            "lineHeight": "84.2139px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 541.765625,
+            "y": 421.09375,
+            "top": 421.09375,
+            "right": 824.234375,
+            "bottom": 461.140625,
+            "left": 541.765625,
+            "width": 282.46875,
+            "height": 40.046875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "34.833px",
+            "fontWeight": "400",
+            "lineHeight": "40.0579px",
+            "letterSpacing": "-0.870825px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 54.625,
+            "y": 36.859375,
+            "top": 36.859375,
+            "right": 129.171875,
+            "bottom": 49.296875,
+            "left": 54.625,
+            "width": 74.546875,
+            "height": 12.4375
+          }
+        },
+        "overflow": {
+          "viewportWidth": 1366,
+          "documentClientWidth": 1366,
+          "documentScrollWidth": 1366,
+          "bodyScrollWidth": 1366
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      }
+    },
+    "768x800": {
+      "business": {
+        "phase": "1",
+        "sectionHeight": 3200,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 96.2734375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 428.0859375,
+            "bottom": 424.6796875,
+            "left": 96.2734375,
+            "width": 331.8125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 439.5234375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 671.7265625,
+            "bottom": 424.6796875,
+            "left": 439.5234375,
+            "width": 232.203125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          }
+        },
+        "activeWord": {
+          "rect": {
+            "x": 439.5234375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 671.7265625,
+            "bottom": 424.6796875,
+            "left": 439.5234375,
+            "width": 232.203125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          },
+          "text": "business"
+        },
+        "presentation": {
+          "rect": {
+            "x": 96.2734375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 671.7265625,
+            "bottom": 424.6796875,
+            "left": 96.2734375,
+            "width": 575.453125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 132.796875,
+            "y": 354.4921875,
+            "top": 354.4921875,
+            "right": 635.203125,
+            "bottom": 404.8828125,
+            "left": 132.796875,
+            "width": 502.40625,
+            "height": 50.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56px",
+            "fontWeight": "400",
+            "lineHeight": "50.4px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 302.75,
+            "y": 422.4765625,
+            "top": 422.4765625,
+            "right": 465.25,
+            "bottom": 445.4765625,
+            "left": 302.75,
+            "width": 162.5,
+            "height": 23
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "20px",
+            "fontWeight": "400",
+            "lineHeight": "23px",
+            "letterSpacing": "-0.5px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 30.71875,
+            "y": 38.390625,
+            "top": 38.390625,
+            "right": 104.71875,
+            "bottom": 50.390625,
+            "left": 30.71875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 768,
+          "documentClientWidth": 768,
+          "documentScrollWidth": 768,
+          "bodyScrollWidth": 768
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      },
+      "resolved": {
+        "phase": "5",
+        "sectionHeight": 3200,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 96.2734375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 428.0859375,
+            "bottom": 424.6796875,
+            "left": 96.2734375,
+            "width": 331.8125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 439.5234375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 671.7265625,
+            "bottom": 424.6796875,
+            "left": 439.5234375,
+            "width": 232.203125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          }
+        },
+        "activeWord": {
+          "rect": null,
+          "style": null
+        },
+        "presentation": {
+          "rect": {
+            "x": 96.2734375,
+            "y": 375.2890625,
+            "top": 375.2890625,
+            "right": 671.7265625,
+            "bottom": 424.6796875,
+            "left": 96.2734375,
+            "width": 575.453125,
+            "height": 49.390625
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "52px",
+            "fontWeight": "400",
+            "lineHeight": "49.4px",
+            "letterSpacing": "-2.6px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 132.796875,
+            "y": 354.4921875,
+            "top": 354.4921875,
+            "right": 635.203125,
+            "bottom": 404.8828125,
+            "left": 132.796875,
+            "width": 502.40625,
+            "height": 50.390625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56px",
+            "fontWeight": "400",
+            "lineHeight": "50.4px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 302.75,
+            "y": 422.4765625,
+            "top": 422.4765625,
+            "right": 465.25,
+            "bottom": 445.4765625,
+            "left": 302.75,
+            "width": 162.5,
+            "height": 23
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "20px",
+            "fontWeight": "400",
+            "lineHeight": "23px",
+            "letterSpacing": "-0.5px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 30.71875,
+            "y": 38.390625,
+            "top": 38.390625,
+            "right": 104.71875,
+            "bottom": 50.390625,
+            "left": 30.71875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 768,
+          "documentClientWidth": 768,
+          "documentScrollWidth": 768,
+          "bodyScrollWidth": 768
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      }
+    },
+    "390x844": {
+      "business": {
+        "phase": "1",
+        "sectionHeight": 3629.1875,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 58.3671875,
+            "y": 379.5390625,
+            "top": 379.5390625,
+            "right": 331.6328125,
+            "bottom": 420.2890625,
+            "left": 58.3671875,
+            "width": 273.265625,
+            "height": 40.75
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 99.5703125,
+            "y": 423.7109375,
+            "top": 423.7109375,
+            "right": 290.4140625,
+            "bottom": 464.4609375,
+            "left": 99.5703125,
+            "width": 190.84375,
+            "height": 40.75
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          }
+        },
+        "activeWord": {
+          "rect": {
+            "x": 99.5703125,
+            "y": 423.7109375,
+            "top": 423.7109375,
+            "right": 290.4140625,
+            "bottom": 464.4609375,
+            "left": 99.5703125,
+            "width": 190.84375,
+            "height": 40.75
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          },
+          "text": "business"
+        },
+        "presentation": {
+          "rect": {
+            "x": 58.3671875,
+            "y": 379.5390625,
+            "top": 379.5390625,
+            "right": 331.6328125,
+            "bottom": 464.4609375,
+            "left": 58.3671875,
+            "width": 273.265625,
+            "height": 84.921875
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 21.796875,
+            "y": 383.6484375,
+            "top": 383.6484375,
+            "right": 368.203125,
+            "bottom": 418.3828125,
+            "left": 21.796875,
+            "width": 346.40625,
+            "height": 34.734375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "38.61px",
+            "fontWeight": "400",
+            "lineHeight": "34.749px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 117.53125,
+            "y": 438.3828125,
+            "top": 438.3828125,
+            "right": 272.46875,
+            "bottom": 460.3515625,
+            "left": 117.53125,
+            "width": 154.9375,
+            "height": 21.96875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "19.11px",
+            "fontWeight": "400",
+            "lineHeight": "21.9765px",
+            "letterSpacing": "-0.47775px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 31.1875,
+            "y": 30.390625,
+            "top": 30.390625,
+            "right": 105.1875,
+            "bottom": 42.390625,
+            "left": 31.1875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 390,
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "bodyScrollWidth": 390
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      },
+      "resolved": {
+        "phase": "5",
+        "sectionHeight": 3629.1875,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 58.3671875,
+            "y": 379.5390625,
+            "top": 379.5390625,
+            "right": 331.6328125,
+            "bottom": 420.2890625,
+            "left": 58.3671875,
+            "width": 273.265625,
+            "height": 40.75
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 99.5703125,
+            "y": 423.7109375,
+            "top": 423.7109375,
+            "right": 290.4140625,
+            "bottom": 464.4609375,
+            "left": 99.5703125,
+            "width": 190.84375,
+            "height": 40.75
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          }
+        },
+        "activeWord": {
+          "rect": null,
+          "style": null
+        },
+        "presentation": {
+          "rect": {
+            "x": 58.3671875,
+            "y": 379.5390625,
+            "top": 379.5390625,
+            "right": 331.6328125,
+            "bottom": 464.4609375,
+            "left": 58.3671875,
+            "width": 273.265625,
+            "height": 84.921875
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "42.9px",
+            "fontWeight": "400",
+            "lineHeight": "40.755px",
+            "letterSpacing": "-2.145px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 21.796875,
+            "y": 383.6484375,
+            "top": 383.6484375,
+            "right": 368.203125,
+            "bottom": 418.3828125,
+            "left": 21.796875,
+            "width": 346.40625,
+            "height": 34.734375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "38.61px",
+            "fontWeight": "400",
+            "lineHeight": "34.749px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 117.53125,
+            "y": 438.3828125,
+            "top": 438.3828125,
+            "right": 272.46875,
+            "bottom": 460.3515625,
+            "left": 117.53125,
+            "width": 154.9375,
+            "height": 21.96875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "19.11px",
+            "fontWeight": "400",
+            "lineHeight": "21.9765px",
+            "letterSpacing": "-0.47775px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 31.1875,
+            "y": 30.390625,
+            "top": 30.390625,
+            "right": 105.1875,
+            "bottom": 42.390625,
+            "left": 31.1875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 390,
+          "documentClientWidth": 390,
+          "documentScrollWidth": 390,
+          "bodyScrollWidth": 390
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      }
+    },
+    "360x800": {
+      "business": {
+        "phase": "1",
+        "sectionHeight": 3440,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 54.859375,
+            "y": 360.8125,
+            "top": 360.8125,
+            "right": 305.109375,
+            "bottom": 398.421875,
+            "left": 54.859375,
+            "width": 250.25,
+            "height": 37.609375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 93.390625,
+            "y": 401.578125,
+            "top": 401.578125,
+            "right": 266.5625,
+            "bottom": 439.1875,
+            "left": 93.390625,
+            "width": 173.171875,
+            "height": 37.609375
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          }
+        },
+        "activeWord": {
+          "rect": {
+            "x": 93.390625,
+            "y": 401.578125,
+            "top": 401.578125,
+            "right": 266.5625,
+            "bottom": 439.1875,
+            "left": 93.390625,
+            "width": 173.171875,
+            "height": 37.609375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          },
+          "text": "business"
+        },
+        "presentation": {
+          "rect": {
+            "x": 54.859375,
+            "y": 360.8125,
+            "top": 360.8125,
+            "right": 305.109375,
+            "bottom": 439.1875,
+            "left": 54.859375,
+            "width": 250.25,
+            "height": 78.375
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 20.296875,
+            "y": 363.828125,
+            "top": 363.828125,
+            "right": 339.703125,
+            "bottom": 395.890625,
+            "left": 20.296875,
+            "width": 319.40625,
+            "height": 32.0625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "35.64px",
+            "fontWeight": "400",
+            "lineHeight": "32.076px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 109.171875,
+            "y": 415.890625,
+            "top": 415.890625,
+            "right": 250.796875,
+            "bottom": 436.171875,
+            "left": 109.171875,
+            "width": 141.625,
+            "height": 20.28125
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "17.64px",
+            "fontWeight": "400",
+            "lineHeight": "20.286px",
+            "letterSpacing": "-0.441px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 28.796875,
+            "y": 30.390625,
+            "top": 30.390625,
+            "right": 102.796875,
+            "bottom": 42.390625,
+            "left": 28.796875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 360,
+          "documentClientWidth": 360,
+          "documentScrollWidth": 360,
+          "bodyScrollWidth": 360
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      },
+      "resolved": {
+        "phase": "5",
+        "sectionHeight": 3440,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 54.859375,
+            "y": 360.8125,
+            "top": 360.8125,
+            "right": 305.109375,
+            "bottom": 398.421875,
+            "left": 54.859375,
+            "width": 250.25,
+            "height": 37.609375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 93.390625,
+            "y": 401.578125,
+            "top": 401.578125,
+            "right": 266.5625,
+            "bottom": 439.1875,
+            "left": 93.390625,
+            "width": 173.171875,
+            "height": 37.609375
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          }
+        },
+        "activeWord": {
+          "rect": null,
+          "style": null
+        },
+        "presentation": {
+          "rect": {
+            "x": 54.859375,
+            "y": 360.8125,
+            "top": 360.8125,
+            "right": 305.109375,
+            "bottom": 439.1875,
+            "left": 54.859375,
+            "width": 250.25,
+            "height": 78.375
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "39.6px",
+            "fontWeight": "400",
+            "lineHeight": "37.62px",
+            "letterSpacing": "-1.98px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 20.296875,
+            "y": 363.828125,
+            "top": 363.828125,
+            "right": 339.703125,
+            "bottom": 395.890625,
+            "left": 20.296875,
+            "width": 319.40625,
+            "height": 32.0625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "35.64px",
+            "fontWeight": "400",
+            "lineHeight": "32.076px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 109.171875,
+            "y": 415.890625,
+            "top": 415.890625,
+            "right": 250.796875,
+            "bottom": 436.171875,
+            "left": 109.171875,
+            "width": 141.625,
+            "height": 20.28125
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "17.64px",
+            "fontWeight": "400",
+            "lineHeight": "20.286px",
+            "letterSpacing": "-0.441px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 28.796875,
+            "y": 30.390625,
+            "top": 30.390625,
+            "right": 102.796875,
+            "bottom": 42.390625,
+            "left": 28.796875,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 360,
+          "documentClientWidth": 360,
+          "documentScrollWidth": 360,
+          "bodyScrollWidth": 360
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      }
+    },
+    "844x390": {
+      "business": {
+        "phase": "1",
+        "sectionHeight": 1638,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 108.7109375,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 469.5390625,
+            "bottom": 222.0546875,
+            "left": 108.7109375,
+            "width": 360.828125,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 482.0703125,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 735.2890625,
+            "bottom": 222.0546875,
+            "left": 482.0703125,
+            "width": 253.21875,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          }
+        },
+        "activeWord": {
+          "rect": {
+            "x": 482.0703125,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 735.2890625,
+            "bottom": 222.0546875,
+            "left": 482.0703125,
+            "width": 253.21875,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          },
+          "text": "business"
+        },
+        "presentation": {
+          "rect": {
+            "x": 108.7109375,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 735.2890625,
+            "bottom": 222.0546875,
+            "left": 108.7109375,
+            "width": 626.578125,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 157.296875,
+            "y": 146.53125,
+            "top": 146.53125,
+            "right": 686.703125,
+            "bottom": 199.6875,
+            "left": 157.296875,
+            "width": 529.40625,
+            "height": 53.15625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "59.08px",
+            "fontWeight": "400",
+            "lineHeight": "53.172px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 334.71875,
+            "y": 218.25,
+            "top": 218.25,
+            "right": 509.296875,
+            "bottom": 243.46875,
+            "left": 334.71875,
+            "width": 174.578125,
+            "height": 25.21875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "21.944px",
+            "fontWeight": "400",
+            "lineHeight": "25.2356px",
+            "letterSpacing": "-0.5486px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 33.75,
+            "y": 32,
+            "top": 32,
+            "right": 107.75,
+            "bottom": 44,
+            "left": 33.75,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 844,
+          "documentClientWidth": 844,
+          "documentScrollWidth": 844,
+          "bodyScrollWidth": 844
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      },
+      "resolved": {
+        "phase": "5",
+        "sectionHeight": 1638,
+        "accessibleHeading": "Welcome. Present your business, work and brand. Present yourself. In a beautiful way.",
+        "rotatingWords": [
+          "business",
+          "work",
+          "brand"
+        ],
+        "lead": {
+          "rect": {
+            "x": 108.7109375,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 469.5390625,
+            "bottom": 222.0546875,
+            "left": 108.7109375,
+            "width": 360.828125,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "block",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          },
+          "text": "Present your"
+        },
+        "slot": {
+          "rect": {
+            "x": 482.0703125,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 735.2890625,
+            "bottom": 222.0546875,
+            "left": 482.0703125,
+            "width": 253.21875,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "grid",
+            "visibility": "hidden",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          }
+        },
+        "activeWord": {
+          "rect": null,
+          "style": null
+        },
+        "presentation": {
+          "rect": {
+            "x": 108.7109375,
+            "y": 167.9453125,
+            "top": 167.9453125,
+            "right": 735.2890625,
+            "bottom": 222.0546875,
+            "left": 108.7109375,
+            "width": 626.578125,
+            "height": 54.109375
+          },
+          "style": {
+            "display": "flex",
+            "visibility": "hidden",
+            "opacity": "0",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "56.97px",
+            "fontWeight": "400",
+            "lineHeight": "54.1215px",
+            "letterSpacing": "-2.8485px"
+          }
+        },
+        "resolutionMain": {
+          "rect": {
+            "x": 157.296875,
+            "y": 146.53125,
+            "top": 146.53125,
+            "right": 686.703125,
+            "bottom": 199.6875,
+            "left": 157.296875,
+            "width": 529.40625,
+            "height": 53.15625
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "\"Archivo Black\", \"Arial Black\", sans-serif",
+            "fontSize": "59.08px",
+            "fontWeight": "400",
+            "lineHeight": "53.172px",
+            "letterSpacing": "-0.8px"
+          }
+        },
+        "resolutionSub": {
+          "rect": {
+            "x": 334.71875,
+            "y": 218.25,
+            "top": 218.25,
+            "right": 509.296875,
+            "bottom": 243.46875,
+            "left": 334.71875,
+            "width": 174.578125,
+            "height": 25.21875
+          },
+          "style": {
+            "display": "block",
+            "visibility": "visible",
+            "opacity": "1",
+            "fontFamily": "Inter, Arial, sans-serif",
+            "fontSize": "21.944px",
+            "fontWeight": "400",
+            "lineHeight": "25.2356px",
+            "letterSpacing": "-0.5486px"
+          }
+        },
+        "chapter": {
+          "rect": {
+            "x": 33.75,
+            "y": 32,
+            "top": 32,
+            "right": 107.75,
+            "bottom": 44,
+            "left": 33.75,
+            "width": 74,
+            "height": 12
+          }
+        },
+        "overflow": {
+          "viewportWidth": 844,
+          "documentClientWidth": 844,
+          "documentScrollWidth": 844,
+          "bodyScrollWidth": 844
+        },
+        "background": {
+          "color": "rgb(3, 5, 7)",
+          "image": "radial-gradient(72% 58% at 53% 47%, rgba(9, 21, 34, 0.28) 0%, rgba(6, 9, 13, 0.14) 48%, rgba(0, 0, 0, 0) 78%), linear-gradient(135deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.1) 100%)"
+        },
+        "before": {
+          "content": "none",
+          "width": "auto",
+          "backgroundImage": "none"
+        }
+      }
+    }
+  },
+  "sequences": {
+    "forward": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "reverse": [
+      "5",
+      "4",
+      "3",
+      "2",
+      "1",
+      "0"
+    ]
+  },
+  "restoration": {
+    "reloadPhase": "3",
+    "pageshowPhase": "3"
+  },
+  "reducedMotion": {
+    "forward": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "transitions": {
+      "welcome": "0s",
+      "presentation": "0s",
+      "resolution": "0s",
+      "resolutionSub": "0s"
+    }
+  }
+}

@@ -1,0 +1,1499 @@
+{
+  "straight": {
+    "rest": {
+      "x": 0,
+      "y": 112,
+      "reach": 112,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "held": {
+      "x": 0.010000228881835938,
+      "y": 159.02000427246094,
+      "reach": 159.02000458690117,
+      "deployed": 47,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0.0133,
+      "releasing": false,
+      "dragging": true,
+      "armed": true,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0.005,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 0.105,
+      "monotonicY": true
+    },
+    "toggleCount": 1,
+    "crossings": [
+      925,
+      1246
+    ],
+    "peaks": [
+      {
+        "t": 53,
+        "x": 4.88
+      },
+      {
+        "t": 327,
+        "x": 8.46
+      },
+      {
+        "t": 1085,
+        "x": -1.94
+      },
+      {
+        "t": 1623,
+        "x": 4.91
+      },
+      {
+        "t": 2856,
+        "x": 3.79
+      },
+      {
+        "t": 4021,
+        "x": 3.01
+      },
+      {
+        "t": 5187,
+        "x": 2.6
+      }
+    ],
+    "deploymentSettledAt": 1518,
+    "idleAt": 5349,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 1.05,
+        "y": 159.34,
+        "deployed": 47,
+        "reelVelocity": 0,
+        "tangentialVelocity": 45.93
+      },
+      {
+        "t": 112,
+        "x": 4.88,
+        "y": 159.64,
+        "deployed": 47,
+        "reelVelocity": 0,
+        "tangentialVelocity": 45.27
+      },
+      {
+        "t": 271,
+        "x": 7.9,
+        "y": 152.21,
+        "deployed": 39.7,
+        "reelVelocity": -81.85,
+        "tangentialVelocity": 14.87
+      },
+      {
+        "t": 489,
+        "x": 7.44,
+        "y": 133.82,
+        "deployed": 21.37,
+        "reelVelocity": -69.4,
+        "tangentialVelocity": -12.47
+      },
+      {
+        "t": 758,
+        "x": 1.85,
+        "y": 121.57,
+        "deployed": 8.94,
+        "reelVelocity": -33.43,
+        "tangentialVelocity": -18.04
+      },
+      {
+        "t": 977,
+        "x": -1.64,
+        "y": 116.8,
+        "deployed": 4.19,
+        "reelVelocity": -16.47,
+        "tangentialVelocity": -13.42
+      },
+      {
+        "t": 1246,
+        "x": 0.46,
+        "y": 114.1,
+        "deployed": 1.42,
+        "reelVelocity": -5.77,
+        "tangentialVelocity": 20.42
+      },
+      {
+        "t": 1518,
+        "x": 4.59,
+        "y": 113.03,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 6.88
+      },
+      {
+        "t": 2003,
+        "x": 1.01,
+        "y": 112.7,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -13.11
+      },
+      {
+        "t": 2481,
+        "x": 1.47,
+        "y": 112.71,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 10.03
+      },
+      {
+        "t": 3015,
+        "x": 3.28,
+        "y": 112.7,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -6.44
+      },
+      {
+        "t": 4021,
+        "x": 3.01,
+        "y": 112.71,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -0.4
+      }
+    ]
+  },
+  "offAxis": {
+    "rest": {
+      "x": 0,
+      "y": 112,
+      "reach": 112,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "held": {
+      "x": 61.769996643066406,
+      "y": 144.80999755859375,
+      "reach": 157.43401118628833,
+      "deployed": 45.6991,
+      "reelVelocity": 0.0002,
+      "tangentialVelocity": 0.2536,
+      "releasing": false,
+      "dragging": true,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0.027,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 0.04,
+      "monotonicY": true
+    },
+    "toggleCount": 0,
+    "crossings": [
+      377,
+      979,
+      1632,
+      2169,
+      2866,
+      3345,
+      4040,
+      4460,
+      5322,
+      5533
+    ],
+    "peaks": [
+      {
+        "t": 650,
+        "x": -30.17
+      },
+      {
+        "t": 1249,
+        "x": 22.94
+      },
+      {
+        "t": 1848,
+        "x": -13.57
+      },
+      {
+        "t": 2442,
+        "x": 13.15
+      },
+      {
+        "t": 3026,
+        "x": -6.21
+      },
+      {
+        "t": 3614,
+        "x": 8.19
+      },
+      {
+        "t": 4197,
+        "x": -2.66
+      },
+      {
+        "t": 4780,
+        "x": 5.53
+      }
+    ],
+    "deploymentSettledAt": 1465,
+    "idleAt": 8642,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 60.97,
+        "y": 145.03,
+        "deployed": 45.7,
+        "reelVelocity": 0,
+        "tangentialVelocity": -46.98
+      },
+      {
+        "t": 106,
+        "x": 47.87,
+        "y": 150.67,
+        "deployed": 44.64,
+        "reelVelocity": -40.01,
+        "tangentialVelocity": -166.77
+      },
+      {
+        "t": 269,
+        "x": 19.32,
+        "y": 145.56,
+        "deployed": 33.74,
+        "reelVelocity": -84.68,
+        "tangentialVelocity": -181.87
+      },
+      {
+        "t": 489,
+        "x": -18.76,
+        "y": 127.77,
+        "deployed": 17.15,
+        "reelVelocity": -58.36,
+        "tangentialVelocity": -136.61
+      },
+      {
+        "t": 758,
+        "x": -27.92,
+        "y": 114.74,
+        "deployed": 7,
+        "reelVelocity": -26.63,
+        "tangentialVelocity": 67.38
+      },
+      {
+        "t": 979,
+        "x": 3.84,
+        "y": 115.6,
+        "deployed": 2.85,
+        "reelVelocity": -11.37,
+        "tangentialVelocity": 140.89
+      },
+      {
+        "t": 1249,
+        "x": 22.94,
+        "y": 111.51,
+        "deployed": 0.92,
+        "reelVelocity": -3.78,
+        "tangentialVelocity": -10.54
+      },
+      {
+        "t": 1520,
+        "x": 5.97,
+        "y": 112.7,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -96.45
+      },
+      {
+        "t": 2010,
+        "x": -7.16,
+        "y": 112.24,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 65.59
+      },
+      {
+        "t": 2494,
+        "x": 12.81,
+        "y": 112.12,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -13.57
+      },
+      {
+        "t": 3026,
+        "x": -6.21,
+        "y": 112.34,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -6.46
+      },
+      {
+        "t": 3989,
+        "x": 0.03,
+        "y": 112.69,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -25.46
+      }
+    ]
+  },
+  "moving": {
+    "rest": {
+      "x": 0,
+      "y": 112,
+      "reach": 112,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "held": {
+      "x": 39.810001373291016,
+      "y": 138.38999938964844,
+      "reach": 144.00218102656754,
+      "deployed": 32.336,
+      "reelVelocity": 36.7607,
+      "tangentialVelocity": -2.6907,
+      "releasing": false,
+      "dragging": true,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0.076,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 2.677,
+      "monotonicY": true
+    },
+    "toggleCount": 0,
+    "crossings": [
+      590,
+      1177,
+      1768,
+      2348,
+      2987,
+      3465,
+      4167,
+      4597,
+      5463,
+      5727
+    ],
+    "peaks": [
+      {
+        "t": 267,
+        "x": 76.6
+      },
+      {
+        "t": 802,
+        "x": -37.84
+      },
+      {
+        "t": 1386,
+        "x": 29.75
+      },
+      {
+        "t": 2033,
+        "x": -16.14
+      },
+      {
+        "t": 2612,
+        "x": 14.15
+      },
+      {
+        "t": 3200,
+        "x": -7.66
+      },
+      {
+        "t": 3794,
+        "x": 9.15
+      },
+      {
+        "t": 4383,
+        "x": -3.21
+      }
+    ],
+    "deploymentSettledAt": 1386,
+    "idleAt": 9210,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 45.03,
+        "y": 136.78,
+        "deployed": 33.56,
+        "reelVelocity": 36.76,
+        "tangentialVelocity": 180.57
+      },
+      {
+        "t": 105,
+        "x": 64.08,
+        "y": 129.05,
+        "deployed": 36.23,
+        "reelVelocity": -15.12,
+        "tangentialVelocity": 155.09
+      },
+      {
+        "t": 267,
+        "x": 76.6,
+        "y": 118.48,
+        "deployed": 28.53,
+        "reelVelocity": -66.8,
+        "tangentialVelocity": 52.6
+      },
+      {
+        "t": 479,
+        "x": 27.36,
+        "y": 120.65,
+        "deployed": 14.82,
+        "reelVelocity": -49.55,
+        "tangentialVelocity": -380.07
+      },
+      {
+        "t": 749,
+        "x": -37,
+        "y": 109.27,
+        "deployed": 6.11,
+        "reelVelocity": -23.08,
+        "tangentialVelocity": -58.7
+      },
+      {
+        "t": 1018,
+        "x": -18.83,
+        "y": 112.61,
+        "deployed": 2.19,
+        "reelVelocity": -8.76,
+        "tangentialVelocity": 118.8
+      },
+      {
+        "t": 1229,
+        "x": 14.47,
+        "y": 112.9,
+        "deployed": 0.93,
+        "reelVelocity": -3.78,
+        "tangentialVelocity": 165.79
+      },
+      {
+        "t": 1490,
+        "x": 25.93,
+        "y": 109.83,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -73.08
+      },
+      {
+        "t": 1980,
+        "x": -15.55,
+        "y": 111.04,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -30.57
+      },
+      {
+        "t": 2507,
+        "x": 13.56,
+        "y": 112.05,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 21.59
+      },
+      {
+        "t": 2987,
+        "x": -2.84,
+        "y": 112.59,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -54.29
+      },
+      {
+        "t": 4004,
+        "x": 4.3,
+        "y": 112.69,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -33.15
+      }
+    ]
+  },
+  "partialSlack": {
+    "partial": {
+      "held": {
+        "x": 0,
+        "y": 132.02999877929688,
+        "reach": 132.02999877929688,
+        "deployed": 20,
+        "reelVelocity": 0.0001,
+        "tangentialVelocity": 0.0104,
+        "releasing": false,
+        "dragging": true,
+        "armed": false,
+        "lit": false,
+        "reduced": false,
+        "overflow": 0,
+        "target": {
+          "width": 44,
+          "height": 44
+        },
+        "viewport": [
+          1365,
+          644
+        ]
+      },
+      "crossings": [
+        909,
+        1122
+      ],
+      "peaks": [
+        {
+          "t": 267,
+          "x": 6.14
+        },
+        {
+          "t": 1549,
+          "x": 3.63
+        },
+        {
+          "t": 2654,
+          "x": 3.09
+        },
+        {
+          "t": 3767,
+          "x": 2.6
+        }
+      ],
+      "deploymentSettledAt": 1282,
+      "idleAt": 4083,
+      "checkpoints": [
+        {
+          "t": 0,
+          "x": 0,
+          "y": 132.03,
+          "deployed": 20,
+          "reelVelocity": 0,
+          "tangentialVelocity": 0.01
+        },
+        {
+          "t": 106,
+          "x": 3.44,
+          "y": 132.54,
+          "deployed": 19.97,
+          "reelVelocity": -4.17,
+          "tangentialVelocity": 31.65
+        },
+        {
+          "t": 267,
+          "x": 6.14,
+          "y": 127.93,
+          "deployed": 15.38,
+          "reelVelocity": -36.87,
+          "tangentialVelocity": 3.35
+        },
+        {
+          "t": 481,
+          "x": 4.01,
+          "y": 120.78,
+          "deployed": 8.16,
+          "reelVelocity": -27.25,
+          "tangentialVelocity": -13.46
+        },
+        {
+          "t": 746,
+          "x": 1.27,
+          "y": 115.83,
+          "deployed": 3.16,
+          "reelVelocity": -12,
+          "tangentialVelocity": -9.58
+        },
+        {
+          "t": 1015,
+          "x": -0.28,
+          "y": 113.83,
+          "deployed": 1.17,
+          "reelVelocity": -4.67,
+          "tangentialVelocity": 7.53
+        },
+        {
+          "t": 1228,
+          "x": 2.21,
+          "y": 113.23,
+          "deployed": 0.53,
+          "reelVelocity": -2.15,
+          "tangentialVelocity": 12
+        },
+        {
+          "t": 1497,
+          "x": 3.62,
+          "y": 112.73,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 0.86
+        },
+        {
+          "t": 1975,
+          "x": 0.96,
+          "y": 112.7,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -4.98
+        },
+        {
+          "t": 2497,
+          "x": 2.65,
+          "y": 112.71,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 5.2
+        },
+        {
+          "t": 3025,
+          "x": 1.8,
+          "y": 112.71,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -3.74
+        },
+        {
+          "t": 3978,
+          "x": 2.41,
+          "y": 112.71,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -2.05
+        }
+      ]
+    },
+    "slack": {
+      "held": {
+        "x": -51.760000228881836,
+        "y": 72.16000366210938,
+        "reach": 88.80407508785555,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 1.5887,
+        "releasing": false,
+        "dragging": true,
+        "armed": false,
+        "lit": false,
+        "reduced": false,
+        "overflow": 0,
+        "target": {
+          "width": 44,
+          "height": 44
+        },
+        "viewport": [
+          1365,
+          644
+        ]
+      },
+      "crossings": [
+        322,
+        1017,
+        1556,
+        2150,
+        2683,
+        3376,
+        3799,
+        4588,
+        4900
+      ],
+      "peaks": [
+        {
+          "t": 690,
+          "x": 31.4
+        },
+        {
+          "t": 1175,
+          "x": -18.29
+        },
+        {
+          "t": 1765,
+          "x": 17.72
+        },
+        {
+          "t": 2364,
+          "x": -9
+        },
+        {
+          "t": 2948,
+          "x": 9.87
+        },
+        {
+          "t": 3533,
+          "x": -4.11
+        },
+        {
+          "t": 4117,
+          "x": 6.65
+        },
+        {
+          "t": 4691,
+          "x": -1.35
+        }
+      ],
+      "deploymentSettledAt": 0,
+      "idleAt": 8441,
+      "checkpoints": [
+        {
+          "t": 0,
+          "x": -51.76,
+          "y": 72.16,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 1.59
+        },
+        {
+          "t": 112,
+          "x": -45.37,
+          "y": 92.6,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 247.55
+        },
+        {
+          "t": 269,
+          "x": -1.59,
+          "y": 109.43,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 242.29
+        },
+        {
+          "t": 479,
+          "x": 20.13,
+          "y": 110.63,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 55.91
+        },
+        {
+          "t": 747,
+          "x": 29.69,
+          "y": 108.06,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -64.44
+        },
+        {
+          "t": 1017,
+          "x": -7.83,
+          "y": 112,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -140.7
+        },
+        {
+          "t": 1231,
+          "x": -17.29,
+          "y": 110.72,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 28.2
+        },
+        {
+          "t": 1499,
+          "x": -3.23,
+          "y": 112.51,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 91.56
+        },
+        {
+          "t": 1991,
+          "x": 9.98,
+          "y": 112.41,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -62.22
+        },
+        {
+          "t": 2525,
+          "x": -4.58,
+          "y": 112.47,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 51.43
+        },
+        {
+          "t": 3000,
+          "x": 9.63,
+          "y": 112.42,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": -8.9
+        },
+        {
+          "t": 4011,
+          "x": 5.93,
+          "y": 112.63,
+          "deployed": 0,
+          "reelVelocity": 0,
+          "tangentialVelocity": 14.62
+        }
+      ]
+    }
+  },
+  "regrab": {
+    "before": {
+      "x": 41.349998474121094,
+      "y": 145.8000030517578,
+      "reach": 151.5502004739763,
+      "deployed": 38.3017,
+      "reelVelocity": -84.4868,
+      "tangentialVelocity": -160.7925,
+      "releasing": true,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "after": {
+      "x": 35,
+      "y": 144.25,
+      "reach": 148.43538156383067,
+      "deployed": 35.4254,
+      "reelVelocity": -86.9528,
+      "tangentialVelocity": -179.0595,
+      "releasing": false,
+      "dragging": true,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "sampleDelta": 6.54
+  },
+  "mobile": {
+    "rest": {
+      "x": 0,
+      "y": 68,
+      "reach": 68,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    "held": {
+      "x": 0,
+      "y": 96.5999984741211,
+      "reach": 96.5999984741211,
+      "deployed": 28.56,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0.0098,
+      "releasing": false,
+      "dragging": true,
+      "armed": true,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 0.118,
+      "monotonicY": true
+    },
+    "toggleCount": 1,
+    "crossings": [
+      580,
+      950,
+      1636,
+      1798
+    ],
+    "peaks": [
+      {
+        "t": 211,
+        "x": 6.07
+      },
+      {
+        "t": 740,
+        "x": -1.7
+      },
+      {
+        "t": 1161,
+        "x": 4.07
+      },
+      {
+        "t": 2064,
+        "x": 2.97
+      },
+      {
+        "t": 3025,
+        "x": 2.38
+      },
+      {
+        "t": 3872,
+        "x": 2.03
+      }
+    ],
+    "deploymentSettledAt": 1319,
+    "idleAt": 4136,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 1.41,
+        "y": 96.99,
+        "deployed": 28.56,
+        "reelVelocity": 0,
+        "tangentialVelocity": 46.27
+      },
+      {
+        "t": 104,
+        "x": 4.85,
+        "y": 96.77,
+        "deployed": 28.28,
+        "reelVelocity": -16.36,
+        "tangentialVelocity": 25.36
+      },
+      {
+        "t": 264,
+        "x": 6.04,
+        "y": 89.07,
+        "deployed": 20.64,
+        "reelVelocity": -52.9,
+        "tangentialVelocity": -0.6
+      },
+      {
+        "t": 475,
+        "x": 1.84,
+        "y": 79.58,
+        "deployed": 11.02,
+        "reelVelocity": -37.29,
+        "tangentialVelocity": -26.52
+      },
+      {
+        "t": 740,
+        "x": -1.7,
+        "y": 72.8,
+        "deployed": 4.37,
+        "reelVelocity": -16.64,
+        "tangentialVelocity": 1.83
+      },
+      {
+        "t": 1002,
+        "x": 2.4,
+        "y": 70.02,
+        "deployed": 1.51,
+        "reelVelocity": -6.06,
+        "tangentialVelocity": 18.93
+      },
+      {
+        "t": 1266,
+        "x": 3.58,
+        "y": 69.01,
+        "deployed": 0.54,
+        "reelVelocity": -2.21,
+        "tangentialVelocity": -9.36
+      },
+      {
+        "t": 1479,
+        "x": 0.62,
+        "y": 68.45,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -12.66
+      },
+      {
+        "t": 2012,
+        "x": 2.79,
+        "y": 68.49,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 5.63
+      },
+      {
+        "t": 2492,
+        "x": 0.46,
+        "y": 68.49,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -2.79
+      },
+      {
+        "t": 3025,
+        "x": 2.38,
+        "y": 68.5,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -1.16
+      },
+      {
+        "t": 3978,
+        "x": 1.98,
+        "y": 68.5,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -1.59
+      }
+    ]
+  },
+  "intermediate": {
+    "rest": {
+      "x": 0,
+      "y": 88,
+      "reach": 88,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        768,
+        800
+      ]
+    },
+    "held": {
+      "x": 0,
+      "y": 125,
+      "reach": 125,
+      "deployed": 36.96,
+      "reelVelocity": 0,
+      "tangentialVelocity": -0.0322,
+      "releasing": false,
+      "dragging": true,
+      "armed": true,
+      "lit": false,
+      "reduced": false,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        768,
+        800
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 0.066,
+      "monotonicY": true
+    },
+    "toggleCount": 1,
+    "crossings": [
+      750,
+      1121,
+      1867,
+      2078
+    ],
+    "peaks": [
+      {
+        "t": 265,
+        "x": 7.13
+      },
+      {
+        "t": 855,
+        "x": -2.13
+      },
+      {
+        "t": 1385,
+        "x": 4.2
+      },
+      {
+        "t": 2452,
+        "x": 3.11
+      },
+      {
+        "t": 3464,
+        "x": 2.46
+      },
+      {
+        "t": 4533,
+        "x": 2.07
+      }
+    ],
+    "deploymentSettledAt": 1438,
+    "idleAt": 4697,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 1.33,
+        "y": 125.32,
+        "deployed": 36.96,
+        "reelVelocity": 0,
+        "tangentialVelocity": 43.19
+      },
+      {
+        "t": 105,
+        "x": 4.13,
+        "y": 125.31,
+        "deployed": 36.96,
+        "reelVelocity": 0,
+        "tangentialVelocity": 36.77
+      },
+      {
+        "t": 265,
+        "x": 7.13,
+        "y": 115.07,
+        "deployed": 26.72,
+        "reelVelocity": -68.46,
+        "tangentialVelocity": 7.36
+      },
+      {
+        "t": 479,
+        "x": 4.96,
+        "y": 103.11,
+        "deployed": 14.66,
+        "reelVelocity": -49.31,
+        "tangentialVelocity": -21.69
+      },
+      {
+        "t": 750,
+        "x": -1.11,
+        "y": 93.99,
+        "deployed": 5.49,
+        "reelVelocity": -20.92,
+        "tangentialVelocity": -18.82
+      },
+      {
+        "t": 1013,
+        "x": -0.66,
+        "y": 90.51,
+        "deployed": 1.96,
+        "reelVelocity": -7.85,
+        "tangentialVelocity": 16.07
+      },
+      {
+        "t": 1226,
+        "x": 3.05,
+        "y": 89.44,
+        "deployed": 0.85,
+        "reelVelocity": -3.49,
+        "tangentialVelocity": 14.15
+      },
+      {
+        "t": 1491,
+        "x": 4.05,
+        "y": 88.63,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -5.95
+      },
+      {
+        "t": 2026,
+        "x": -0.07,
+        "y": 88.59,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 6.86
+      },
+      {
+        "t": 2505,
+        "x": 2.84,
+        "y": 88.6,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": -5.32
+      },
+      {
+        "t": 2987,
+        "x": 0.39,
+        "y": 88.6,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 1.37
+      },
+      {
+        "t": 3995,
+        "x": 0.88,
+        "y": 88.6,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0.53
+      }
+    ]
+  },
+  "reduced": {
+    "rest": {
+      "x": 0,
+      "y": 112,
+      "reach": 112,
+      "deployed": 0,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0,
+      "releasing": false,
+      "dragging": false,
+      "armed": false,
+      "lit": false,
+      "reduced": true,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "held": {
+      "x": 0,
+      "y": 159.02999877929688,
+      "reach": 159.02999877929688,
+      "deployed": 47,
+      "reelVelocity": 0,
+      "tangentialVelocity": 0.0065,
+      "releasing": false,
+      "dragging": true,
+      "armed": true,
+      "lit": false,
+      "reduced": true,
+      "overflow": 0,
+      "target": {
+        "width": 44,
+        "height": 44
+      },
+      "viewport": [
+        1365,
+        644
+      ]
+    },
+    "pointerCaptured": true,
+    "heldTail": {
+      "maximumTangentChange": 0,
+      "monotonicY": true
+    },
+    "releaseTail": {
+      "maximumTangentChange": 0.072,
+      "monotonicY": true
+    },
+    "toggleCount": 1,
+    "crossings": [],
+    "peaks": [],
+    "deploymentSettledAt": 211,
+    "idleAt": 264,
+    "checkpoints": [
+      {
+        "t": 0,
+        "x": 0.3,
+        "y": 133.32,
+        "deployed": 14.16,
+        "reelVelocity": -594.32,
+        "tangentialVelocity": 6.07
+      },
+      {
+        "t": 104,
+        "x": 0.03,
+        "y": 112.64,
+        "deployed": 0.21,
+        "reelVelocity": -8.91,
+        "tangentialVelocity": 0.15
+      },
+      {
+        "t": 264,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      },
+      {
+        "t": 517,
+        "x": 0,
+        "y": 112.4,
+        "deployed": 0,
+        "reelVelocity": 0,
+        "tangentialVelocity": 0
+      }
+    ]
+  },
+  "keyboard": {
+    "before": false,
+    "after": true,
+    "toggleCount": 1
+  }
+}

@@ -1,0 +1,102 @@
+TASK: VISUAL QA AND REFINEMENT OF THE STATIC HERO
+=================================================
+
+The static hero now exists. Do not redesign it and do not add new features. Your job is to perform a rigorous visual comparison, correct proportions and leave the static hero ready for interaction work.
+
+First:
+
+1. Read docs/Rishav_Web_Studio_DESIGN.md.
+2. Inspect references/hero-approved.png.
+3. Inspect the current hero implementation and its styles.
+4. Run the app and capture fresh screenshots of the rendered site.
+5. If I attached a screenshot of the current result, treat it as additional evidence of what is wrong.
+
+
+TARGET VIEWPORTS
+----------------
+Check at least:
+
+- 1440 × 1000
+- 1280 × 800
+- 390 × 844
+- 430 × 932
+
+Use side-by-side or overlay-style comparison if your available browser/image tools support it. Reason from the rendered result, not only from the CSS values.
+
+
+FIX IN THIS PRIORITY ORDER
+--------------------------
+1. Main heading proportion
+   - RISHAV must dominate without occupying the full width.
+   - WEB STUDiO must be slightly smaller and much wider.
+   - Leading must be tight and intentional, not cramped by accident.
+   - The full composition must have the same editorial mass and dark breathing room as the reference.
+
+2. Bulb integration
+   - The lowercase i remains readable.
+   - The bulb must be a full, generous pear shape, not narrow or pinched.
+   - Keep a visible 8–12px apparent gap between the bulb/socket and i stem at large desktop scale.
+   - Keep the socket short and separate.
+   - The stem should be sturdy, not hairline-thin.
+   - Keep the bulb larger than a normal dot and allow it to cross the upper guide/cap-height.
+   - Preserve a warm luminous core and controlled local halo.
+   - Keep the cord thin, centred and visually clean.
+
+3. Background and contrast
+   - The background should be darker than a normal navy website: a chromatic blue-black.
+   - Do not brighten the entire scene to make decoration visible.
+   - Increase the line colour/opacity of grid and doodles instead.
+   - Grid lines should be pale blue-white and restrained.
+   - Doodle lines should be somewhat more visible than the grid but still atmospheric.
+   - The title remains the brightest and most dominant element.
+
+4. Utility layout
+   - Top-left wordmark and top-right navigation should feel aligned to one quiet baseline.
+   - Bottom-left information and bottom-right scroll prompt should feel deliberate, not pasted into corners.
+   - Utility type must be small but not unreadably tiny.
+
+5. Mobile composition
+   - Do not scale down the desktop canvas as one object.
+   - Preserve the title's impact and two-line structure.
+   - Simplify or reposition studio doodles.
+   - Prevent collisions between the cord, title and bottom copy.
+   - Avoid horizontal clipping and accidental scrollbars.
+
+
+IMPLEMENTATION CONSTRAINTS
+--------------------------
+- Keep the current React/TypeScript architecture unless it is actively causing a problem.
+- Use CSS and small SVG adjustments; do not rasterise the composition.
+- Do not use the reference image in the shipped interface.
+- Do not add GSAP, Framer Motion, physics libraries, scroll effects or pointer parallax.
+- Do not begin another homepage section.
+- Do not add generic decoration to fill space.
+- Preserve accessibility and semantic text.
+
+
+QUALITY BAR
+-----------
+The result should feel like an art-directed studio homepage, not a close-enough coding mockup. Correct obvious font fallback, weak line-height, arbitrary margins, poor kerning, hidden doodles, over-bright gradients and unbalanced negative space.
+
+Use design tokens or custom properties for repeatable colours, spacing and type scales. Remove dead CSS and temporary debugging styles once the corrections are complete.
+
+
+VALIDATION
+----------
+After editing:
+
+1. Capture fresh screenshots at all four target sizes.
+2. Check keyboard focus and semantic heading/nav behaviour.
+3. Run the production build.
+4. Check for console errors and horizontal overflow.
+
+Then report:
+
+- The visual problems you found.
+- The specific corrections you made.
+- The files changed.
+- The screenshots/viewports checked.
+- Any remaining mismatch that requires a human design decision.
+
+Stop after the static visual QA. Do not add the interactive bulb until I approve the appearance.
+

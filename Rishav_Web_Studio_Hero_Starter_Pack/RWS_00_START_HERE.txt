@@ -1,0 +1,85 @@
+RISHAV WEB STUDIO — HERO STARTER PACK
+=======================================
+
+WHAT THIS PACK IS FOR
+---------------------
+This pack gives Codex the context needed to build the first production-quality version of the Rishav Web Studio homepage hero. The job is deliberately divided into three passes:
+
+1. Build the static responsive hero.
+2. Compare it against the approved visual and correct the proportions.
+3. Add the bulb interaction only after the static design is approved.
+
+Do not ask Stitch, Lovable or another generator to redesign this hero. The supplied image is the visual target; Codex should translate it into maintainable HTML, CSS, React and SVG.
+
+
+CONTENTS
+--------
+RWS_00_START_HERE.txt
+    These instructions.
+
+RWS_01_CODEX_STATIC_HERO_PROMPT.txt
+    The first prompt. Use this now.
+
+RWS_02_CODEX_VISUAL_QA_PROMPT.txt
+    The second prompt. Use it after Codex has produced the first static hero.
+
+RWS_03_CODEX_BULB_INTERACTION_PROMPT.txt
+    The third prompt. Use it only after the static hero looks right.
+
+docs/Rishav_Web_Studio_DESIGN.md
+    The wider homepage creative direction and section plan.
+
+references/hero-approved.png
+    The current approved hero visual. It is a design reference, not a background image to ship in the website.
+
+
+WHAT TO DO RIGHT NOW
+--------------------
+1. Extract this ZIP into a new local project folder, for example:
+   Rishav-Web-Studio
+
+2. Open that folder in Codex on your laptop.
+
+3. Start a coding task in that folder.
+
+4. Open RWS_01_CODEX_STATIC_HERO_PROMPT.txt, copy the entire prompt and send it to Codex.
+
+5. Let Codex inspect the design brief and hero image, create the React project if needed, run it and visually check the result.
+
+6. Review the static hero at approximately:
+   - Desktop: 1440 × 1000
+   - Laptop: 1280 × 800
+   - Mobile: 390 × 844
+   - Large mobile: 430 × 932
+
+7. Do not ask for the bulb physics yet. First make sure the title scale, spacing, grid, doodles, bulb proportions and mobile layout are correct.
+
+8. If the first result is not close enough, attach a screenshot of the rendered page and send the full contents of RWS_02_CODEX_VISUAL_QA_PROMPT.txt.
+
+9. Once the static hero is approved, send RWS_03_CODEX_BULB_INTERACTION_PROMPT.txt.
+
+
+SCOPE FOR THIS FIRST MILESTONE
+------------------------------
+Build only the hero. Do not build the intro scroll sequence, work panels, 3D plant or contact ending yet. Those sections will be prepared while the hero direction is being validated, but they should not complicate this first implementation.
+
+There is no backend work in this milestone.
+
+
+NON-NEGOTIABLE RULES
+--------------------
+- Do not use the reference image as the webpage background.
+- Do not trace the entire reference into one giant SVG.
+- Use real semantic text for all visible text.
+- Use CSS and small, maintainable SVG components for the grid, doodles and bulb.
+- Do not introduce glass cards, gradients everywhere, neon cyberpunk effects, particles, random 3D objects or generic portfolio decoration.
+- Do not add animations before the static composition is visually correct.
+- Preserve the custom lowercase i in STUDiO.
+- Preserve a visible gap between the i stem and the bulb/socket.
+- Keep the background dark; illumination should be local and controlled.
+
+
+EXPECTED RESULT OF PASS ONE
+---------------------------
+A clean React + TypeScript project that runs locally, builds successfully and contains a responsive, visually accurate static hero. Codex should report the files it changed, how to run the project and any remaining visual differences it could not resolve.
+

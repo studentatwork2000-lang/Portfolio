@@ -1,0 +1,212 @@
+TASK: BUILD THE STATIC RISHAV WEB STUDIO HERO
+=============================================
+
+You are implementing the first section of a premium personal portfolio for Rishav Web Studio. This is an implementation and visual-matching task, not a new design exercise.
+
+Before editing anything:
+
+1. Inspect the current repository and preserve any useful existing setup.
+2. Read docs/Rishav_Web_Studio_DESIGN.md completely.
+3. Inspect references/hero-approved.png carefully.
+4. If the repository has an AGENTS.md or local project instructions, read and obey them.
+
+If no frontend project exists, create a Vite project using React, TypeScript and npm in the current folder. Do not create an unnecessary nested project directory. Use ordinary CSS or CSS Modules and lightweight custom SVG. Do not add a UI framework.
+
+
+MILESTONE SCOPE
+---------------
+Build only a static, responsive hero. Do not implement the bulb click/drag physics, scroll animation, later homepage sections, routing, CMS, database or backend in this pass.
+
+The reference PNG must never be used as a background image in the finished hero. Rebuild the composition with semantic HTML, responsive CSS and editable SVG elements.
+
+
+EXACT CONTENT
+-------------
+Top-left wordmark:
+RISHAV WEB STUDIO
+
+Top-right navigation:
+WORK
+APPROACH
+CONTACT
+
+Main heading, on two tightly stacked lines:
+RISHAV
+WEB STUDiO
+
+Only the i in STUDiO is lowercase. Its dot is replaced by a custom light-bulb mark.
+
+Bottom-left information:
+INDEPENDENT WEB DESIGN & DEVELOPMENT
+INDIA / WORLDWIDE
+
+Bottom-right prompt:
+SCROLL TO EXPLORE ↓
+
+
+ART DIRECTION
+-------------
+The page belongs to one coherent world: a moody creative web studio at night.
+
+It should feel editorial, deliberate, dark, spatial and technically precise. It must not feel like a game screen, a cartoon room, generic SaaS, cyberpunk, or an AI-generated portfolio template.
+
+Use a very dark chromatic black-blue background rather than flat pure black. Start around these colour relationships and adjust by eye against the reference:
+
+- Deepest background: #020509
+- Main midnight field: #040910
+- Slightly lighter blue-black region: #07101A
+- Main type: #F0EFE8 to #F5F1E8
+- Cool construction lines: #BFD8EA at low opacity
+- Studio doodle lines: #D7E7F0 at restrained opacity
+- Warm bulb: #FFD995 with a small #FFF4CE core
+
+Keep any ambient gradient broad and extremely subtle. The background must remain predominantly dark even around the bulb.
+
+Add very light grain only if it can be done cheaply and without obscuring type. Avoid a visible repeating noise tile.
+
+
+TYPOGRAPHY AND PROPORTIONS
+--------------------------
+Use a broad, very heavy grotesk display face in the spirit of the approved reference. Prefer Archivo Black for this prototype. Use Inter or an equivalent clean grotesk for navigation and utility text. Define reliable system fallbacks.
+
+The main title is the dominant object:
+
+- Both lines use the same warm off-white colour and weight.
+- RISHAV is the larger line.
+- WEB STUDiO is slightly smaller, approximately 4–7px shorter at the desktop reference scale, but determine the final value responsively rather than hardcoding one universal difference.
+- Use very tight leading, approximately 0.76–0.82 depending on the loaded font.
+- Tighten tracking carefully without causing collisions.
+- At a 1440px viewport, WEB STUDiO should occupy roughly 84–90% of the usable width.
+- RISHAV should occupy roughly 58–65% of the usable width.
+- The title should feel anchored in the lower-middle/centre field, with enough dark space above for the studio atmosphere.
+- Do not centre every item mechanically. Follow the reference's asymmetric editorial balance.
+
+Use clamp() and controlled breakpoints. Do not solve responsiveness by shrinking the entire desktop canvas with transform: scale().
+
+
+CUSTOM BULB IN THE LOWERCASE i
+------------------------------
+Build the lowercase i as a dedicated component so it can later become interactive.
+
+Static visual requirements:
+
+- The i stem remains a normal, sturdy vertical stroke matching the display type. It should not become hairline-thin.
+- The stem should be approximately 10–12px wide at the large desktop reference scale, then scale responsively.
+- There must be an intentional visible air gap between the top of the i stem and the bottom of the bulb/socket. Aim for an apparent 8–12px gap at the desktop reference scale.
+- Do not merge the socket into the stem.
+- Make the bulb larger than an ordinary i dot. It may extend above the cap-height/grid line because that interruption is the feature.
+- Use a full, slightly unusual pear-shaped bulb silhouette, not a thin teardrop, pill, balloon or tiny icon.
+- Approximate large-desktop bulb dimensions: 38–44px wide and 48–56px tall, then tune against the letterforms.
+- The socket/base must be short and visually separate from the stem.
+- A thin cord descends from the bulb area below the title baseline. Aim for around 2px line weight and 55–70px visible length on desktop.
+- For this static pass, show a restrained warm luminous core and a local halo. The glow must not wash the whole background blue or yellow.
+- Keep the kerning around the custom i natural. In particular, STUD and O must still read as one word rather than two chunks.
+
+The bulb, cord and i should be implemented in a way that allows a later interaction pass without rebuilding the heading.
+
+
+GRID AND STUDIO LINE ART
+------------------------
+Use sparse cool-blue construction lines and a few elegant studio-object outlines as environmental texture.
+
+Grid/construction system:
+
+- Use a small number of purposeful vertical and horizontal guides, not full graph paper.
+- Lines should be pale blue-white and more visible than in the very darkest draft, but still subordinate to the title.
+- Start around 16–22% opacity and adjust by visual comparison.
+- Allow some lines or rectangles to terminate; avoid covering the entire viewport uniformly.
+
+Studio line art:
+
+- Include only a few objects, such as a monitor/desk zone, frame/shelf zone and lamp/chair suggestion.
+- Treat them as architectural contour drawings, partly lost in darkness.
+- Use pale blue-white outlines rather than navy outlines that disappear.
+- Start around 24–32% opacity, then tune by eye.
+- Keep them away from critical letter counters and navigation.
+- Use small, maintainable SVG components or CSS, not a giant monolithic illustration.
+
+The fillers should stop the page from feeling empty, but they must not compete with the wordmark.
+
+
+LAYOUT DETAILS
+--------------
+- Use a full viewport hero with a sensible minimum height and safe handling of mobile browser chrome.
+- Provide consistent outer padding, responsive with clamp().
+- Keep the top utility row quiet and aligned.
+- Keep bottom utility copy small but readable.
+- Use semantic nav, h1 and supporting text.
+- Ensure no horizontal overflow at any target size.
+
+On mobile:
+
+- Preserve the two-line title and the distinctive lowercase i.
+- Recompose rather than merely shrinking the desktop design.
+- Reduce and simplify the background line art.
+- Keep the bulb large enough to understand and eventually tap.
+- Keep navigation usable; a compact text arrangement is acceptable, but do not invent a hamburger menu unless space genuinely requires it.
+- Preserve safe margins and avoid the cord colliding with bottom copy.
+
+
+SUGGESTED CODE ORGANISATION
+---------------------------
+Use a small, clear component structure similar to:
+
+src/components/Hero/Hero.tsx
+src/components/Hero/Hero.module.css
+src/components/Hero/BulbMark.tsx
+src/components/Hero/StudioLineArt.tsx
+src/styles/tokens.css
+src/styles/global.css
+
+You may adjust this structure if the repository already has an established convention. Do not over-componentise individual decorative lines.
+
+
+ACCESSIBILITY FOR THIS PASS
+---------------------------
+- Use one logical h1 with an accessible text reading of “Rishav Web Studio.”
+- If the visual word is split into spans, do not make screen readers announce it incorrectly.
+- Decorative SVGs must be hidden from assistive technology.
+- Keep utility text above WCAG AA contrast where it conveys information.
+- Provide visible keyboard focus for navigation.
+- Do not rely on the bulb glow to make the title legible.
+
+
+VISUAL VERIFICATION
+-------------------
+Run the project and inspect the result in a browser. If screenshot or browser tools are available, capture and compare at:
+
+- 1440 × 1000
+- 1280 × 800
+- 390 × 844
+- 430 × 932
+
+Iterate on actual rendered screenshots, prioritising:
+
+1. Main title width, leading and vertical placement.
+2. Bulb size, pear shape, separate socket and visible gap above the i stem.
+3. Background darkness and local glow.
+4. Grid and doodle visibility.
+5. Top and bottom utility alignment.
+6. Mobile composition and overflow.
+
+Do not claim visual accuracy without inspecting the rendered page.
+
+
+DEFINITION OF DONE
+------------------
+- The static hero runs locally.
+- The production build succeeds.
+- The design is recognisably faithful to references/hero-approved.png.
+- The title and utility text are semantic HTML.
+- Grid, bulb and studio details are editable CSS/SVG.
+- Desktop and mobile layouts are intentional.
+- No animation or bulb physics have been added yet.
+
+At the end, tell me:
+
+1. What you implemented.
+2. Which files you changed.
+3. The exact commands to run it.
+4. The viewport sizes you checked.
+5. Any visible discrepancies that remain.
+

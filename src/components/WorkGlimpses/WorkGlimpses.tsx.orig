@@ -1,0 +1,741 @@
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import type { KeyboardEvent, PointerEvent } from 'react'
+import styles from './WorkGlimpses.module.css'
+
+const projects = [
+  {
+    index: '01',
+    title: 'Restaurant',
+    category: 'Hospitality / Web Design',
+    layout: 'restaurant',
+  },
+  { index: '02', title: 'Clinic', category: 'Healthcare / Web Design', layout: 'clinic' },
+  {
+    index: '03',
+    title: 'Motorsport',
+    category: 'Racing Portfolio / Web Design',
+    layout: 'motorsport',
+  },
+  { index: '04', title: 'Salon', category: 'Beauty / Web Design', layout: 'salon' },
+] as const
+
+const BEFORE_CLONE_PHYSICAL_INDEX = 0
+const FIRST_REAL_PHYSICAL_INDEX = 1
+const LAST_REAL_PHYSICAL_INDEX = projects.length
+const AFTER_CLONE_PHYSICAL_INDEX = projects.length + 1
+
+const physicalSlides = [
+  {
+    project: projects[projects.length - 1],
+    logicalIndex: projects.length - 1,
+    clone: true,
+    cloneSide: 'before',
+  },
+  ...projects.map((project, logicalIndex) => ({
+    project,
+    logicalIndex,
+    clone: false,
+    cloneSide: null,
+  })),
+  {
+    project: projects[0],
+    logicalIndex: 0,
+    clone: true,
+    cloneSide: 'after',
+  },
+]
+
+const logicalFromPhysical = (physicalIndex: number) =>
+  physicalSlides[physicalIndex]?.logicalIndex ?? 0
+
+const canonicalPhysicalFromLogical = (logicalIndex: number) => logicalIndex + 1
+
+type DragState = {
+  pointerId: number
+  startX: number
+  startScrollLeft: number
+  dragged: boolean
+} | null
+
+type LightFieldVector = {
+  x: number
+  y: number
+}
+
+type LightFieldMotion = {
+  target: LightFieldVector
+  main: LightFieldVector
+  secondary: LightFieldVector
+  cutout: LightFieldVector
+  crest: LightFieldVector
+  frame: number | null
+}
+
+const clamp = (value: number, minimum = 0, maximum = 1) =>
+  Math.min(maximum, Math.max(minimum, value))
+
+const range = (value: number, start: number, end: number) =>
+  clamp((value - start) / (end - start))
+
+const easeInOut = (value: number) => value * value * (3 - 2 * value)
+const mix = (start: number, end: number, amount: number) => start + (end - start) * amount
+
+function CarouselArrowIcon() {
+  return (
+    <svg
+      className={styles.arrowIcon}
+      viewBox="0 0 38 12"
+      width="38"
+      height="12"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M1 6h30M26 1l5 5-5 5" />
+    </svg>
+  )
+}
+
+export default function WorkGlimpses() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const headingStageRef = useRef<HTMLElement>(null)
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const panelRefs = useRef<Array<HTMLElement | null>>([])
+  const choreographyFrameRef = useRef<number | null>(null)
+  const scrollFrameRef = useRef<number | null>(null)
+  const resizeFrameRef = useRef<number | null>(null)
+  const scrollEndTimerRef = useRef<number | null>(null)
+  const dragRef = useRef<DragState>(null)
+  const touchActiveRef = useRef(false)
+  const activeIndexRef = useRef(0)
+  const reducedMotionRef = useRef(false)
+  const lightFieldMotionRef = useRef<LightFieldMotion>({
+    target: { x: 0, y: 0 },
+    main: { x: 0, y: 0 },
+    secondary: { x: 0, y: 0 },
+    cutout: { x: 0, y: 0 },
+    crest: { x: 0, y: 0 },
+    frame: null,
+  })
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current
+    const headingStage = headingStageRef.current
+    const heading = headingRef.current
+    if (!section || !headingStage || !heading) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const shortLandscape = window.matchMedia('(max-height: 620px) and (orientation: landscape)')
+    let startY = 0
+    let startScale = 1.42
+
+    const measure = () => {
+      const useFlow = reducedMotion.matches || shortLandscape.matches
+      section.dataset.flow = useFlow ? 'true' : 'false'
+
+      if (useFlow) {
+        startY = 0
+        startScale = 1
+        return
+      }
+
+      startScale = window.innerWidth <= 700 ? 1.34 : 1.42
+      startY = window.innerHeight / 2 - headingStage.offsetTop - heading.offsetHeight / 2
+    }
+
+    const update = () => {
+      choreographyFrameRef.current = null
+      const useFlow = reducedMotion.matches || shortLandscape.matches
+
+      if (useFlow) {
+        section.style.setProperty('--work-title-y', '0px')
+        section.style.setProperty('--work-title-scale', '1')
+        section.style.setProperty('--work-title-opacity', '1')
+        section.style.setProperty('--work-content-reveal', '1')
+        section.style.setProperty('--work-exit-progress', '0')
+        return
+      }
+
+      const bounds = section.getBoundingClientRect()
+      if (bounds.top > 0) {
+        section.style.setProperty('--work-title-y', `${startY.toFixed(3)}px`)
+        section.style.setProperty('--work-title-scale', startScale.toFixed(4))
+        const entryReveal = easeInOut(
+          clamp((window.innerHeight * 0.32 - bounds.top) / (window.innerHeight * 0.18)),
+        )
+        section.style.setProperty('--work-title-opacity', entryReveal.toFixed(4))
+        section.style.setProperty('--work-content-reveal', '0')
+        section.style.setProperty('--work-exit-progress', '0')
+        return
+      }
+      if (bounds.bottom < -window.innerHeight) return
+
+      const travel = Math.max(1, section.offsetHeight - window.innerHeight)
+      const progress = clamp(-bounds.top / travel)
+      const titleProgress = easeInOut(range(progress, 0.32, 0.6))
+      const contentReveal = easeInOut(range(progress, 0.5, 0.72))
+      const exitProgress = easeInOut(range(progress, 0.9, 1))
+
+      section.style.setProperty('--work-title-y', `${mix(startY, 0, titleProgress).toFixed(3)}px`)
+      section.style.setProperty(
+        '--work-title-scale',
+        mix(startScale, 1, titleProgress).toFixed(4),
+      )
+      section.style.setProperty('--work-title-opacity', (1 - exitProgress).toFixed(4))
+      section.style.setProperty('--work-content-reveal', contentReveal.toFixed(4))
+      section.style.setProperty('--work-exit-progress', exitProgress.toFixed(4))
+    }
+
+    const requestUpdate = () => {
+      if (choreographyFrameRef.current !== null) return
+      choreographyFrameRef.current = window.requestAnimationFrame(update)
+    }
+
+    const measureAndUpdate = () => {
+      measure()
+      requestUpdate()
+    }
+
+    measure()
+    update()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', measureAndUpdate)
+    window.addEventListener('pageshow', measureAndUpdate)
+    reducedMotion.addEventListener('change', measureAndUpdate)
+    shortLandscape.addEventListener('change', measureAndUpdate)
+    void document.fonts.ready.then(measureAndUpdate)
+
+    return () => {
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', measureAndUpdate)
+      window.removeEventListener('pageshow', measureAndUpdate)
+      reducedMotion.removeEventListener('change', measureAndUpdate)
+      shortLandscape.removeEventListener('change', measureAndUpdate)
+      if (choreographyFrameRef.current !== null) {
+        window.cancelAnimationFrame(choreographyFrameRef.current)
+      }
+    }
+  }, [])
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const reactivePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const shortLandscape = window.matchMedia('(max-height: 620px) and (orientation: landscape)')
+    const motion = lightFieldMotionRef.current
+    let interactionEnabled = false
+
+    const interpolateVector = (vector: LightFieldVector, factor: number) => {
+      vector.x += (motion.target.x - vector.x) * factor
+      vector.y += (motion.target.y - vector.y) * factor
+    }
+
+    const writeLightFieldTransforms = () => {
+      const mainScaleX = 1 + motion.main.y * 0.008
+      const mainScaleY = 1 - motion.main.y * 0.005
+      const crestScaleX = 1 + motion.crest.y * 0.011
+      const crestScaleY = 1 - motion.crest.y * 0.007
+
+      section.style.setProperty(
+        '--work-main-transform',
+        `translate3d(${(motion.main.x * 48).toFixed(3)}px, ${(motion.main.y * 22).toFixed(3)}px, 0) rotate(${(motion.main.x * 0.35).toFixed(3)}deg) scale(${mainScaleX.toFixed(4)}, ${mainScaleY.toFixed(4)})`,
+      )
+      section.style.setProperty(
+        '--work-secondary-transform',
+        `translate3d(${(motion.secondary.x * 25).toFixed(3)}px, ${(motion.secondary.y * 13).toFixed(3)}px, 0)`,
+      )
+      section.style.setProperty(
+        '--work-cutout-transform',
+        `translate3d(${(motion.cutout.x * -11).toFixed(3)}px, ${(motion.cutout.y * -7).toFixed(3)}px, 0)`,
+      )
+      section.style.setProperty(
+        '--work-crest-transform',
+        `translate3d(${(motion.crest.x * 56).toFixed(3)}px, ${(motion.crest.y * 26).toFixed(3)}px, 0) rotate(${(motion.crest.x * -0.45).toFixed(3)}deg) scale(${crestScaleX.toFixed(4)}, ${crestScaleY.toFixed(4)})`,
+      )
+    }
+
+    const vectorIsSettled = (vector: LightFieldVector) =>
+      Math.abs(motion.target.x - vector.x) <= 0.001 &&
+      Math.abs(motion.target.y - vector.y) <= 0.001
+
+    const animateLightField = () => {
+      interpolateVector(motion.main, 0.07)
+      interpolateVector(motion.secondary, 0.045)
+      interpolateVector(motion.cutout, 0.035)
+      interpolateVector(motion.crest, 0.08)
+      writeLightFieldTransforms()
+
+      if (
+        !vectorIsSettled(motion.main) ||
+        !vectorIsSettled(motion.secondary) ||
+        !vectorIsSettled(motion.cutout) ||
+        !vectorIsSettled(motion.crest)
+      ) {
+        motion.frame = window.requestAnimationFrame(animateLightField)
+        return
+      }
+
+      motion.main.x = motion.target.x
+      motion.main.y = motion.target.y
+      motion.secondary.x = motion.target.x
+      motion.secondary.y = motion.target.y
+      motion.cutout.x = motion.target.x
+      motion.cutout.y = motion.target.y
+      motion.crest.x = motion.target.x
+      motion.crest.y = motion.target.y
+      writeLightFieldTransforms()
+      motion.frame = null
+    }
+
+    const requestLightFieldFrame = () => {
+      if (motion.frame !== null) return
+      motion.frame = window.requestAnimationFrame(animateLightField)
+    }
+
+    const resetLightField = (immediate = false) => {
+      motion.target.x = 0
+      motion.target.y = 0
+
+      if (!immediate) {
+        requestLightFieldFrame()
+        return
+      }
+
+      if (motion.frame !== null) window.cancelAnimationFrame(motion.frame)
+      motion.frame = null
+      motion.main.x = 0
+      motion.main.y = 0
+      motion.secondary.x = 0
+      motion.secondary.y = 0
+      motion.cutout.x = 0
+      motion.cutout.y = 0
+      motion.crest.x = 0
+      motion.crest.y = 0
+      writeLightFieldTransforms()
+    }
+
+    const handleLightFieldPointerMove = (event: globalThis.PointerEvent) => {
+      if (event.pointerType !== 'mouse') return
+      motion.target.x = clamp((event.clientX / window.innerWidth) * 2 - 1, -1, 1)
+      motion.target.y = clamp((event.clientY / window.innerHeight) * 2 - 1, -1, 1)
+      requestLightFieldFrame()
+    }
+
+    const handleLightFieldPointerLeave = () => {
+      resetLightField()
+    }
+
+    const syncLightFieldCapability = () => {
+      const shouldEnable =
+        reactivePointer.matches && !reducedMotion.matches && !shortLandscape.matches
+      if (shouldEnable === interactionEnabled) return
+
+      interactionEnabled = shouldEnable
+      if (interactionEnabled) {
+        section.addEventListener('pointermove', handleLightFieldPointerMove, { passive: true })
+        section.addEventListener('pointerleave', handleLightFieldPointerLeave)
+        return
+      }
+
+      section.removeEventListener('pointermove', handleLightFieldPointerMove)
+      section.removeEventListener('pointerleave', handleLightFieldPointerLeave)
+      resetLightField(true)
+    }
+
+    reactivePointer.addEventListener('change', syncLightFieldCapability)
+    reducedMotion.addEventListener('change', syncLightFieldCapability)
+    shortLandscape.addEventListener('change', syncLightFieldCapability)
+    writeLightFieldTransforms()
+    syncLightFieldCapability()
+
+    return () => {
+      section.removeEventListener('pointermove', handleLightFieldPointerMove)
+      section.removeEventListener('pointerleave', handleLightFieldPointerLeave)
+      reactivePointer.removeEventListener('change', syncLightFieldCapability)
+      reducedMotion.removeEventListener('change', syncLightFieldCapability)
+      shortLandscape.removeEventListener('change', syncLightFieldCapability)
+      if (motion.frame !== null) window.cancelAnimationFrame(motion.frame)
+      motion.frame = null
+    }
+  }, [])
+
+  const getNearestPhysicalIndex = useCallback(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return 0
+
+    const viewportCentre = viewport.scrollLeft + viewport.clientWidth / 2
+    let nearestIndex = 0
+    let nearestDistance = Number.POSITIVE_INFINITY
+
+    panelRefs.current.forEach((panel, index) => {
+      if (!panel) return
+      const panelCentre = panel.offsetLeft + panel.offsetWidth / 2
+      const distance = Math.abs(panelCentre - viewportCentre)
+      if (distance < nearestDistance) {
+        nearestDistance = distance
+        nearestIndex = index
+      }
+    })
+
+    return nearestIndex
+  }, [])
+
+  const updatePanelFocus = useCallback(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const viewportCentre = viewport.scrollLeft + viewport.clientWidth / 2
+    panelRefs.current.forEach((panel) => {
+      if (!panel) return
+      const panelCentre = panel.offsetLeft + panel.offsetWidth / 2
+      const signedDistance = panelCentre - viewportCentre
+      const distance = Math.abs(signedDistance)
+      const focus = clamp(1 - distance / panel.offsetWidth)
+      const centredThreshold = panel.offsetWidth * 0.01
+      const origin =
+        distance <= centredThreshold ? '50%' : signedDistance > 0 ? '0%' : '100%'
+      panel.style.setProperty('--panel-focus', focus.toFixed(4))
+      panel.style.setProperty('--panel-origin-x', origin)
+    })
+  }, [])
+
+  const setActiveProject = useCallback((index: number) => {
+    activeIndexRef.current = index
+    setActiveIndex((current) => (current === index ? current : index))
+  }, [])
+
+  const scrollToPhysical = useCallback(
+    (physicalIndex: number, forceInstant = false) => {
+      const viewport = viewportRef.current
+      const panel = panelRefs.current[physicalIndex]
+      if (!viewport || !panel) return
+
+      const left = panel.offsetLeft + panel.offsetWidth / 2 - viewport.clientWidth / 2
+      const useInstant = forceInstant || reducedMotionRef.current
+
+      if (useInstant) {
+        const previousBehavior = viewport.style.scrollBehavior
+        viewport.style.scrollBehavior = 'auto'
+        viewport.scrollLeft = left
+        viewport.style.scrollBehavior = previousBehavior
+        updatePanelFocus()
+        setActiveProject(logicalFromPhysical(physicalIndex))
+        return
+      }
+
+      viewport.scrollTo({ left, behavior: 'smooth' })
+    },
+    [setActiveProject, updatePanelFocus],
+  )
+
+  const normalizeLoopPosition = useCallback(() => {
+    const viewport = viewportRef.current
+    if (!viewport || dragRef.current || touchActiveRef.current) return
+
+    const physicalIndex = getNearestPhysicalIndex()
+    let canonicalIndex: number | null = null
+
+    if (physicalIndex === BEFORE_CLONE_PHYSICAL_INDEX) {
+      canonicalIndex = LAST_REAL_PHYSICAL_INDEX
+    } else if (physicalIndex === AFTER_CLONE_PHYSICAL_INDEX) {
+      canonicalIndex = FIRST_REAL_PHYSICAL_INDEX
+    }
+
+    if (canonicalIndex === null) return
+
+    const clonePanel = panelRefs.current[physicalIndex]
+    if (!clonePanel) return
+    const cloneLeft = clonePanel.offsetLeft + clonePanel.offsetWidth / 2 - viewport.clientWidth / 2
+
+    // Only teleport once snapping has actually centred the visual clone.
+    if (Math.abs(viewport.scrollLeft - cloneLeft) > 2) return
+    scrollToPhysical(canonicalIndex, true)
+  }, [getNearestPhysicalIndex, scrollToPhysical])
+
+  const scheduleLoopSettlement = useCallback(() => {
+    if (scrollEndTimerRef.current !== null) {
+      window.clearTimeout(scrollEndTimerRef.current)
+    }
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      scrollEndTimerRef.current = null
+      normalizeLoopPosition()
+    }, 110)
+  }, [normalizeLoopPosition])
+
+  const navigateByPhysicalStep = useCallback(
+    (direction: -1 | 1) => {
+      let currentPhysicalIndex = getNearestPhysicalIndex()
+
+      // A rapid second input can arrive before a settled clone has normalized.
+      if (currentPhysicalIndex === BEFORE_CLONE_PHYSICAL_INDEX) {
+        currentPhysicalIndex = LAST_REAL_PHYSICAL_INDEX
+        scrollToPhysical(currentPhysicalIndex, true)
+      } else if (currentPhysicalIndex === AFTER_CLONE_PHYSICAL_INDEX) {
+        currentPhysicalIndex = FIRST_REAL_PHYSICAL_INDEX
+        scrollToPhysical(currentPhysicalIndex, true)
+      }
+
+      scrollToPhysical(currentPhysicalIndex + direction)
+      if (reducedMotionRef.current) normalizeLoopPosition()
+    },
+    [getNearestPhysicalIndex, normalizeLoopPosition, scrollToPhysical],
+  )
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const syncMotionPreference = () => {
+      reducedMotionRef.current = reducedMotion.matches
+    }
+    syncMotionPreference()
+
+    const updateActivePanel = () => {
+      scrollFrameRef.current = null
+      updatePanelFocus()
+      setActiveProject(logicalFromPhysical(getNearestPhysicalIndex()))
+    }
+    const supportsNativeScrollEnd = 'onscrollend' in viewport
+    const onScroll = () => {
+      if (scrollFrameRef.current === null) {
+        scrollFrameRef.current = window.requestAnimationFrame(updateActivePanel)
+      }
+      if (!supportsNativeScrollEnd) scheduleLoopSettlement()
+    }
+    const onScrollEnd = () => normalizeLoopPosition()
+
+    const recenter = () => {
+      resizeFrameRef.current = null
+      scrollToPhysical(canonicalPhysicalFromLogical(activeIndexRef.current), true)
+    }
+    const requestRecenter = () => {
+      if (resizeFrameRef.current !== null) window.cancelAnimationFrame(resizeFrameRef.current)
+      resizeFrameRef.current = window.requestAnimationFrame(recenter)
+    }
+
+    const resizeObserver = new ResizeObserver(requestRecenter)
+    resizeObserver.observe(viewport)
+    panelRefs.current.forEach((panel) => {
+      if (panel) resizeObserver.observe(panel)
+    })
+
+    viewport.addEventListener('scroll', onScroll, { passive: true })
+    if (supportsNativeScrollEnd) viewport.addEventListener('scrollend', onScrollEnd)
+    reducedMotion.addEventListener('change', syncMotionPreference)
+    recenter()
+
+    return () => {
+      viewport.removeEventListener('scroll', onScroll)
+      if (supportsNativeScrollEnd) viewport.removeEventListener('scrollend', onScrollEnd)
+      reducedMotion.removeEventListener('change', syncMotionPreference)
+      resizeObserver.disconnect()
+      if (scrollFrameRef.current !== null) window.cancelAnimationFrame(scrollFrameRef.current)
+      if (resizeFrameRef.current !== null) window.cancelAnimationFrame(resizeFrameRef.current)
+      if (scrollEndTimerRef.current !== null) {
+        window.clearTimeout(scrollEndTimerRef.current)
+      }
+      const drag = dragRef.current
+      if (drag && viewport.hasPointerCapture(drag.pointerId)) {
+        viewport.releasePointerCapture(drag.pointerId)
+      }
+      dragRef.current = null
+      touchActiveRef.current = false
+    }
+  }, [
+    getNearestPhysicalIndex,
+    normalizeLoopPosition,
+    scheduleLoopSettlement,
+    scrollToPhysical,
+    setActiveProject,
+    updatePanelFocus,
+  ])
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    let targetIndex: number | null = null
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      navigateByPhysicalStep(-1)
+      return
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      navigateByPhysicalStep(1)
+      return
+    }
+    if (event.key === 'Home') targetIndex = FIRST_REAL_PHYSICAL_INDEX
+    if (event.key === 'End') targetIndex = LAST_REAL_PHYSICAL_INDEX
+
+    if (targetIndex === null) return
+    event.preventDefault()
+    scrollToPhysical(targetIndex, true)
+  }
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return
+    const viewport = viewportRef.current
+    if (!viewport) return
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startScrollLeft: viewport.scrollLeft,
+      dragged: false,
+    }
+    viewport.setPointerCapture(event.pointerId)
+  }
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current
+    const drag = dragRef.current
+    if (!viewport || !drag || drag.pointerId !== event.pointerId) return
+
+    const delta = event.clientX - drag.startX
+    if (!drag.dragged && Math.abs(delta) < 6) return
+    drag.dragged = true
+    viewport.dataset.dragging = 'true'
+    viewport.scrollLeft = drag.startScrollLeft - delta
+    event.preventDefault()
+  }
+
+  const finishPointerDrag = (event: PointerEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current
+    const drag = dragRef.current
+    if (!viewport || !drag || drag.pointerId !== event.pointerId) return
+
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId)
+    delete viewport.dataset.dragging
+    dragRef.current = null
+
+    const nearestPhysicalIndex = getNearestPhysicalIndex()
+    setActiveProject(logicalFromPhysical(nearestPhysicalIndex))
+    scrollToPhysical(nearestPhysicalIndex)
+    if (reducedMotionRef.current) normalizeLoopPosition()
+    scheduleLoopSettlement()
+  }
+
+  const handleTouchStart = () => {
+    touchActiveRef.current = true
+  }
+
+  const finishTouchInteraction = () => {
+    touchActiveRef.current = false
+    scheduleLoopSettlement()
+  }
+
+  const activeProject = projects[activeIndex]
+
+  return (
+    <section
+      ref={sectionRef}
+      className={styles.work}
+      id="work"
+      aria-labelledby="work-heading"
+    >
+      <div className={styles.stickyStage}>
+        <div className={styles.workLightField} aria-hidden="true">
+          <div className={styles.workSecondaryField} />
+          <div className={styles.workMainWave} />
+          <div className={styles.workDarkVoid} />
+          <div className={styles.workHighlightCrest} />
+        </div>
+
+        <header ref={headingStageRef} className={styles.headingStage}>
+          <h2 ref={headingRef} id="work-heading">
+            <span>Glimpses of</span>{' '}
+            <span>My Work</span>
+          </h2>
+        </header>
+
+        <div className={styles.exhibitionStage}>
+          <div className={styles.activeProjectMeta} aria-hidden="true">
+            <div className={styles.activeProjectMetaContent} key={activeProject.title}>
+              <span>{activeProject.index} / 04</span>
+              <h3>{activeProject.title}</h3>
+              <p>{activeProject.category}</p>
+            </div>
+          </div>
+
+          <div className={styles.visualStage}>
+            <button
+              className={`${styles.sideArrow} ${styles.previousArrow}`}
+              type="button"
+              onClick={() => navigateByPhysicalStep(-1)}
+              aria-label="Show previous project"
+            >
+              <span className={styles.arrowMotion} aria-hidden="true">
+                <CarouselArrowIcon />
+              </span>
+            </button>
+
+            <div
+              ref={viewportRef}
+              className={styles.carouselViewport}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Project carousel"
+              tabIndex={0}
+              onKeyDown={handleKeyDown}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={finishPointerDrag}
+              onPointerCancel={finishPointerDrag}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={finishTouchInteraction}
+              onTouchCancel={finishTouchInteraction}
+            >
+              <div className={styles.carouselTrack}>
+                {physicalSlides.map((slide, physicalIndex) => {
+                  const { project, logicalIndex, clone, cloneSide } = slide
+
+                  return (
+                    <article
+                      ref={(panel) => {
+                        panelRefs.current[physicalIndex] = panel
+                      }}
+                      className={`${styles.panel} ${styles[project.layout]}`}
+                      key={clone ? `${project.title}-${cloneSide}-clone` : project.title}
+                      data-project={project.title.toLowerCase()}
+                      data-active={activeIndex === logicalIndex ? 'true' : 'false'}
+                      data-clone={clone ? cloneSide : undefined}
+                      aria-hidden={clone ? 'true' : undefined}
+                      aria-label={
+                        clone
+                          ? undefined
+                          : `${logicalIndex + 1} of ${projects.length}: ${project.title}`
+                      }
+                      aria-current={
+                        !clone && activeIndex === logicalIndex ? 'true' : undefined
+                      }
+                    >
+                      <div className={styles.projectPreview} aria-hidden="true" />
+                    </article>
+                  )
+                })}
+              </div>
+            </div>
+
+            <button
+              className={`${styles.sideArrow} ${styles.nextArrow}`}
+              type="button"
+              onClick={() => navigateByPhysicalStep(1)}
+              aria-label="Show next project"
+            >
+              <span className={styles.arrowMotion} aria-hidden="true">
+                <CarouselArrowIcon />
+              </span>
+            </button>
+          </div>
+
+          <p className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+            {activeIndex + 1} of {projects.length}: {activeProject.title}
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}

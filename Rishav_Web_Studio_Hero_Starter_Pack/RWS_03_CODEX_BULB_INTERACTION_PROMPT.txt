@@ -1,0 +1,135 @@
+TASK: ADD THE HERO BULB AND PULL-CORD INTERACTION
+=================================================
+
+PRECONDITION
+------------
+The static hero has already been visually approved. Preserve its layout, typography, proportions, responsive behaviour and background composition. Do not use this task as permission to redesign the hero or build later sections.
+
+Read the existing hero implementation, docs/Rishav_Web_Studio_DESIGN.md and references/hero-approved.png before editing.
+
+
+INTERACTION GOAL
+----------------
+Turn the bulb that replaces the lowercase i dot in STUDiO into one memorable, polished interaction:
+
+- The visitor can click or tap the bulb/cord to toggle it.
+- On devices with precise pointers, the visitor can drag the cord downward a short distance.
+- The cord stretches slightly under tension.
+- On release, it returns and produces one restrained, damped swing.
+- The bulb changes between off and on.
+- Turning it on reveals a controlled warm light across the nearby letters and subtly raises the visibility of the construction lines and studio doodles.
+- The rest of the background remains dark.
+
+This must feel tactile and elegant, not like a game mechanic.
+
+
+VISUAL STATE BEHAVIOUR
+----------------------
+Off state:
+
+- The title remains fully readable.
+- The bulb has a faint cool glass edge or tiny residual warm core.
+- Grid and line-art details remain visible but quiet.
+- The background stays chromatic blue-black.
+
+On state:
+
+- The bulb core warms to approximately #FFF4CE with a restrained #FFD995 halo.
+- Nearby letter edges receive a subtle warm tint.
+- A local radial light field expands around the bulb, but does not illuminate the whole viewport.
+- Grid opacity may increase slightly.
+- Studio doodle opacity may increase slightly more than the grid.
+- Avoid a large yellow fog, bloom covering the word, lens flare or aggressive box-shadow stacking.
+
+Use CSS variables driven by the bulb state so the light system remains coherent and adjustable.
+
+
+BULB AND CORD GEOMETRY
+----------------------
+Do not lose the approved proportions:
+
+- Keep the bulb large and full-bodied.
+- Keep the socket short.
+- Preserve the intentional visible gap between the socket and i stem.
+- Preserve the sturdy i stem.
+- Keep the cord thin.
+- The interactive hit target may be larger than the visible bulb/cord but must not change the visual geometry.
+
+
+INPUT AND PHYSICS
+-----------------
+Support:
+
+- Pointer click
+- Touch tap
+- Keyboard Enter
+- Keyboard Space
+- Downward pointer/touch drag on the cord or its enlarged invisible hit area
+
+Use Pointer Events and pointer capture for dragging. Constrain movement to a short, mostly vertical range. A small amount of lateral response is acceptable, but it must not become a freely draggable object.
+
+On release, animate back with a short spring-like return and one or two damped swings. Target a total settling time of roughly 650–950ms. Avoid an endless pendulum.
+
+Prefer a small requestAnimationFrame-based spring or a lightweight dependency already present in the project. Do not add a large physics library solely for this interaction. Clean up event listeners and animation frames correctly.
+
+
+ACCESSIBILITY
+-------------
+- Make the bulb control an actual accessible button or give it correct equivalent semantics.
+- Give it an accessible name such as “Turn studio light on” / “Turn studio light off.”
+- Keep aria-pressed in sync with the visual state.
+- Provide a clear keyboard focus style that fits the design.
+- The interactive target must be at least 44 × 44 CSS pixels.
+- Do not make dragging the only way to toggle the light.
+- Do not play sound.
+
+
+REDUCED MOTION
+--------------
+Under prefers-reduced-motion: reduce:
+
+- Disable drag stretch physics and swinging.
+- Keep click/tap/keyboard toggling.
+- Change illumination with an immediate state change or a short, gentle opacity fade no longer than about 150ms.
+- Disable any decorative pointer response.
+
+
+MOBILE BEHAVIOUR
+----------------
+Mobile is tap-first:
+
+- Keep the 44 × 44 minimum hit area.
+- A short downward drag can still work, but it must not interfere with normal vertical page scrolling unless the gesture begins clearly on the cord control.
+- Use touch-action carefully and only on the dedicated control.
+- Do not cause the page to jump or select text.
+- Keep the cord clear of bottom utility copy.
+
+
+PERFORMANCE
+-----------
+- Animate transforms and opacity where possible.
+- Avoid continuously animating box-shadow, filter or large blurred layers while idle.
+- Use one or two controlled glow layers rather than many stacked shadows.
+- Stop requestAnimationFrame when the spring settles.
+- Avoid React state updates on every pointer frame if refs and direct CSS variables are more suitable.
+- Check for cleanup after component unmount.
+
+
+TESTING AND DEFINITION OF DONE
+------------------------------
+Verify:
+
+- Mouse click toggles correctly.
+- Pointer drag works and settles cleanly.
+- Touch interaction does not break page scrolling.
+- Enter and Space toggle the control.
+- aria-pressed and accessible label update correctly.
+- Reduced-motion behaviour is calm and functional.
+- Repeated rapid interactions do not leave the bulb or cord in a broken state.
+- The hero remains responsive at 1440 × 1000, 1280 × 800, 390 × 844 and 430 × 932.
+- The production build succeeds with no console errors.
+
+At the end, report the interaction design, files changed, dependency choices, tests performed and any remaining limitations.
+
+Stop after completing the hero interaction. Do not begin the introductory scroll sequence or other homepage sections.
+
