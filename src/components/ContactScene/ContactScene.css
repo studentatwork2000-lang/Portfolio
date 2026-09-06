@@ -1,0 +1,65 @@
+.contact-scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #060b10;
+  color: var(--ink-warm);
+}
+
+.contact-scene__artwork {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-scene__heading {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 6svh, 4.5rem) var(--page-gutter);
+  pointer-events: none;
+}
+
+.contact-scene__heading h2,
+.contact-scene__caption {
+  margin: 0;
+  font-family: var(--font-utility);
+  font-size: var(--utility-size);
+  font-weight: 400;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.contact-scene__heading h2 {
+  color: #adb6bc;
+}
+
+.contact-scene__heading p {
+  margin: 1rem 0 0;
+  color: #79848e;
+  font-size: clamp(.75rem, 1vw, .875rem);
+  line-height: 1.6;
+}
+
+.contact-scene__caption {
+  position: absolute;
+  bottom: clamp(1.5rem, 4svh, 3rem);
+  left: var(--page-gutter);
+  color: #687782;
+  font-size: .625rem;
+}
+
+/* Keep the whole desk and doorway in frame on portrait screens. */
+@media (max-aspect-ratio: 4/5) {
+  .contact-scene__artwork {
+    width: 145%;
+    max-width: none;
+    left: -22.5%;
+  }
+
+  .contact-scene__heading {
+    padding-top: 3rem;
+  }
+}
