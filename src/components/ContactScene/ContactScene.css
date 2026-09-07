@@ -1,7 +1,9 @@
 .contact-scene {
   position: relative;
   isolation: isolate;
-  min-height: 100svh;
+  min-height: 640px;
+  height: 100svh;
+  max-height: 1100px;
   overflow: hidden;
   background: #060b10;
   color: var(--ink-warm);
@@ -16,7 +18,9 @@
 }
 
 .contact-scene__heading {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
   padding: clamp(2rem, 6svh, 4.5rem) var(--page-gutter);
   pointer-events: none;
@@ -51,12 +55,18 @@
   font-size: .625rem;
 }
 
-/* Keep the whole desk and doorway in frame on portrait screens. */
+/* A tighter portrait crop preserves the desk feet, lamp and closed door. */
 @media (max-aspect-ratio: 4/5) {
+  .contact-scene {
+    height: 72svh;
+    min-height: 520px;
+    max-height: 820px;
+  }
+
   .contact-scene__artwork {
-    width: 145%;
+    width: 140%;
     max-width: none;
-    left: -22.5%;
+    left: -20%;
   }
 
   .contact-scene__heading {
