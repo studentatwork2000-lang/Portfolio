@@ -10,6 +10,7 @@
   --light-warm: #dfae63;
   --light-core: #fff4ce;
   --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-hero: "Sora", "Inter", Arial, sans-serif;
   --font-text: "Inter", Arial, sans-serif;
   --font-utility: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --page-gutter: clamp(1.25rem, 4vw, 3.75rem);

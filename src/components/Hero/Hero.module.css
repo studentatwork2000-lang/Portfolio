@@ -14,9 +14,9 @@
   min-height: 100svh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 54% 48%, rgb(13 27 43 / 42%) 0, transparent 61%),
-    radial-gradient(ellipse at 8% 84%, rgb(8 21 35 / 34%) 0, transparent 42%),
-    linear-gradient(116deg, var(--night-00) 0%, var(--night-10) 54%, #02070c 100%);
+    radial-gradient(ellipse at 52% 42%, rgb(13 30 48 / 46%) 0, transparent 59%),
+    radial-gradient(ellipse at 9% 86%, rgb(8 23 39 / 38%) 0, transparent 43%),
+    linear-gradient(118deg, #02060b 0%, #050c15 51%, #010408 100%);
 }
 
 .hero::before,
@@ -144,17 +144,18 @@
 .titleRegion {
   position: absolute;
   z-index: 5;
-  top: clamp(14.5rem, 32.1svh, 20rem);
+  top: 44.5%;
   right: auto;
-  left: clamp(1.25rem, 4.4vw, 4.125rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: max-content;
 }
 
 .titleVisual {
   width: max-content;
   color: var(--ink-warm);
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-hero);
+  font-weight: 700;
   letter-spacing: normal;
   line-height: .73;
 }
@@ -169,10 +170,10 @@
   position: relative;
   margin-inline-start: -.055em;
   padding-block-end: calc(
-    clamp(3.285rem, 7.7015vw, 6.57rem) - clamp(3.285rem, 7.4606vw, 6.3646875rem)
+    clamp(3rem, 6.65vw, 6rem) - clamp(2.9rem, 6.45vw, 5.82rem)
   );
-  font-size: clamp(4.5rem, 10.22vw, 8.71875rem);
-  letter-spacing: -.035em;
+  font-size: clamp(4.1rem, 9vw, 8.25rem);
+  letter-spacing: -.048em;
 }
 
 .firstLine::after {
@@ -199,9 +200,9 @@
 
 .secondLine {
   position: relative;
-  margin-block-start: clamp(1rem, 2.1vw, 2rem);
-  font-size: clamp(3.25rem, 7.62vw, 6.5rem);
-  letter-spacing: -.025em;
+  margin-block-start: clamp(.9rem, 1.8vw, 1.7rem);
+  font-size: clamp(3.2rem, 7vw, 6.4rem);
+  letter-spacing: -.035em;
   white-space: nowrap;
   word-spacing: calc(-.105em + 5px);
 }
@@ -239,15 +240,15 @@
 }
 
 .customI {
-  --bulb-width: 4.5625rem;
-  --bulb-height: 6rem;
-  --stem-width: 1.1875rem;
-  --stem-height: 3.375rem;
-  --bulb-stem-gap: .5rem;
+  --bulb-width: clamp(2.25rem, 4.45vw, 4rem);
+  --bulb-height: clamp(3rem, 5.85vw, 5.25rem);
+  --stem-width: clamp(.8rem, 1.15vw, 1.04rem);
+  --stem-height: clamp(2rem, 3.28vw, 2.95rem);
+  --bulb-stem-gap: clamp(.38rem, .54vw, .48rem);
   --cord-length: clamp(7rem, .75em, 8rem);
   --weight-width: clamp(.5rem, .048em, .65rem);
   --weight-height: clamp(.72rem, .067em, .9rem);
-  --slot-width: 1.875rem;
+  --slot-width: clamp(1.2rem, 2.42vw, 2.18rem);
   --cord-lane-offset: clamp(.55rem, .065em, .72rem);
   --pull-y: 0px;
   --pull-x: 0px;
@@ -259,7 +260,7 @@
   width: var(--slot-width);
   height: .72em;
   padding: 0;
-  margin: 0 -.025em 0 .004em;
+  margin: 0 .025em 0 .035em;
   overflow: visible;
   border: 0;
   border-radius: 0;
@@ -615,6 +616,8 @@
 .location {
   display: grid;
   gap: .58rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .scrollPrompt {
@@ -634,6 +637,49 @@
   z-index: 1;
   inset: 0;
   pointer-events: none;
+}
+
+.stars,
+.stars::before,
+.stars::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stars {
+  opacity: .58;
+}
+
+.stars::before,
+.stars::after {
+  content: "";
+  background-repeat: no-repeat;
+}
+
+.stars::before {
+  background-image:
+    radial-gradient(circle at 8% 17%, rgb(220 234 244 / 62%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 19% 43%, rgb(191 215 232 / 38%) 0 .7px, transparent 1.2px),
+    radial-gradient(circle at 29% 11%, rgb(229 237 241 / 48%) 0 .8px, transparent 1.35px),
+    radial-gradient(circle at 41% 27%, rgb(180 209 228 / 31%) 0 .65px, transparent 1.15px),
+    radial-gradient(circle at 54% 8%, rgb(221 234 242 / 46%) 0 .8px, transparent 1.4px),
+    radial-gradient(circle at 67% 22%, rgb(196 219 234 / 34%) 0 .7px, transparent 1.2px),
+    radial-gradient(circle at 78% 12%, rgb(235 239 236 / 67%) 0 1.1px, transparent 1.7px),
+    radial-gradient(circle at 91% 37%, rgb(182 207 225 / 35%) 0 .7px, transparent 1.2px),
+    radial-gradient(circle at 14% 72%, rgb(211 227 238 / 31%) 0 .65px, transparent 1.2px),
+    radial-gradient(circle at 36% 83%, rgb(190 214 230 / 28%) 0 .7px, transparent 1.25px),
+    radial-gradient(circle at 63% 69%, rgb(220 231 236 / 40%) 0 .8px, transparent 1.35px),
+    radial-gradient(circle at 86% 78%, rgb(195 217 231 / 30%) 0 .65px, transparent 1.15px);
+}
+
+.stars::after {
+  background-image:
+    radial-gradient(circle at 23% 24%, rgb(246 242 226 / 74%) 0 1.2px, rgb(220 232 240 / 16%) 1.5px, transparent 2.5px),
+    radial-gradient(circle at 72% 44%, rgb(238 239 231 / 65%) 0 1px, transparent 2px),
+    radial-gradient(circle at 47% 67%, rgb(221 235 244 / 58%) 0 .9px, transparent 1.8px),
+    radial-gradient(circle at 94% 18%, rgb(235 238 229 / 54%) 0 .9px, transparent 1.8px);
+  filter: drop-shadow(0 0 3px rgb(169 207 232 / 25%));
 }
 
 .constructionLines {
@@ -761,16 +807,7 @@
 }
 
 @media (max-width: 900px) {
-  .titleRegion {
-    top: 37svh;
-  }
-
   .customI {
-    --bulb-width: clamp(2.75rem, .48em, 3.15rem);
-    --bulb-height: clamp(3.9rem, .68em, 4.45rem);
-    --stem-width: clamp(.72rem, .14em, .95rem);
-    --stem-height: clamp(3.45rem, .61em, 4.1rem);
-    --bulb-stem-gap: clamp(.5rem, .105em, .68rem);
     --cord-length: clamp(5.5rem, .94em, 6.25rem);
   }
 
@@ -792,8 +829,8 @@
     --light-y: 45%;
     min-height: max(42rem, 100svh);
     background:
-      radial-gradient(ellipse at 48% 48%, rgb(13 25 39 / 38%) 0, transparent 68%),
-      linear-gradient(112deg, var(--night-00), var(--night-10) 62%, #03070c);
+      radial-gradient(ellipse at 48% 43%, rgb(13 28 45 / 40%) 0, transparent 66%),
+      linear-gradient(112deg, #02060b, #050c15 62%, #02060a);
   }
 
   .hero::before {
@@ -832,36 +869,36 @@
     padding-inline: 0;
   }
 
-  .titleRegion {
-    top: 39.4%;
-  }
-
   .titleVisual {
     letter-spacing: normal;
     line-height: .73;
   }
 
+  .titleRegion {
+    top: 43.5%;
+  }
+
   .firstLine {
     margin-inline-start: -.05em;
-    font-size: 13vw;
+    font-size: 12.2vw;
   }
 
   .secondLine {
-    font-size: 9.85vw;
+    font-size: 9.55vw;
   }
 
   .customI {
-    --bulb-width: clamp(2rem, .72em, 2.35rem);
-    --bulb-height: clamp(2.85rem, .99em, 3.3rem);
-    --stem-width: clamp(.52rem, .19em, .68rem);
-    --stem-height: clamp(1.8rem, .62em, 2.25rem);
-    --bulb-stem-gap: clamp(.36rem, .13em, .48rem);
+    --bulb-width: clamp(1.75rem, .72em, 2.15rem);
+    --bulb-height: clamp(2.45rem, .99em, 2.95rem);
+    --stem-width: clamp(.44rem, .19em, .61rem);
+    --stem-height: clamp(1.56rem, .62em, 1.95rem);
+    --bulb-stem-gap: clamp(.32rem, .13em, .42rem);
     --cord-length: 4.25rem;
     --weight-width: .43rem;
     --weight-height: .7rem;
-    --slot-width: .75rem;
+    --slot-width: .86rem;
     --cord-lane-offset: .4rem;
-    margin-right: .026em;
+    margin: 0 .03em 0 .04em;
   }
 
   .hero[data-light="on"] .titleLead {
@@ -971,10 +1008,6 @@
 }
 
 @media (max-height: 720px) and (min-width: 700px) {
-  .titleRegion {
-    top: 31.25%;
-  }
-
   .bottomBar {
     bottom: 1.65rem;
   }

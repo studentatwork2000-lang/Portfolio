@@ -3,6 +3,8 @@ import styles from './Hero.module.css'
 export default function StudioLineArt() {
   return (
     <div className={styles.atmosphere} aria-hidden="true">
+      <div className={styles.stars} />
+
       <svg className={styles.constructionLines} viewBox="0 0 1440 1000" preserveAspectRatio="none">
         <g className={styles.gridQuiet}>
           <path d="M287 0V1000M586 0V1000M877 0V1000" />
