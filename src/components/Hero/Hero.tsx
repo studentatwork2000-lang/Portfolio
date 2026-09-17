@@ -94,9 +94,12 @@ export default function Hero() {
             RISHAV
           </span>
           <span className={styles.secondLine}>
-            <span className={`${styles.titleText} ${styles.titleLead}`} aria-hidden="true">WEB STUD</span>
-            <BulbMark isLit={isLit} onToggle={() => setIsLit((current) => !current)} />
-            <span className={`${styles.titleText} ${styles.titleTail}`} aria-hidden="true">O</span>
+            <span className={styles.titleText} aria-hidden="true">WEB</span>
+            <span className={styles.studioWord}>
+              <span className={`${styles.titleText} ${styles.titleLead}`} aria-hidden="true">STUD</span>
+              <BulbMark isLit={isLit} onToggle={() => setIsLit((current) => !current)} />
+              <span className={`${styles.titleText} ${styles.titleTail}`} aria-hidden="true">O</span>
+            </span>
           </span>
         </div>
       </section>

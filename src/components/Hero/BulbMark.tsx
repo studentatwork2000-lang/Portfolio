@@ -724,6 +724,9 @@ export default function BulbMark({ isLit, onToggle }: BulbMarkProps) {
     const observer = new ResizeObserver(syncLightPosition)
     observer.observe(hero)
     observer.observe(bulb)
+    // The font can reflow the title without changing the bulb's own dimensions.
+    const title = controlRef.current?.closest('section')
+    if (title) observer.observe(title)
 
     return () => observer.disconnect()
   }, [])
