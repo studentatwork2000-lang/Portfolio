@@ -685,9 +685,13 @@
 /* Fixed, non-repeating stars: varied size and luminance, with a quieter
    region around the lettering. Only three elements move on pointer input. */
 .starsFar {
-  width: 1px;
-  height: 1px;
+  width: 1.12px;
+  height: 1.12px;
+  opacity: .96;
+  filter: blur(.06px);
   transform: translate3d(calc(var(--depth-sky-x) * .2), calc(var(--depth-sky-y) * .2), 0);
+  transition-duration: 360ms;
+  will-change: transform;
   box-shadow:
     50.25cqw 16.11cqh 0.04px 0.08px rgb(210 222 237 / 29%),
     13.41cqw 36.79cqh 0.01px 0.06px rgb(202 219 237 / 58%),
@@ -876,9 +880,12 @@
 }
 
 .starsMid {
-  width: 1.5px;
-  height: 1.5px;
+  width: 1.65px;
+  height: 1.65px;
+  filter: drop-shadow(0 0 .7px rgb(205 222 241 / 14%));
   transform: translate3d(calc(var(--depth-sky-x) * .65), calc(var(--depth-sky-y) * .65), 0);
+  transition-duration: 300ms;
+  will-change: transform;
   box-shadow:
     26.72cqw 12.43cqh 0.09px 0.00px rgb(221 228 236 / 73%),
     61.90cqw 66.99cqh 0.02px -0.04px rgb(221 228 236 / 82%),
@@ -931,10 +938,14 @@
 }
 
 .starsNear {
-  width: 2px;
-  height: 2px;
+  width: 2.15px;
+  height: 2.15px;
   transform: translate3d(var(--depth-sky-x), var(--depth-sky-y), 0);
-  filter: drop-shadow(0 0 2px rgb(212 226 244 / 36%));
+  filter:
+    blur(.03px)
+    drop-shadow(0 0 2.6px rgb(212 226 244 / 42%));
+  transition-duration: 240ms;
+  will-change: transform;
   box-shadow:
     11.42cqw 23.27cqh .25px -.12px rgb(228 234 244 / 88%),
     27.86cqw 10.74cqh .20px .10px rgb(238 234 219 / 92%),
@@ -944,6 +955,71 @@
     65.92cqw 81.77cqh .20px .08px rgb(238 234 219 / 88%),
     92.41cqw 74.16cqh .30px -.10px rgb(224 232 243 / 90%),
     17.83cqw 58.61cqh .20px -.04px rgb(227 231 234 / 85%);
+}
+
+.twinkleField {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(
+    calc(var(--depth-sky-x) * .82),
+    calc(var(--depth-sky-y) * .82),
+    0
+  );
+  transition: transform 260ms ease-out;
+  will-change: transform;
+}
+
+.twinkleField span {
+  position: absolute;
+  width: 1.7px;
+  height: 1.7px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(248 248 242 / 96%) 0 28%,
+    rgb(222 233 245 / 78%) 36%,
+    rgb(203 221 240 / 18%) 61%,
+    transparent 76%
+  );
+  box-shadow:
+    0 0 2.4px rgb(222 233 245 / 26%),
+    0 0 5.5px rgb(190 215 240 / 9%);
+  opacity: .58;
+  animation: starTwinkle 9.5s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+.twinkleField span:nth-child(3n) {
+  width: 1.95px;
+  height: 1.95px;
+}
+
+.twinkleField span:nth-child(4n) {
+  width: 1.45px;
+  height: 1.45px;
+}
+
+@keyframes starTwinkle {
+  0%,
+  100% {
+    opacity: .48;
+    transform: scale(.96);
+  }
+
+  34% {
+    opacity: .66;
+    transform: scale(1);
+  }
+
+  51% {
+    opacity: .9;
+    transform: scale(1.06);
+  }
+
+  68% {
+    opacity: .6;
+    transform: scale(.99);
+  }
 }
 
 @media (max-width: 600px) {
@@ -1088,7 +1164,18 @@
 
   .starsFar,
   .starsMid,
-  .starsNear {
+  .starsNear,
+  .twinkleField {
+    transform: none;
+  }
+
+  .twinkleField {
+    transition: none;
+  }
+
+  .twinkleField span {
+    animation: none;
+    opacity: .68;
     transform: none;
   }
 

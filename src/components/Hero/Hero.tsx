@@ -23,8 +23,8 @@ export default function Hero() {
     const hero = heroRef.current
     if (!hero) return
 
-    hero.style.setProperty('--depth-sky-x', `${x * -3}px`)
-    hero.style.setProperty('--depth-sky-y', `${y * -2.4}px`)
+    hero.style.setProperty('--depth-sky-x', `${x * -5.5}px`)
+    hero.style.setProperty('--depth-sky-y', `${y * -4.2}px`)
     hero.style.setProperty('--depth-bulb-x', `${y * -1.1}deg`)
     hero.style.setProperty('--depth-bulb-y', `${x * 1.5}deg`)
   }
