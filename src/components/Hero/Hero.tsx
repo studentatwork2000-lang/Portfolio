@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import BulbMark from './BulbMark'
-import StudioLineArt from './StudioLineArt'
+import NightSky from './StudioLineArt'
 import styles from './Hero.module.css'
 
 const navItems = ['Work', 'Approach', 'Contact']
@@ -23,10 +23,8 @@ export default function Hero() {
     const hero = heroRef.current
     if (!hero) return
 
-    hero.style.setProperty('--depth-grid-x', `${x * -1.5}px`)
-    hero.style.setProperty('--depth-grid-y', `${y * -1.2}px`)
-    hero.style.setProperty('--depth-drawing-x', `${x * 3.2}px`)
-    hero.style.setProperty('--depth-drawing-y', `${y * 2.4}px`)
+    hero.style.setProperty('--depth-sky-x', `${x * -3}px`)
+    hero.style.setProperty('--depth-sky-y', `${y * -2.4}px`)
     hero.style.setProperty('--depth-bulb-x', `${y * -1.1}deg`)
     hero.style.setProperty('--depth-bulb-y', `${x * 1.5}deg`)
   }
@@ -68,7 +66,7 @@ export default function Hero() {
       onPointerMove={handlePointerMove}
       onPointerLeave={resetDepth}
     >
-      <StudioLineArt />
+      <NightSky />
 
       <header className={styles.topBar}>
         <a className={styles.wordmark} href="#top" aria-label="Rishav Web Studio, home">
@@ -102,13 +100,13 @@ export default function Hero() {
             </span>
           </span>
         </div>
-      </section>
-
-      <footer className={styles.bottomBar}>
         <p className={styles.location}>
           <span>Independent web design &amp; development</span>
           <span>India / Worldwide</span>
         </p>
+      </section>
+
+      <footer className={styles.bottomBar}>
         <p className={styles.scrollPrompt}>
           Scroll to explore <span aria-hidden="true">↓</span>
         </p>
