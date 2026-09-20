@@ -1,9 +1,9 @@
 import styles from './Hero.module.css'
 
-// Keep the existing background component boundary; the scene is now sky only.
-export default function NightSky() {
+// Preserve the approved CSS sky while the 3D module loads or WebGL is unavailable.
+export default function CssSkyFallback({ embedded = false }: { embedded?: boolean }) {
   return (
-    <div className={styles.atmosphere} aria-hidden="true">
+    <div className={embedded ? styles.skyFallback : styles.atmosphere} aria-hidden="true">
       <div className={styles.stars}>
         <span className={styles.starsFar} />
         <span className={styles.starsMid} />

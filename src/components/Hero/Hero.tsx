@@ -1,18 +1,34 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import BulbMark from './BulbMark'
-import NightSky from './StudioLineArt'
+import CssSkyFallback from './CssSkyFallback'
+import type { SkyPointer } from './CelestialSky'
 import styles from './Hero.module.css'
 
+// The DOM Hero and CSS sky can paint before the optional WebGL code arrives.
+const CelestialSky = lazy(() => import('./CelestialSky').catch(() => ({ default: () => <CssSkyFallback /> })))
 const navItems = ['Work', 'Approach', 'Contact']
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null)
   const frameRef = useRef<number | null>(null)
-  const nextDepthRef = useRef({ x: 0, y: 0 })
+  const pointerRef = useRef<SkyPointer>({ x: 0, y: 0, enabled: false, invalidate: () => {} })
   const [isLit, setIsLit] = useState(false)
 
   useEffect(() => {
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const syncInput = () => {
+      pointerRef.current.enabled = finePointer.matches && !reducedMotion.matches
+      resetDepth()
+    }
+    syncInput()
+    finePointer.addEventListener('change', syncInput)
+    reducedMotion.addEventListener('change', syncInput)
+    window.addEventListener('blur', resetDepth)
     return () => {
+      finePointer.removeEventListener('change', syncInput)
+      reducedMotion.removeEventListener('change', syncInput)
+      window.removeEventListener('blur', resetDepth)
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current)
       }
@@ -23,28 +39,24 @@ export default function Hero() {
     const hero = heroRef.current
     if (!hero) return
 
-    hero.style.setProperty('--depth-sky-x', `${x * -5.5}px`)
-    hero.style.setProperty('--depth-sky-y', `${y * -4.2}px`)
     hero.style.setProperty('--depth-bulb-x', `${y * -1.1}deg`)
     hero.style.setProperty('--depth-bulb-y', `${x * 1.5}deg`)
   }
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    if (event.pointerType === 'touch') return
+    if (event.pointerType === 'touch' || !pointerRef.current.enabled) return
     if ((event.target as Element).closest('[data-bulb-control]')) return
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    nextDepthRef.current = {
-      x: Math.max(-1, Math.min(1, (event.clientX / window.innerWidth - 0.5) * 2)),
-      y: Math.max(-1, Math.min(1, (event.clientY / window.innerHeight - 0.5) * 2)),
-    }
+    const bounds = event.currentTarget.getBoundingClientRect()
+    const pointer = pointerRef.current
+    pointer.x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width - 0.5) * 2))
+    pointer.y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height - 0.5) * 2))
+    pointer.invalidate()
 
     if (frameRef.current !== null) return
 
     frameRef.current = window.requestAnimationFrame(() => {
       frameRef.current = null
-      writeDepth(nextDepthRef.current.x, nextDepthRef.current.y)
+      writeDepth(pointerRef.current.x, pointerRef.current.y)
     })
   }
 
@@ -54,7 +66,9 @@ export default function Hero() {
       frameRef.current = null
     }
 
-    nextDepthRef.current = { x: 0, y: 0 }
+    pointerRef.current.x = 0
+    pointerRef.current.y = 0
+    pointerRef.current.invalidate()
     writeDepth(0, 0)
   }
 
@@ -66,7 +80,9 @@ export default function Hero() {
       onPointerMove={handlePointerMove}
       onPointerLeave={resetDepth}
     >
-      <NightSky />
+      <Suspense fallback={<CssSkyFallback />}>
+        <CelestialSky pointer={pointerRef} />
+      </Suspense>
 
       <header className={styles.topBar}>
         <a className={styles.wordmark} href="#top" aria-label="Rishav Web Studio, home">
