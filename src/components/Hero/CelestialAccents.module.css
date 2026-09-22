@@ -1,0 +1,65 @@
+.accents {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.earth {
+  position: absolute;
+  will-change: transform;
+  top: 73%;
+  right: 8%;
+  width: clamp(7.875rem, 11.5vw, 10.375rem);
+  opacity: .85;
+  transform: translate3d(
+    calc(var(--sky-drift-x, 0px) * .65),
+    calc(-50% + var(--sky-drift-y, 0px) * .65),
+    0
+  );
+}
+
+.accents svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@media (max-width: 900px) {
+  .earth {
+    right: 5%;
+    width: 7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .earth {
+    top: 77%;
+    right: 5%;
+    width: 5.25rem;
+    opacity: .72;
+  }
+}
+
+@media (max-height: 640px) {
+  .earth {
+    top: 76%;
+    width: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .earth {
+    transform: translateY(-50%);
+    will-change: auto;
+  }
+}
+
+@media (forced-colors: active) {
+  .accents {
+    display: none;
+  }
+}

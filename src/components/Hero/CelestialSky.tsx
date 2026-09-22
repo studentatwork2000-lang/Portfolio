@@ -1,46 +1,47 @@
 import { Component, useEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { createRoot, extend, useFrame, useThree, type RootState } from '@react-three/fiber'
-import {
-  BufferAttribute, BufferGeometry, Color, DataTexture, LinearFilter,
-  Points, PointsMaterial, RGBAFormat,
-} from 'three'
+import { BufferAttribute, BufferGeometry, Color, Points, ShaderMaterial } from 'three'
 import CssSkyFallback from './CssSkyFallback'
 import styles from './Hero.module.css'
 
-// Viewing angles in degrees; response controls the slope, not the bounds.
+// Viewing angles in degrees; response shapes the slope without changing bounds.
 const YAW_LEFT = -32
 const YAW_RIGHT = 32
 const PITCH_UP = 27
 const PITCH_DOWN = -32
-const RESPONSE_X = 1.2
-const RESPONSE_UP = 1.55
-const RESPONSE_DOWN = 1.2
-const DAMPING = 16
+const RESPONSE_X = 1.15
+const RESPONSE_UP = 1.3
+const RESPONSE_DOWN = 1.15
+const DAMPING = 11.5
 const FOV = 58
-const PARALLAX_X = 0.12
-const PARALLAX_Y = 0.08
+const PARALLAX_X = 0.72
+const PARALLAX_Y = 0.46
 const DEG = Math.PI / 180
+const IDLE_FRAME_MS = 50
 
 export type SkyPointer = {
   x: number
   y: number
   enabled: boolean
+  reducedMotion?: boolean
   invalidate: () => void
+  onDrift?: (x: number, y: number) => void
 }
 
 type SkyProps = { pointer: RefObject<SkyPointer> }
 
-// A small R3F catalogue, without raycasting or DOM event registration.
-extend({ Points, BufferGeometry, BufferAttribute, PointsMaterial })
+// Keep the lazy R3F catalogue small: no event manager, lights, or texture assets.
+extend({ Points, BufferGeometry, BufferAttribute, ShaderMaterial })
 
 const populations = [
-  { count: 1800, min: 70, max: 100, size: 2, opacity: 0.64, seed: 817 },
-  { count: 550, min: 30, max: 50, size: 2.8, opacity: 0.76, seed: 231 },
-  { count: 110, min: 12, max: 22, size: 3.6, opacity: 0.86, seed: 593 },
-  { count: 16, min: 18, max: 35, size: 5.2, opacity: 0.92, seed: 941 },
+  { count: 4400, min: 72, max: 108, size: [1.5, 2.8], brightness: [0.32, 0.69], twinkle: 0.07, seed: 817 },
+  { count: 1800, min: 38, max: 66, size: [2.2, 4], brightness: [0.46, 0.84], twinkle: 0.11, seed: 231 },
+  { count: 520, min: 15, max: 29, size: [3.2, 5.8], brightness: [0.63, 0.94], twinkle: 0.14, seed: 593 },
+  { count: 28, min: 22, max: 40, size: [7, 10.5], brightness: [0.78, 1], twinkle: 0.07, seed: 941 },
 ]
 
-function generateStars({ count, min, max, seed }: typeof populations[number]) {
+function generateStars(population: typeof populations[number]) {
+  const { count, min, max, seed } = population
   let state = seed
   const random = () => {
     state = (Math.imul(state, 1664525) + 1013904223) >>> 0
@@ -48,11 +49,15 @@ function generateStars({ count, min, max, seed }: typeof populations[number]) {
   }
   const positions = new Float32Array(count * 3)
   const colors = new Float32Array(count * 3)
+  const sizes = new Float32Array(count)
+  const brightness = new Float32Array(count)
+  const phases = new Float32Array(count)
+  const twinkles = new Float32Array(count)
   const color = new Color()
-  const palette = ['#dce5ef', '#cadbed', '#edf0ed', '#ebe7db']
+  const palette = ['#dce5ef', '#c6d9ed', '#f0f1ec', '#eee6d4']
 
   for (let index = 0; index < count; index += 1) {
-    // Uniform full spheres: even diagonal/ultrawide views have no field edge.
+    // Full spheres keep the view continuous at every corner and aspect ratio.
     const y = random() * 2 - 1
     const angle = random() * Math.PI * 2
     const ring = Math.sqrt(1 - y * y)
@@ -61,61 +66,105 @@ function generateStars({ count, min, max, seed }: typeof populations[number]) {
     const radius = min + random() * (max - min)
     positions.set([x * radius, y * radius, z * radius], index * 3)
 
-    // A soft world-space quiet patch near the neutral title, never camera-pinned.
+    // A world-space quiet patch leaves breathing room behind the neutral title.
+    // It moves with the dome, never looking like a mask attached to the cursor.
     const quiet = z < 0
-      ? Math.exp(-((x / -z / 0.34) ** 2 + ((y / -z - 0.08) / 0.2) ** 2))
+      ? Math.exp(-((x / -z / 0.4) ** 2 + ((y / -z - 0.08) / 0.24) ** 2))
       : 0
     const temperature = random()
-    color.set(palette[temperature < 0.48 ? 0 : temperature < 0.78 ? 1 : temperature < 0.97 ? 2 : 3])
-    color.multiplyScalar((0.55 + random() * 0.45) * (1 - quiet * 0.5))
+    color.set(palette[temperature < 0.46 ? 0 : temperature < 0.76 ? 1 : temperature < 0.95 ? 2 : 3])
     color.toArray(colors, index * 3)
+    sizes[index] = population.size[0] + random() ** 1.8 * (population.size[1] - population.size[0])
+    brightness[index] = (population.brightness[0] + random() * (population.brightness[1] - population.brightness[0])) * (1 - quiet * 0.58)
+    phases[index] = random() * Math.PI * 2
+    // Most stars remain constant; a few breathe independently over ~9–15 s.
+    twinkles[index] = random() < 0.24 ? population.twinkle : 0
   }
-  return { positions, colors }
+  return { positions, colors, sizes, brightness, phases, twinkles }
 }
 
-// One tiny radial alpha sprite, shared by all four point clouds.
-function createStarTexture() {
-  const size = 32
-  const data = new Uint8Array(size * size * 4)
-  for (let y = 0; y < size; y += 1) {
-    for (let x = 0; x < size; x += 1) {
-      const radius = Math.hypot((x + 0.5) / size * 2 - 1, (y + 0.5) / size * 2 - 1)
-      const core = 1 - Math.min(1, Math.max(0, (radius - 0.18) / 0.55))
-      const alpha = radius >= 1 ? 0 : core * core * (3 - 2 * core) * 0.9 + (1 - radius) ** 3 * 0.1
-      const offset = (y * size + x) * 4
-      data[offset] = data[offset + 1] = data[offset + 2] = 255
-      data[offset + 3] = Math.round(alpha * 255)
-    }
+const starVertexShader = /* glsl */ `
+  attribute vec3 aColor;
+  attribute float aSize;
+  attribute float aBrightness;
+  attribute float aPhase;
+  attribute float aTwinkle;
+  uniform float uPixelRatio;
+  uniform float uTime;
+  uniform float uMotion;
+  varying vec3 vColor;
+  varying float vBrightness;
+
+  void main() {
+    vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * viewPosition;
+    // Angular sizes stay delicate at the viewport edges. Physical depth still
+    // changes each layer's response to the camera's small lateral translation.
+    gl_PointSize = aSize * uPixelRatio;
+    vColor = aColor;
+    float breath = 0.5 + 0.5 * sin(uTime * (0.43 + aPhase * 0.045) + aPhase);
+    vBrightness = aBrightness * (1.0 - breath * aTwinkle * uMotion);
   }
-  const texture = new DataTexture(data, size, size, RGBAFormat)
-  texture.magFilter = texture.minFilter = LinearFilter
-  texture.needsUpdate = true
-  return texture
-}
+`
+
+const starFragmentShader = /* glsl */ `
+  varying vec3 vColor;
+  varying float vBrightness;
+
+  void main() {
+    vec2 point = gl_PointCoord * 2.0 - 1.0;
+    float radius = length(point);
+    if (radius >= 1.0) discard;
+    // Analytic round cores and a soft optical halo, with no square sprite edge.
+    float core = exp(-radius * radius * 4.6);
+    float halo = exp(-radius * radius * 2.0) * 0.09;
+    float edge = 1.0 - smoothstep(0.68, 1.0, radius);
+    gl_FragColor = vec4(vColor, (core * 0.91 + halo) * edge * vBrightness);
+    #include <colorspace_fragment>
+  }
+`
 
 const saturate = (value: number, response: number) =>
-  Math.tanh(value * response) / Math.tanh(response)
+  Math.tanh(Math.max(-1, Math.min(1, value)) * response) / Math.tanh(response)
 
 function StarScene({ pointer, onReady }: SkyProps & { onReady: () => void }) {
   const { camera, gl, invalidate, setFrameloop } = useThree()
   const fields = useMemo(() => populations.map(generateStars), [])
-  const texture = useMemo(createStarTexture, [])
-  const motion = useRef({ yaw: 0, pitch: 0, x: 0, y: 0, awake: false, lastTime: 0 })
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uPixelRatio: { value: gl.getPixelRatio() },
+    uMotion: { value: 1 },
+  }), [gl])
+  const motion = useRef({ yaw: 0, pitch: 0, x: 0, y: 0, lastTime: 0, driftX: NaN, driftY: NaN })
   const firstFrame = useRef(true)
+  const scheduleIdle = useRef<() => void>(() => {})
 
   useEffect(() => {
     let inView = true
     let active = !document.hidden
+    let idleTimer: number | undefined
+    const clearIdle = () => {
+      window.clearTimeout(idleTimer)
+      idleTimer = undefined
+    }
     const wake = () => {
       if (!active) return
-      if (!motion.current.awake) motion.current.lastTime = performance.now()
-      motion.current.awake = true
+      clearIdle()
       invalidate()
+    }
+    scheduleIdle.current = () => {
+      if (!active || pointer.current.reducedMotion || idleTimer !== undefined) return
+      // A settled camera only repaints the very slow twinkle, capped at 20 fps.
+      idleTimer = window.setTimeout(() => {
+        idleTimer = undefined
+        if (active) invalidate()
+      }, IDLE_FRAME_MS)
     }
     const syncVisibility = () => {
       active = inView && !document.hidden
+      clearIdle()
+      motion.current.lastTime = performance.now()
       setFrameloop(active ? 'demand' : 'never')
-      motion.current.awake = false
       if (active) wake()
     }
     const observer = new IntersectionObserver(([entry]) => {
@@ -127,25 +176,26 @@ function StarScene({ pointer, onReady }: SkyProps & { onReady: () => void }) {
     pointer.current.invalidate = wake
     syncVisibility()
     return () => {
+      clearIdle()
       observer.disconnect()
       document.removeEventListener('visibilitychange', syncVisibility)
       pointer.current.invalidate = () => {}
-      texture.dispose()
+      scheduleIdle.current = () => {}
     }
-  }, [gl, invalidate, pointer, setFrameloop, texture])
+  }, [gl, invalidate, pointer, setFrameloop])
 
   useFrame(() => {
     const input = pointer.current
-    const x = input.enabled ? input.x : 0
-    const y = input.enabled ? -input.y : 0
+    const x = input.enabled ? Math.max(-1, Math.min(1, input.x)) : 0
+    const y = input.enabled ? Math.max(-1, Math.min(1, -input.y)) : 0
     const yaw = (x < 0 ? -YAW_LEFT : YAW_RIGHT) * saturate(x, RESPONSE_X) * DEG
     const pitch = (y < 0 ? -PITCH_DOWN : PITCH_UP) * saturate(y, y < 0 ? RESPONSE_DOWN : RESPONSE_UP) * DEG
     const state = motion.current
     const now = performance.now()
-    // Ignore time spent asleep, and cap long interrupted frames to avoid snapping.
-    const delta = Math.min((now - state.lastTime) / 1000, 0.05)
+    // Do not include time spent hidden/offscreen or jump after a stalled frame.
+    const delta = Math.min((now - state.lastTime) / 1000, 0.075)
     state.lastTime = now
-    const alpha = input.enabled ? 1 - Math.exp(-DAMPING * delta) : 1
+    const alpha = input.reducedMotion ? 1 : 1 - Math.exp(-DAMPING * delta)
     state.yaw += (yaw - state.yaw) * alpha
     state.pitch += (pitch - state.pitch) * alpha
     state.x += (x * PARALLAX_X - state.x) * alpha
@@ -161,11 +211,21 @@ function StarScene({ pointer, onReady }: SkyProps & { onReady: () => void }) {
       state.x = x * PARALLAX_X
       state.y = y * PARALLAX_Y
     }
-    // Three looks down -Z: positive website yaw (right) is negative Euler Y.
+    // Three looks down -Z: positive website yaw is negative Euler Y.
     camera.rotation.set(state.pitch, -state.yaw, 0, 'YXZ')
     camera.position.set(state.x, state.y, 0)
-    state.awake = !settled
+    const driftX = -22 * state.yaw / (YAW_RIGHT * DEG)
+    const driftY = 16 * state.pitch / ((state.pitch < 0 ? -PITCH_DOWN : PITCH_UP) * DEG)
+    if (driftX !== state.driftX || driftY !== state.driftY) {
+      state.driftX = driftX
+      state.driftY = driftY
+      input.onDrift?.(driftX, driftY)
+    }
+    uniforms.uPixelRatio.value = gl.getPixelRatio()
+    uniforms.uMotion.value = input.reducedMotion ? 0 : 1
+    if (!input.reducedMotion) uniforms.uTime.value += delta
     if (!settled) invalidate()
+    else scheduleIdle.current()
   })
 
   return fields.map((field, index) => (
@@ -180,14 +240,16 @@ function StarScene({ pointer, onReady }: SkyProps & { onReady: () => void }) {
     >
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[field.positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[field.colors, 3]} />
+        <bufferAttribute attach="attributes-aColor" args={[field.colors, 3]} />
+        <bufferAttribute attach="attributes-aSize" args={[field.sizes, 1]} />
+        <bufferAttribute attach="attributes-aBrightness" args={[field.brightness, 1]} />
+        <bufferAttribute attach="attributes-aPhase" args={[field.phases, 1]} />
+        <bufferAttribute attach="attributes-aTwinkle" args={[field.twinkles, 1]} />
       </bufferGeometry>
-      <pointsMaterial
-        map={texture}
-        size={populations[index].size}
-        sizeAttenuation={false}
-        opacity={populations[index].opacity}
-        vertexColors
+      <shaderMaterial
+        uniforms={uniforms}
+        vertexShader={starVertexShader}
+        fragmentShader={starFragmentShader}
         transparent
         depthWrite={false}
         depthTest={false}
@@ -218,6 +280,8 @@ export default function CelestialSky({ pointer }: SkyProps) {
     let getState: (() => RootState) | undefined
     const fail = () => {
       if (!disposed) {
+        getState?.().setFrameloop('never')
+        pointer.current.onDrift?.(0, 0)
         setReady(false)
         setFailed(true)
       }
@@ -240,7 +304,11 @@ export default function CelestialSky({ pointer }: SkyProps) {
           dpr: Math.min(window.devicePixelRatio || 1, 1.5),
           // Resizing must preserve the offscreen/hidden scene's paused loop.
           frameloop: getState?.().frameloop ?? 'demand',
-          onCreated: ({ get }) => { getState = get },
+          onCreated: ({ get, gl }) => {
+            getState = get
+            // Shader compilation can fail independently of renderer creation.
+            gl.debug.onShaderError = fail
+          },
         })
         // Three updates inline pixel dimensions; keep display size tied to the Hero.
         canvas.style.width = canvas.style.height = '100%'
@@ -265,6 +333,9 @@ export default function CelestialSky({ pointer }: SkyProps) {
     })
     return () => {
       disposed = true
+      // Stop frames before async R3F disposal can rewrite the neutral DOM drift.
+      getState?.().setFrameloop('never')
+      pointer.current.onDrift?.(0, 0)
       window.cancelAnimationFrame(startFrame)
       observer.disconnect()
       window.removeEventListener('resize', onResize)

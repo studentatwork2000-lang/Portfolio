@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import BulbMark from './BulbMark'
 import CssSkyFallback from './CssSkyFallback'
+import CelestialAccents from './CelestialAccents'
 import type { SkyPointer } from './CelestialSky'
 import styles from './Hero.module.css'
 
@@ -11,7 +12,13 @@ const navItems = ['Work', 'Approach', 'Contact']
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null)
   const frameRef = useRef<number | null>(null)
-  const pointerRef = useRef<SkyPointer>({ x: 0, y: 0, enabled: false, invalidate: () => {} })
+  const pointerRef = useRef<SkyPointer>({
+    x: 0, y: 0, enabled: false, reducedMotion: false, invalidate: () => {},
+    onDrift: (x, y) => {
+      heroRef.current?.style.setProperty('--sky-drift-x', `${x}px`)
+      heroRef.current?.style.setProperty('--sky-drift-y', `${y}px`)
+    },
+  })
   const [isLit, setIsLit] = useState(false)
 
   useEffect(() => {
@@ -19,6 +26,7 @@ export default function Hero() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const syncInput = () => {
       pointerRef.current.enabled = finePointer.matches && !reducedMotion.matches
+      pointerRef.current.reducedMotion = reducedMotion.matches
       resetDepth()
     }
     syncInput()
@@ -41,6 +49,8 @@ export default function Hero() {
 
     hero.style.setProperty('--depth-bulb-x', `${y * -1.1}deg`)
     hero.style.setProperty('--depth-bulb-y', `${x * 1.5}deg`)
+    hero.style.setProperty('--depth-sky-x', `${x * -20}px`)
+    hero.style.setProperty('--depth-sky-y', `${y * -16}px`)
   }
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
@@ -75,6 +85,7 @@ export default function Hero() {
   return (
     <main
       ref={heroRef}
+      id="top"
       className={styles.hero}
       data-light={isLit ? 'on' : 'off'}
       onPointerMove={handlePointerMove}
@@ -83,6 +94,8 @@ export default function Hero() {
       <Suspense fallback={<CssSkyFallback />}>
         <CelestialSky pointer={pointerRef} />
       </Suspense>
+      <div className={styles.skyVeil} aria-hidden="true" />
+      <CelestialAccents />
 
       <header className={styles.topBar}>
         <a className={styles.wordmark} href="#top" aria-label="Rishav Web Studio, home">
@@ -99,10 +112,11 @@ export default function Hero() {
         </nav>
       </header>
 
-      <section className={styles.titleRegion} id="top" aria-labelledby="hero-title">
+      <section className={styles.titleRegion} aria-labelledby="hero-title">
         <h1 id="hero-title" className={styles.visuallyHidden}>
           Rishav Web Studio
         </h1>
+        <p className={styles.eyebrow}>Independent by design.</p>
         <div className={styles.titleVisual}>
           <span className={styles.firstLine} data-text="RISHAV" aria-hidden="true">
             RISHAV
@@ -118,14 +132,18 @@ export default function Hero() {
         </div>
         <p className={styles.location}>
           <span>Independent web design &amp; development</span>
-          <span>India / Worldwide</span>
+          <span>Based in India <span aria-hidden="true">·</span> Creating worldwide</span>
         </p>
       </section>
 
       <footer className={styles.bottomBar}>
-        <p className={styles.scrollPrompt}>
-          Scroll to explore <span aria-hidden="true">↓</span>
+        <p className={styles.interactionHint}>
+          <span className={styles.hintDot} aria-hidden="true" />
+          Pull the cord. Light an idea.
         </p>
+        <a className={styles.scrollPrompt} href="#approach">
+          Scroll to explore <span aria-hidden="true">↓</span>
+        </a>
       </footer>
     </main>
   )
