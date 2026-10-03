@@ -5,6 +5,7 @@ import {
   Points, PointsMaterial, RGBAFormat,
 } from 'three'
 import CssSkyFallback from './CssSkyFallback'
+import CelestialDiscoveries from './CelestialDiscoveries'
 import styles from './Hero.module.css'
 
 // Viewing angles in degrees; response controls the slope, not the bounds.
@@ -247,6 +248,7 @@ export default function CelestialSky({ pointer }: SkyProps) {
         if (!disposed) root.render(
           <SkyErrorBoundary onError={fail}>
             <StarScene pointer={pointer} onReady={() => { if (!disposed) setReady(true) }} />
+            <CelestialDiscoveries />
           </SkyErrorBoundary>,
         )
       } catch {
