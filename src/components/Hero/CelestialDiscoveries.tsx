@@ -8,6 +8,17 @@ extend({ Sprite, SpriteMaterial })
 
 const DEG = Math.PI / 180
 
+type Placement = { yaw: number; elevation: number; distance: number; angularSize: number; rotation: number }
+type CelestialConfig = {
+  astronaut: Placement
+  earth: Placement & { centerY: number }
+}
+
+const defaultConfig: CelestialConfig = {
+  astronaut: { yaw: -73, elevation: 34, distance: 76, angularSize: 9.7, rotation: 10.5 },
+  earth: { yaw: 74.2, elevation: -6.9, distance: 48, angularSize: 42.6, centerY: 1.79, rotation: 0 },
+}
+
 // Match the existing YXZ camera: right is +X, up is +Y, forward is -Z.
 function worldDirection(yaw: number, elevation: number, distance: number): [number, number, number] {
   const horizontal = distance * Math.cos(elevation * DEG)
@@ -20,30 +31,37 @@ function worldDirection(yaw: number, elevation: number, distance: number): [numb
 
 const discoveries = [
   {
+    name: 'astronaut',
     source: astronautSource,
-    position: worldDirection(-22, 41, 24),
-    distance: 24,
-    angularSize: 4,
     axis: 'height',
     center: [0.5, 0.5],
     // Full-body alpha bounds span 1267 of the source's 1402 vertical pixels.
     visibleFraction: 1267 / 1402,
   },
   {
+    name: 'earth',
     source: earthSource,
-    position: worldDirection(18, -50, 48),
-    distance: 48,
-    angularSize: 20,
     axis: 'width',
     // The horizon artwork ends at rectangular source edges. Keep those beyond
     // the deepest camera view by offsetting the whole sprite in its world plane.
     // This is a geometry anchor, not a texture crop or pointer-driven reveal.
-    center: [0.5, 1.55],
+    center: [0.5, defaultConfig.earth.centerY],
     visibleFraction: 1,
   },
 ] as const
 
-function Discovery({ source, position, distance, angularSize, axis, center, visibleFraction }: typeof discoveries[number]) {
+type DiscoveryProps = {
+  source: string
+  position: [number, number, number]
+  distance: number
+  angularSize: number
+  axis: 'height' | 'width'
+  center: readonly [number, number]
+  visibleFraction: number
+  rotation: number
+}
+
+function Discovery({ source, position, distance, angularSize, axis, center, visibleFraction, rotation }: DiscoveryProps) {
   const [texture, setTexture] = useState<Texture<HTMLImageElement> | null>(null)
   const invalidate = useThree((state) => state.invalidate)
 
@@ -78,6 +96,7 @@ function Discovery({ source, position, distance, angularSize, axis, center, visi
     <sprite position={position} scale={[width, height, 1]} center={center} renderOrder={1}>
       <spriteMaterial
         map={texture}
+        rotation={rotation * DEG}
         transparent
         opacity={1}
         depthWrite={false}
@@ -89,5 +108,16 @@ function Discovery({ source, position, distance, angularSize, axis, center, visi
 }
 
 export default function CelestialDiscoveries() {
-  return discoveries.map((discovery) => <Discovery key={discovery.source} {...discovery} />)
+  return discoveries.map((discovery) => {
+    const placement = defaultConfig[discovery.name]
+    return <Discovery
+      key={discovery.source}
+      {...discovery}
+      position={worldDirection(placement.yaw, placement.elevation, placement.distance)}
+      distance={placement.distance}
+      angularSize={placement.angularSize}
+      center={discovery.center}
+      rotation={placement.rotation}
+    />
+  })
 }
