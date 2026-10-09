@@ -84,7 +84,7 @@ export default function Hero() {
         <CelestialSky pointer={pointerRef} />
       </Suspense>
 
-      <header className={styles.topBar}>
+      <header className={styles.topBar} data-font-lab-target="utility">
         <a className={styles.wordmark} href="#top" aria-label="Rishav Web Studio, home">
           Rishav Web Studio
         </a>
@@ -103,7 +103,7 @@ export default function Hero() {
         <h1 id="hero-title" className={styles.visuallyHidden}>
           Rishav Web Studio
         </h1>
-        <div className={styles.titleVisual}>
+        <div className={styles.titleVisual} data-font-lab-target="hero-title">
           <span className={styles.firstLine} data-text="RISHAV" aria-hidden="true">
             RISHAV
           </span>

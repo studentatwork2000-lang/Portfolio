@@ -75,6 +75,16 @@ export default function IntroStatement() {
       const travel = Math.max(1, section.offsetHeight - window.innerHeight)
       const progress = clamp(-bounds.top / travel)
 
+      // Reuse the text choreography's progress; ease each join to avoid opacity steps.
+      const starsOpacity = progress <= 0.12
+        ? 0.75
+        : progress <= 0.38
+          ? mix(0.75, 0.4, easeInOut(segment(progress, 0.12, 0.38)))
+          : progress <= 0.6
+            ? mix(0.4, 0.1, easeInOut(segment(progress, 0.38, 0.6)))
+            : mix(0.1, 0, easeInOut(segment(progress, 0.6, 0.65)))
+      setSectionValue('--intro-stars-opacity', starsOpacity)
+
       const welcomeExit = easeInOut(segment(progress, 0.29, 0.38))
       letterRefs.current.forEach((letter, index) => {
         if (!letter) return
@@ -189,6 +199,13 @@ export default function IntroStatement() {
 
     const handleMotionChange = () => requestMeasure()
 
+    // Text dimensions can change without a viewport resize (e.g. dev font auditions).
+    const textObserver = new ResizeObserver(requestMeasure)
+    const measuredText = [leadRef.current, ...wordRefs.current, resolutionSubRef.current]
+    measuredText.forEach(element => {
+      if (element) textObserver.observe(element)
+    })
+
     update()
     window.addEventListener('scroll', requestUpdate, { passive: true })
     window.addEventListener('resize', requestMeasure)
@@ -197,6 +214,7 @@ export default function IntroStatement() {
     void document.fonts.ready.then(requestMeasure)
 
     return () => {
+      textObserver.disconnect()
       window.removeEventListener('scroll', requestUpdate)
       window.removeEventListener('resize', requestMeasure)
       window.removeEventListener('pageshow', requestMeasure)
@@ -213,6 +231,7 @@ export default function IntroStatement() {
       aria-labelledby="intro-heading"
     >
       <div className={styles.stickyStage}>
+        <div className={styles.starContinuation} aria-hidden="true" />
         <p className={styles.chapterLabel}>01 / Intro</p>
         <h2 id="intro-heading" className={styles.visuallyHidden}>
           Welcome. Present your business. Present your work. Present your brand. Present yourself.
@@ -220,7 +239,7 @@ export default function IntroStatement() {
         </h2>
 
         <div className={styles.copyStage} aria-hidden="true">
-          <p className={styles.welcome}>
+          <p className={styles.welcome} data-font-lab-target="intro-display">
             {welcomeLetters.map((letter, index) => (
               <span
                 className={styles.welcomeLetter}
@@ -234,7 +253,7 @@ export default function IntroStatement() {
             ))}
           </p>
 
-          <div className={styles.presentation}>
+          <div className={styles.presentation} data-font-lab-target="intro-display">
             <span className={styles.leadViewport}>
               <span className={styles.lead} ref={leadRef}>
                 Present your
@@ -254,20 +273,20 @@ export default function IntroStatement() {
                 </span>
               ))}
             </span>
-            <span className={styles.resolutionSub} ref={resolutionSubRef}>
+            <span className={styles.resolutionSub} data-font-lab-target="intro-subtitle" ref={resolutionSubRef}>
               In a beautiful way.
             </span>
           </div>
 
           <div className={styles.reducedSequence}>
-            <p className={styles.reducedWelcome}>Welcome.</p>
-            <div className={styles.reducedStatements}>
+            <p className={styles.reducedWelcome} data-font-lab-target="intro-display">Welcome.</p>
+            <div className={styles.reducedStatements} data-font-lab-target="intro-display">
               <p>Present your business</p>
               <p>Present your work</p>
               <p>Present your brand</p>
               <p>Present yourself.</p>
             </div>
-            <p className={styles.reducedSubtitle}>In a beautiful way.</p>
+            <p className={styles.reducedSubtitle} data-font-lab-target="intro-subtitle">In a beautiful way.</p>
           </div>
         </div>
       </div>

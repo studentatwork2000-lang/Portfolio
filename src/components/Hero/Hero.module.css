@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Agdasima';
+  src: url('../../assets/fonts/agdasima-latin-700-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 .hero {
   --depth-sky-x: 0px;
   --depth-sky-y: 0px;
@@ -12,8 +20,7 @@
   min-height: max(34rem, 100vh);
   min-height: max(34rem, 100svh);
   overflow: hidden;
-  background:
-    linear-gradient(176deg, #030507 0%, #06090e 58%, #080c12 100%);
+  background: var(--bg-page);
 }
 
 .hero::before,
@@ -163,12 +170,16 @@
 .secondLine {
   display: block;
   width: max-content;
+  font-family: 'Agdasima', sans-serif;
+  font-weight: 700;
+  font-synthesis: none;
+  letter-spacing: .015em;
+  line-height: .87;
 }
 
 .firstLine {
   position: relative;
-  font-size: clamp(2rem, 1.12rem + 5.1vw, 5.75rem);
-  letter-spacing: -.025em;
+  font-size: calc(clamp(2rem, 1.12rem + 5.1vw, 5.75rem) * 1.23);
 }
 
 .firstLine::after {
@@ -200,9 +211,7 @@
   gap: .42em;
   /* Clear the bulb above STUDIO without offsetting either centered line. */
   margin-block-start: max(2.25rem, .79em);
-  font-size: clamp(1.5rem, .835rem + 3.77vw, 4.25rem);
-  font-weight: 400;
-  letter-spacing: .005em;
+  font-size: calc(clamp(1.5rem, .835rem + 3.77vw, 4.25rem) * 1.23);
   white-space: nowrap;
 }
 

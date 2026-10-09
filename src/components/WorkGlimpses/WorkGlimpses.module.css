@@ -8,6 +8,12 @@
   --wk-font-heading: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
   --wk-font-meta: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  /* Photograph tuning: preserve the approved image's colour and detail. */
+  --work-atmosphere-opacity: .88;
+  --work-atmosphere-scale: 1.025;
+  --work-atmosphere-position-x: 50%;
+  --work-atmosphere-position-y: 50%;
+
   /* Carousel geometry — LOCKED */
   --carousel-gap: clamp(.75rem, 1.2vw, 1.25rem);
   --carousel-window-width: 100vw;
@@ -29,7 +35,7 @@
   isolation: isolate;
   min-height: 430svh;
   overflow: clip;
-  background-color: #010205;
+  background-color: var(--bg-page, #030405);
 }
 
 
@@ -44,186 +50,69 @@
   height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  /* Layer A — BASE DEPTH: near-black to dark navy, darker outer edges.
-     Many small color stops avoid visible banding. */
-  background:
-    linear-gradient(
-      178deg,
-      #010205 0%,
-      #010306 6%,
-      #020408 14%,
-      #02050b 24%,
-      #03060e 34%,
-      #030812 44%,
-      #040a16 54%,
-      #050c1c 64%,
-      #060f24 74%,
-      #07122c 84%,
-      #081536 94%,
-      #091838 100%
-    );
+  background: var(--bg-page, #030405);
 }
 
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   BACKGROUND LIGHTING — continuous nocturnal environment
-   Core rule: BLACK IS THE SURFACE; BLUE IS THE LIGHT
-   3 layers: base depth + royal blue energy + icy/frost pointer-reactive
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.workLightField {
-  --ptr-x: 0.5;
-  --ptr-y: 0.5;
+/* The photograph is the only moving background layer. Fixed, neutral masks
+   soften its perimeter without filtering the galactic band or project images. */
+.workAtmosphere {
   position: absolute;
   z-index: 0;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  opacity: calc(1 - var(--work-copy-reveal));
 }
 
-/* ── Layer A: broad dark-navy base with deeper outer edges ── */
-.lightLayerA {
+.atmosphereImage {
+  position: absolute;
+  inset: -12px;
+  display: block;
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+  max-width: none;
+  object-fit: cover;
+  object-position: var(--work-atmosphere-position-x) var(--work-atmosphere-position-y);
+  opacity: var(--work-atmosphere-opacity);
+  transform: translate3d(var(--work-atmosphere-offset-x, 0px), var(--work-atmosphere-offset-y, 0px), 0) scale(var(--work-atmosphere-scale));
+}
+
+.workAtmosphere::after {
   position: absolute;
   inset: 0;
   background:
-    /* primary dark-navy-to-royal depth — lower center bias */
-    radial-gradient(
-      ellipse 130% 70% at 54% 88%,
-      rgb(11 36 82 / 0.52) 0%,
-      rgb(8 26 64 / 0.42) 18%,
-      rgb(6 18 50 / 0.30) 38%,
-      rgb(4 12 36 / 0.18) 58%,
-      rgb(3 8 24 / 0.08) 78%,
-      transparent 100%
-    ),
-    /* darken upper zone */
-    linear-gradient(
-      180deg,
-      rgb(1 2 5 / 0.6) 0%,
-      transparent 42%
-    ),
-    /* darken left/right for vignette */
-    linear-gradient(
-      90deg,
-      rgb(1 2 5 / 0.5) 0%,
-      transparent 22%,
-      transparent 78%,
-      rgb(1 2 5 / 0.5) 100%
-    );
-  transform: translate3d(
-    calc((var(--ptr-x) - 0.5) * 1.2vw),
-    calc((var(--ptr-y) - 0.5) * 0.5vh),
-    0
-  );
-  will-change: transform;
-  animation: lightDriftA 42s ease-in-out infinite;
+    linear-gradient(180deg, #030405 0%, rgb(3 4 5 / .78) 7%, rgb(3 4 5 / .22) 22%, transparent 38%, transparent 66%, rgb(3 4 5 / .38) 82%, #030405 100%),
+    linear-gradient(90deg, #030405 0%, rgb(3 4 5 / .3) 8%, transparent 24%, transparent 76%, rgb(3 4 5 / .3) 92%, #030405 100%);
+  content: "";
 }
 
-/* ── Layer B: royal/cobalt blue energy — asymmetric, organic ── */
-.lightLayerB {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .atmosphereImage {
+    will-change: transform;
+  }
+}
+
+/* The following section retains its design; only its entry seam fades from
+   Work's shared near-black base. This rule is scoped to Work's direct sibling. */
+.work + section {
+  isolation: isolate;
+}
+
+.work + section::after {
   position: absolute;
-  inset: 0;
-  background:
-    /* main royal blue field — lower-right bias for asymmetry */
-    radial-gradient(
-      ellipse 80% 56% at 62% 82%,
-      rgb(16 60 159 / 0.38) 0%,
-      rgb(14 50 130 / 0.30) 20%,
-      rgb(10 36 100 / 0.20) 42%,
-      rgb(6 22 68 / 0.10) 64%,
-      rgb(4 14 42 / 0.04) 82%,
-      transparent 100%
-    ),
-    /* secondary cobalt glow — left/lower for counterbalance */
-    radial-gradient(
-      ellipse 58% 44% at 26% 74%,
-      rgb(20 56 148 / 0.24) 0%,
-      rgb(12 38 108 / 0.16) 32%,
-      rgb(6 20 64 / 0.08) 62%,
-      transparent 100%
-    );
-  transform: translate3d(
-    calc((var(--ptr-x) - 0.5) * -1.4vw),
-    calc((var(--ptr-y) - 0.5) * 0.8vh),
-    0
-  );
-  will-change: transform;
-  animation: lightDriftB 56s ease-in-out infinite;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: clamp(8rem, 20svh, 14rem);
+  background: linear-gradient(180deg, #030405, rgb(3 4 5 / .75) 25%, transparent 100%);
+  pointer-events: none;
+  content: "";
 }
 
-/* ── Layer C: icy/frost highlight — pointer-reactive, most visible movement ── */
-.lightLayerC {
-  position: absolute;
-  inset: 0;
-  background:
-    /* primary frost field — elongated, directional */
-    radial-gradient(
-      ellipse 60% 34% at 58% 68%,
-      rgb(142 201 255 / 0.09) 0%,
-      rgb(110 170 240 / 0.06) 28%,
-      rgb(80 140 220 / 0.035) 52%,
-      rgb(50 100 190 / 0.015) 74%,
-      transparent 100%
-    ),
-    /* secondary subtle frost accent — high left */
-    radial-gradient(
-      ellipse 40% 28% at 32% 56%,
-      rgb(184 222 255 / 0.05) 0%,
-      rgb(140 190 240 / 0.03) 40%,
-      transparent 80%
-    ),
-    /* very bottom icy lift */
-    radial-gradient(
-      ellipse 100% 20% at 50% 108%,
-      rgb(180 215 245 / 0.055) 0%,
-      rgb(120 170 220 / 0.035) 36%,
-      rgb(80 130 190 / 0.015) 66%,
-      transparent 100%
-    ),
-    /* cinematic upper vignette */
-    radial-gradient(
-      ellipse 150% 50% at 50% -6%,
-      rgb(1 2 5 / 0.94) 0%,
-      rgb(1 2 5 / 0.72) 28%,
-      rgb(1 2 5 / 0.32) 54%,
-      transparent 78%
-    );
-  /* Strongest pointer displacement — this is the interactive frost layer */
-  transform: translate3d(
-    calc((var(--ptr-x) - 0.5) * 4vw),
-    calc((var(--ptr-y) - 0.5) * 3vh),
-    0
-  );
-  will-change: transform;
-  animation: lightDriftC 48s ease-in-out infinite;
+.work + section::before {
+  opacity: 0;
 }
-
-/* ── Autonomous light drift — extremely slow, non-obvious loop ── */
-@keyframes lightDriftA {
-  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
-  22%  { opacity: 0.94; transform: translate3d(0.8vw, -0.3vh, 0); }
-  48%  { opacity: 1.02; transform: translate3d(-0.5vw, 0.4vh, 0); }
-  71%  { opacity: 0.97; transform: translate3d(0.6vw, 0.15vh, 0); }
-  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
-}
-
-@keyframes lightDriftB {
-  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
-  28%  { opacity: 1.05; transform: translate3d(-1.1vw, 0.6vh, 0); }
-  55%  { opacity: 0.92; transform: translate3d(0.8vw, -0.35vh, 0); }
-  80%  { opacity: 1.02; transform: translate3d(-0.4vw, 0.2vh, 0); }
-  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
-}
-
-@keyframes lightDriftC {
-  0%   { opacity: 1;    transform: translate3d(0, 0, 0); }
-  20%  { opacity: 0.88; transform: translate3d(1.4vw, 0.6vh, 0); }
-  45%  { opacity: 1.10; transform: translate3d(-1.6vw, -0.5vh, 0); }
-  68%  { opacity: 0.94; transform: translate3d(0.8vw, 0.8vh, 0); }
-  88%  { opacity: 1.04; transform: translate3d(-0.5vw, -0.2vh, 0); }
-  100% { opacity: 1;    transform: translate3d(0, 0, 0); }
-}
-
 
 /* ═══════════════════════════════════════════════════════════════════════════
    HEADING ZONE — large counter backdrop + centered section heading
@@ -248,7 +137,7 @@
 .backgroundCounter {
   /* Positioned absolutely within the heading grid to layer behind the h2 */
   grid-area: 1 / 1;
-  color: rgb(160 180 220 / 0.07);
+  color: rgb(220 222 223 / 0.06);
   font-family: var(--wk-font-heading);
   font-size: clamp(5.5rem, 10vw, 9rem);
   font-weight: 600;
@@ -333,7 +222,7 @@
 /* ── Category: smaller, quieter, wider tracked ── */
 .activeProjectMeta p {
   margin: .28rem 0 0;
-  color: rgb(158 168 180 / 0.52);
+  color: rgb(174 177 180 / 0.52);
   font-family: var(--wk-font-meta);
   font-size: clamp(0.56rem, 0.6vw, 0.62rem);
   font-weight: 400;
@@ -387,7 +276,7 @@
 }
 
 .carouselViewport:focus-visible {
-  outline: 1px solid rgb(255 244 219 / 72%);
+  outline: 1px solid rgb(235 237 239 / 72%);
   outline-offset: -3px;
 }
 
@@ -409,7 +298,6 @@
 .panel {
   --panel-focus: 0;
   --panel-origin-x: 50%;
-  --project-tint: 131 151 163;
   position: relative;
   z-index: calc(1 + (var(--panel-focus) * 10));
   flex: 0 0 var(--panel-width);
@@ -423,24 +311,12 @@
   will-change: opacity, transform;
 }
 
-.clinic {
-  --project-tint: 143 154 146;
-}
-
-.motorsport {
-  --project-tint: 157 139 119;
-}
-
-.real-estate {
-  --project-tint: 142 126 141;
-}
-
 .previewImage {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background-color: rgb(6 10 16 / 92%);
+  background-color: rgb(8 9 10 / 92%);
   transition: transform 300ms ease-out;
 }
 
@@ -466,17 +342,17 @@
   overflow: hidden;
   position: relative;
   border-radius: 4px;
-  background-color: rgb(6 10 16 / 92%);
-  box-shadow: 0 10px 24px rgb(0 3 14 / 0.16);
+  background-color: rgb(8 9 10 / 92%);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.3);
   filter: brightness(calc(.84 + (var(--panel-focus) * .16))) saturate(calc(.82 + (var(--panel-focus) * .18)));
   transition: box-shadow 180ms ease-out, filter 120ms linear;
 }
 
 .panel[data-active="true"] .projectPreview {
   box-shadow:
-    0 10px 24px rgb(0 3 14 / 0.16),
-    0 24px 56px rgb(0 3 14 / calc(var(--panel-focus) * .34)),
-    0 12px 34px rgb(34 78 184 / calc(var(--panel-focus) * .08));
+    0 10px 24px rgb(0 0 0 / 0.3),
+    0 24px 56px rgb(0 0 0 / calc(var(--panel-focus) * .42)),
+    0 12px 34px rgb(225 227 230 / calc(var(--panel-focus) * .05));
 }
 
 .panel[data-active="true"] .projectPreview::before {
@@ -486,25 +362,12 @@
   inset: 0;
   border-radius: inherit;
   background:
-    linear-gradient(90deg, transparent 0%, rgb(205 229 250 / 0.72) 18%, rgb(235 243 248 / 0.84) 50%, rgb(205 229 250 / 0.72) 82%, transparent 100%) top / 100% 1px no-repeat,
-    linear-gradient(90deg, transparent 0%, rgb(180 214 245 / 0.62) 18%, rgb(224 238 248 / 0.76) 50%, rgb(180 214 245 / 0.62) 82%, transparent 100%) bottom / 100% 1px no-repeat;
+    linear-gradient(90deg, transparent 0%, rgb(222 224 227 / 0.72) 18%, rgb(241 242 243 / 0.84) 50%, rgb(222 224 227 / 0.72) 82%, transparent 100%) top / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent 0%, rgb(205 207 210 / 0.62) 18%, rgb(230 232 234 / 0.76) 50%, rgb(205 207 210 / 0.62) 82%, transparent 100%) bottom / 100% 1px no-repeat;
   opacity: calc(var(--panel-focus) * .72);
   pointer-events: none;
   transition: opacity 120ms linear;
 }
-
-.projectPreview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgb(215 227 243 / calc(.012 + (var(--panel-focus) * .038))) 0%, transparent 24%),
-    linear-gradient(0deg, rgb(40 92 214 / calc(.025 + (var(--panel-focus) * .055))) 0%, transparent 38%),
-    linear-gradient(142deg, rgb(var(--project-tint) / 4%), transparent 58%);
-  transition: background 120ms linear;
-}
-
 
 /* ═══════════════════════════════════════════════════════════════════════════
    CAROUSEL PAGINATION — editorial thin dash indicator
@@ -538,16 +401,16 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: rgb(166 194 220 / 0.24);
+  background: rgb(206 209 212 / 0.24);
   transition: width 280ms ease, height 280ms ease, border-radius 280ms ease, background 280ms ease, box-shadow 280ms ease;
 }
 
 .paginationTick:hover::after {
-  background: rgb(160 200 240 / 0.38);
+  background: rgb(222 225 228 / 0.38);
 }
 
 .paginationTick:focus-visible {
-  outline: 1px solid rgb(142 201 255 / 0.5);
+  outline: 1px solid rgb(235 237 239 / 0.5);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -556,8 +419,8 @@
   width: 20px;
   height: 1.5px;
   border-radius: 999px;
-  background: rgb(196 222 244 / 0.72);
-  box-shadow: 0 0 5px rgb(142 201 255 / 0.14);
+  background: rgb(235 237 239 / 0.72);
+  box-shadow: 0 0 5px rgb(235 237 239 / 0.14);
 }
 
 
@@ -576,9 +439,9 @@
   height: 2.625rem;
   min-height: 42px;
   padding: 0;
-  border: 1px solid rgb(181 204 232 / 8%);
+  border: 1px solid rgb(222 224 227 / 16%);
   border-radius: 50%;
-  background: rgb(3 8 18 / 16%);
+  background: rgb(3 4 5 / 36%);
   color: var(--ink-warm);
   cursor: pointer;
   opacity: calc((1 - var(--work-exit-progress)) * .54);
@@ -620,8 +483,8 @@
 }
 
 .sideArrow:hover {
-  border-color: rgb(198 218 241 / 20%);
-  background: rgb(7 15 31 / 32%);
+  border-color: rgb(235 237 239 / 28%);
+  background: rgb(20 21 23 / 52%);
   opacity: calc((1 - var(--work-exit-progress)) * .88);
   transform: translate3d(calc(var(--work-exit-progress) * 24vw), -50%, 0);
 }
@@ -709,10 +572,10 @@
   inset: 0;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgb(222 230 239 / 10%);
+  border: 1px solid rgb(222 224 227 / 14%);
   border-radius: 5px;
-  background: #050912;
-  box-shadow: 0 18px 50px rgb(0 2 10 / 32%);
+  background: #08090a;
+  box-shadow: 0 18px 50px rgb(0 0 0 / 32%);
   transform-origin: center;
   will-change: opacity, transform;
 }
@@ -721,8 +584,8 @@
   z-index: 4;
   opacity: 1;
   box-shadow:
-    0 22px 62px rgb(0 2 10 / 42%),
-    0 8px 26px rgb(24 65 146 / 10%);
+    0 22px 62px rgb(0 0 0 / 42%),
+    0 8px 26px rgb(225 227 230 / 6%);
 }
 
 .stackCard[data-depth="1"] {
@@ -786,6 +649,12 @@
   overflow: hidden;
 }
 
+.work[data-flow="true"] .workAtmosphere {
+  bottom: auto;
+  height: max(44rem, 100svh);
+  opacity: 1;
+}
+
 .work[data-flow="true"] .headingStage {
   position: relative;
   top: auto;
@@ -805,6 +674,15 @@
   margin-top: clamp(2.5rem, 5vw, 4rem);
   opacity: 1;
   transform: none;
+}
+
+.work[data-flow="true"] .carouselViewport {
+  opacity: 1;
+  transform: none;
+}
+
+.work[data-flow="true"] .activeProjectMeta {
+  text-shadow: 0 1px 6px rgb(3 4 5 / 95%);
 }
 
 .work[data-flow="true"] .handoffScene {
@@ -868,6 +746,10 @@
 
 @media (max-width: 700px) {
   .work {
+    --work-atmosphere-opacity: .84;
+    --work-atmosphere-scale: 1;
+    --work-atmosphere-position-x: 56%;
+    --work-atmosphere-position-y: 50%;
     --carousel-gap: .375rem;
     --carousel-window-width: 100vw;
     --panel-width: 82vw;
@@ -974,6 +856,10 @@
     padding-bottom: 6rem;
   }
 
+  .work[data-flow="true"] .workAtmosphere {
+    height: min(36rem, 100svh);
+  }
+
   .work[data-flow="true"] .exhibitionStage {
     margin-top: 2rem;
   }
@@ -1013,12 +899,9 @@
     animation: none;
   }
 
-  /* Static lighting — no animation, no pointer perturbation */
-  .lightLayerA,
-  .lightLayerB,
-  .lightLayerC {
-    animation: none;
+  .atmosphereImage {
     transform: none;
+    will-change: auto;
   }
 
   .backgroundCounter {
@@ -1034,4 +917,11 @@
   }
 
   /* Pagination keeps its smooth transition for active state */
+}
+
+@media (hover: none), (any-pointer: coarse) {
+  .atmosphereImage {
+    transform: none;
+    will-change: auto;
+  }
 }

@@ -6,7 +6,7 @@
 
 html {
   color-scheme: dark;
-  background: var(--night-00);
+  background: var(--bg-page);
   scroll-behavior: smooth;
 }
 
@@ -20,7 +20,7 @@ body,
 body {
   min-width: 320px;
   overflow-x: clip;
-  background: var(--night-00);
+  background: var(--bg-page);
   color: var(--ink-warm);
   font-family: var(--font-text);
   text-rendering: optimizeLegibility;

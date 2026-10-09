@@ -2,6 +2,8 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import type { KeyboardEvent, PointerEvent } from 'react'
 import styles from './WorkGlimpses.module.css'
 
+import milkyWayAtmosphere from '../../assets/work/milky-way-atmosphere.webp'
+
 import restaurantImg from '../../assets/work/restaurant-preview.png'
 import clinicImg from '../../assets/work/clinic-preview.png'
 import motorsportImg from '../../assets/work/motorsport-preview.png'
@@ -112,51 +114,17 @@ export default function WorkGlimpses() {
   const exhibitionStageRef = useRef<HTMLDivElement>(null)
   const viewportRef = useRef<HTMLDivElement>(null)
   const panelRefs = useRef<Array<HTMLElement | null>>([])
-  const lightFieldRef = useRef<HTMLDivElement>(null)
+  const stickyStageRef = useRef<HTMLDivElement>(null)
+  const atmosphereImageRef = useRef<HTMLImageElement>(null)
   const choreographyFrameRef = useRef<number | null>(null)
   const scrollFrameRef = useRef<number | null>(null)
   const resizeFrameRef = useRef<number | null>(null)
   const scrollEndTimerRef = useRef<number | null>(null)
-  const pointerRafRef = useRef<number | null>(null)
   const dragRef = useRef<DragState>(null)
   const touchActiveRef = useRef(false)
   const activeIndexRef = useRef(0)
   const reducedMotionRef = useRef(false)
   const [activeIndex, setActiveIndex] = useState(0)
-
-  /* ── Pointer-light damping state (refs, never triggers render) ── */
-  const pointerTargetRef = useRef({ x: 0.5, y: 0.5 })
-  const pointerCurrentRef = useRef({ x: 0.5, y: 0.5 })
-  const pointerActiveRef = useRef(false)
-  const isTouchDeviceRef = useRef(false)
-
-  /* ── Pointer-light rAF loop ── */
-  const startPointerLoop = useCallback(() => {
-    if (pointerRafRef.current !== null) return
-
-    const tick = () => {
-      const cur = pointerCurrentRef.current
-      const tgt = pointerTargetRef.current
-      const damping = 0.04
-      cur.x += (tgt.x - cur.x) * damping
-      cur.y += (tgt.y - cur.y) * damping
-
-      const field = lightFieldRef.current
-      if (field) {
-        field.style.setProperty('--ptr-x', cur.x.toFixed(4))
-        field.style.setProperty('--ptr-y', cur.y.toFixed(4))
-      }
-      pointerRafRef.current = requestAnimationFrame(tick)
-    }
-    pointerRafRef.current = requestAnimationFrame(tick)
-  }, [])
-
-  const stopPointerLoop = useCallback(() => {
-    if (pointerRafRef.current !== null) {
-      cancelAnimationFrame(pointerRafRef.current)
-      pointerRafRef.current = null
-    }
-  }, [])
 
   /* ── Section scroll choreography ── */
   useLayoutEffect(() => {
@@ -283,52 +251,115 @@ export default function WorkGlimpses() {
     }
   }, [])
 
-  /* ── Pointer-light setup (desktop only) ── */
+  /* Background-only parallax: passive listeners, no carousel state updates. */
   useLayoutEffect(() => {
-    const section = sectionRef.current
-    if (!section) return
+    const stage = stickyStageRef.current
+    const image = atmosphereImageRef.current
+    if (!stage || !image) return
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (reducedMotion.matches) return
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const touchPointer = window.matchMedia('(any-pointer: coarse)')
+    const current = { x: 0, y: 0 }
+    const target = { x: 0, y: 0 }
+    let frame: number | null = null
+    let previousTime = 0
+    let touchSeen = false
+    let enabled = false
 
-    const onFirstTouch = () => {
-      isTouchDeviceRef.current = true
-      stopPointerLoop()
-      section.removeEventListener('touchstart', onFirstTouch)
+    const paint = () => {
+      image.style.setProperty('--work-atmosphere-offset-x', current.x.toFixed(3) + 'px')
+      image.style.setProperty('--work-atmosphere-offset-y', current.y.toFixed(3) + 'px')
     }
-    section.addEventListener('touchstart', onFirstTouch, { passive: true, once: true })
 
-    const handleMove = (e: globalThis.PointerEvent) => {
-      if (isTouchDeviceRef.current) return
-      if (e.pointerType === 'touch') return
+    const reset = () => {
+      if (frame !== null) window.cancelAnimationFrame(frame)
+      frame = null
+      previousTime = 0
+      current.x = target.x = 0
+      current.y = target.y = 0
+      paint()
+    }
 
-      const rect = section.getBoundingClientRect()
-      pointerTargetRef.current = {
-        x: clamp((e.clientX - rect.left) / rect.width),
-        y: clamp((e.clientY - rect.top) / rect.height),
+    const tick = (time: number) => {
+      const elapsed = previousTime ? Math.min(time - previousTime, 64) : 16
+      previousTime = time
+      const damping = 1 - Math.exp(-elapsed / 125)
+      current.x += (target.x - current.x) * damping
+      current.y += (target.y - current.y) * damping
+
+      if (Math.max(Math.abs(target.x - current.x), Math.abs(target.y - current.y)) < 0.025) {
+        current.x = target.x
+        current.y = target.y
+        paint()
+        frame = null
+        previousTime = 0
+        return
       }
 
-      if (!pointerActiveRef.current) {
-        pointerActiveRef.current = true
-        pointerCurrentRef.current = { ...pointerTargetRef.current }
-        startPointerLoop()
-      }
+      paint()
+      frame = window.requestAnimationFrame(tick)
+    }
+
+    const requestMotion = () => {
+      if (frame === null) frame = window.requestAnimationFrame(tick)
+    }
+
+    const syncPreference = () => {
+      enabled = finePointer.matches && !touchPointer.matches && !reducedMotion.matches && !touchSeen
+      if (!enabled) reset()
+    }
+
+    const handleMove = (event: globalThis.PointerEvent) => {
+      if (!enabled || event.pointerType !== 'mouse' || event.buttons !== 0) return
+      const bounds = stage.getBoundingClientRect()
+      // Eight pixels per axis; diagonal displacement stays below twelve pixels.
+      target.x = (clamp((event.clientX - bounds.left) / bounds.width) - 0.5) * 16
+      target.y = (clamp((event.clientY - bounds.top) / bounds.height) - 0.5) * 16
+      requestMotion()
     }
 
     const handleLeave = () => {
-      pointerTargetRef.current = { x: 0.5, y: 0.5 }
+      if (!enabled) return
+      target.x = target.y = 0
+      requestMotion()
     }
 
-    section.addEventListener('pointermove', handleMove, { passive: true })
-    section.addEventListener('pointerleave', handleLeave, { passive: true })
+    const handleTouch = () => {
+      touchSeen = true
+      syncPreference()
+    }
+
+    const handleVisibility = () => {
+      if (document.hidden) reset()
+    }
+
+    // Cancel background work when the sticky canvas leaves the viewport.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) reset()
+    })
+    observer.observe(stage)
+    syncPreference()
+    stage.addEventListener('pointermove', handleMove, { passive: true })
+    stage.addEventListener('pointerleave', handleLeave, { passive: true })
+    stage.addEventListener('touchstart', handleTouch, { passive: true })
+    document.addEventListener('visibilitychange', handleVisibility)
+    reducedMotion.addEventListener('change', syncPreference)
+    finePointer.addEventListener('change', syncPreference)
+    touchPointer.addEventListener('change', syncPreference)
 
     return () => {
-      section.removeEventListener('pointermove', handleMove)
-      section.removeEventListener('pointerleave', handleLeave)
-      section.removeEventListener('touchstart', onFirstTouch)
-      stopPointerLoop()
+      stage.removeEventListener('pointermove', handleMove)
+      stage.removeEventListener('pointerleave', handleLeave)
+      stage.removeEventListener('touchstart', handleTouch)
+      document.removeEventListener('visibilitychange', handleVisibility)
+      reducedMotion.removeEventListener('change', syncPreference)
+      finePointer.removeEventListener('change', syncPreference)
+      touchPointer.removeEventListener('change', syncPreference)
+      observer.disconnect()
+      reset()
     }
-  }, [startPointerLoop, stopPointerLoop])
+  }, [])
 
   const getNearestPhysicalIndex = useCallback(() => {
     const viewport = viewportRef.current
@@ -609,12 +640,19 @@ export default function WorkGlimpses() {
       id="work"
       aria-labelledby="work-heading"
     >
-      <div className={styles.stickyStage}>
-        {/* ── Ambient light field with pointer perturbation ── */}
-        <div ref={lightFieldRef} className={styles.workLightField} aria-hidden="true">
-          <div className={styles.lightLayerA} />
-          <div className={styles.lightLayerB} />
-          <div className={styles.lightLayerC} />
+      <div ref={stickyStageRef} className={styles.stickyStage}>
+        <div className={styles.workAtmosphere} aria-hidden="true">
+          <img
+            ref={atmosphereImageRef}
+            className={styles.atmosphereImage}
+            src={milkyWayAtmosphere}
+            alt=""
+            width="1280"
+            height="720"
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+          />
         </div>
 
         {/* ── Heading zone: large counter + section heading ── */}
@@ -622,7 +660,7 @@ export default function WorkGlimpses() {
           <span className={styles.backgroundCounter} aria-hidden="true">
             {activeProject.index}&thinsp;/&thinsp;0{projects.length}
           </span>
-          <h2 ref={headingRef} id="work-heading">
+          <h2 ref={headingRef} id="work-heading" data-font-lab-target="work-heading">
             Glimpses of My Work
           </h2>
         </header>
@@ -631,7 +669,7 @@ export default function WorkGlimpses() {
         <div ref={exhibitionStageRef} className={styles.exhibitionStage}>
           <div className={styles.activeProjectMeta} aria-hidden="true">
             <div className={styles.activeProjectMetaContent} key={activeProject.title}>
-              <h3>{activeProject.title}</h3>
+              <h3 data-font-lab-target="work-project">{activeProject.title}</h3>
               {/* <p>{activeProject.category}</p> */}
             </div>
           </div>

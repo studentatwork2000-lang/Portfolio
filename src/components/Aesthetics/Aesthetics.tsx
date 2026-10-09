@@ -132,7 +132,7 @@ export default function Aesthetics() {
       <div className={styles.stickyStage}>
         <header className={styles.headingField}>
           <p className={styles.chapterLabel}>03 / Aesthetics</p>
-          <h2 id="aesthetics-heading">Aesthetics that fit you.</h2>
+          <h2 id="aesthetics-heading" data-font-lab-target="aesthetics-heading">Aesthetics that fit you.</h2>
         </header>
 
         <div className={styles.composition}>
