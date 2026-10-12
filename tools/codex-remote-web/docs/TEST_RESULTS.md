@@ -103,3 +103,13 @@ All 14 unit/integration tests passed. Protocol fixtures verify the exact outgoin
 All 11 browser scenarios passed, including selecting Full Access, submitting that mode, preserving the selection after reload, and switching back to workspace edits with approval prompts. Existing streaming, prompt visibility, sanitization, reconnection, and 390px layout checks still pass. Initial JavaScript is 103.91 KB gzipped.
 
 These are controller/protocol tests, not proof of unrestricted execution in the user's running Codespace. Codex-managed requirements and operating-system permissions remain authoritative. Pull the updated branch and restart the service to activate the new option.
+
+## Turn duration and delay inspection
+
+Added a live `Working for …` label and a fixed `Worked for …` duration after each completed turn, using Codex 0.162.1's native Unix-second `startedAt` / `completedAt` and millisecond `durationMs` fields. Native completed durations take priority over rounded timestamps. Approval waits are included; interruption and failure use distinct labels. Missing historical timing is omitted. Only the timer component updates once per second, without rerendering the conversation on every timer tick.
+
+All 18 unit/integration tests and all 13 browser scenarios passed. Coverage includes advancing live time, approval waiting, reconnection without reset, fixed completion/interruption durations after reload, timing retention in sparse history and service restarts, native precision, zero durations, clock skew, and hour formatting. Desktop and 390px screenshots were visually inspected. TypeScript and the production build passed; initial JavaScript is 104.39 KB gzipped.
+
+No added execution delay was identified in the controller. The only intentional streaming batch interval is 50 ms. RPC timeout timers are deadlines, not waits; streaming events are forwarded as they arrive. Authentication/workspace checks and the idempotency journal run around submission, and prompt recovery is written after Codex accepts the turn. No execution, model, effort, network, or submission-policy changes were made for speed.
+
+Local fixture measurements: backend turn acceptance 62 ms; browser send-to-acceptance 86 ms; browser send-to-visible-response 120 ms; maximum sampled browser round trip during streaming 6 ms. These are local controller/protocol measurements with a synthetic model, not a benchmark of the user's Codespace, private forwarding proxy, provider latency, or actual task. The user's current slow turn could not be timed or diagnosed remotely from this workspace.

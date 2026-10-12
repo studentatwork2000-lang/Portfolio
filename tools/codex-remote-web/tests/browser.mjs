@@ -15,13 +15,17 @@ try{
   await page.goto(base);await page.getByLabel('App passphrase').fill('browser-test-passphrase');await page.getByRole('button',{name:'Continue',exact:true}).click();
   await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.getByLabel('Model',{exact:true}).selectOption('test-model');
   await page.screenshot({path:resolve(root,'.runtime/browser/desktop-home.png')});
-  await page.getByLabel('Message Codex').fill('hello from browser');await page.getByLabel('Send message').click();
+  await page.getByLabel('Message Codex').fill('hello from browser');
+  const submitStarted=performance.now();const ack=page.waitForResponse(r=>r.request().method()==='POST' && r.url().endsWith('/turn')).then(()=>performance.now());
+  await page.getByLabel('Send message').click();const submitAckMs=Math.round((await ack)-submitStarted);
   await page.getByText('streamed test response.',{exact:false}).waitFor();
+  const firstVisibleResponseMs=Math.round(performance.now()-submitStarted);
   await page.getByLabel('Stop generation').waitFor({state:'hidden'});
   assert.equal(await page.locator('.user-bubble').filter({hasText:'hello from browser'}).count(),1);
   assert.equal(await page.evaluate(()=>window.pwned),undefined);
   assert.equal(await page.locator('.markdown script,.markdown img').count(),0);
   await page.getByRole('button',{name:'Copy code',exact:true}).waitFor();
+  await page.locator('.worked .turn-duration').waitFor();assert.match(await page.locator('.worked .turn-duration').innerText(),/^Worked for \d+m \d{2}s$/);
   await page.screenshot({path:resolve(root,'.runtime/browser/desktop-chat.png')});
   await page.getByLabel('Message Codex').fill('unsubmitted draft');await page.reload();await page.getByLabel('Message Codex').waitFor();assert.equal(await page.getByLabel('Message Codex').inputValue(),'unsubmitted draft');
   await page.locator('.user-bubble').filter({hasText:'hello from browser'}).waitFor();
@@ -44,18 +48,31 @@ try{
   await page.reload();await page.getByLabel('Permission mode').waitFor();assert.equal(await page.getByLabel('Permission mode').inputValue(),'fullAccess');
   await page.getByLabel('Permission mode').selectOption('workspaceWrite');
   await page.getByLabel('Message Codex').fill('approval test');await page.getByLabel('Send message').click();
-  await page.getByRole('button',{name:'Approve once',exact:true}).waitFor();await page.getByRole('button',{name:'Reject',exact:true}).click();await page.getByText('Rejected test command.').waitFor();
-  await page.getByLabel('Message Codex').fill('slow browser reconnect');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
+  await page.getByRole('button',{name:'Approve once',exact:true}).waitFor();await page.locator('.working .turn-duration').waitFor();assert.match(await page.locator('.working').innerText(),/Waiting for your input/);
+  const approvalBefore=Number(await page.locator('.working .turn-duration').getAttribute('data-duration-ms'));
+  await page.waitForFunction(start=>Number(document.querySelector('.working .turn-duration')?.getAttribute('data-duration-ms'))>=start+700,approvalBefore);
+  await page.getByRole('button',{name:'Reject',exact:true}).click();await page.getByText('Rejected test command.').waitFor();
+  await page.getByLabel('Message Codex').fill('slow browser reconnect timer');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
+  await page.locator('.working .turn-duration').waitFor();const liveBefore=Number(await page.locator('.working .turn-duration').getAttribute('data-duration-ms'));
+  await page.waitForFunction(start=>Number(document.querySelector('.working .turn-duration')?.getAttribute('data-duration-ms'))>=start+700,liveBefore);
+  await page.screenshot({path:resolve(root,'.runtime/browser/desktop-working.png')});
   const started=performance.now();await page.close();page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base);await page.getByText('streamed test response.',{exact:false}).first().waitFor();
+  await page.locator('.working .turn-duration').waitFor();assert.ok(Number(await page.locator('.working .turn-duration').getAttribute('data-duration-ms'))>=liveBefore);
   await page.getByLabel('Stop generation').waitFor({state:'hidden'});const reconnectMs=Math.round(performance.now()-started);
+  const completedTimer=page.locator('.worked .turn-duration').last();await completedTimer.waitFor();const workedText=await completedTimer.innerText();const workedMs=await completedTimer.getAttribute('data-duration-ms');
+  await page.reload();await page.locator('.user-bubble').filter({hasText:'slow browser reconnect timer'}).waitFor();
+  assert.equal(await page.locator('.worked .turn-duration').last().innerText(),workedText);assert.equal(await page.locator('.worked .turn-duration').last().getAttribute('data-duration-ms'),workedMs);
   // A long response remains responsive, while updates are batched at 20 Hz.
   await page.getByLabel('Message Codex').fill('long stream');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
   const timings=[];for(let i=0;i<12;i++){const start=performance.now();await page.evaluate(()=>document.querySelector('textarea').focus());timings.push(performance.now()-start);await new Promise(r=>setTimeout(r,50));}
   await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  await page.getByLabel('Message Codex').fill('slow timer interruption');await page.getByLabel('Send message').click();await page.locator('.working .turn-duration').waitFor();await page.getByLabel('Stop generation').click();
+  await page.getByText(/^Stopped after /).waitFor();const stoppedText=await page.getByText(/^Stopped after /).innerText();
+  await page.reload();await page.getByText(/^Stopped after /).waitFor();assert.equal(await page.getByText(/^Stopped after /).innerText(),stoppedText);
   await page.setViewportSize({width:390,height:844});await page.getByLabel('Close sidebar',{exact:true}).first().click();
   await page.screenshot({path:resolve(root,'.runtime/browser/mobile-chat.png')});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile layout overflows horizontally');
   await page.getByLabel('Open sidebar').click();await page.getByRole('button',{name:'New chat',exact:false}).first().click();await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.screenshot({path:resolve(root,'.runtime/browser/mobile-home.png')});
   assert.equal(errors.length,0,errors.join('\n'));
-  console.log(JSON.stringify({passed:['desktop login and new conversation','submitted prompts remain visible after replies','sparse-event multiline prompt survives reload without duplicates','Full Access selection, submission, persistence, and downgrade','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
+  console.log(JSON.stringify({passed:['desktop login and new conversation','submitted prompts remain visible after replies','sparse-event multiline prompt survives reload without duplicates','Full Access selection, submission, persistence, and downgrade','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection with continuing timer','browser closure and reconnect','live timer increments and completed duration survives reload','interrupted duration stays fixed after reload','long streaming responsiveness','390px mobile layout'],submitAckMs,firstVisibleResponseMs,reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
 }finally{await browser?.close();child.kill('SIGTERM');await new Promise(r=>child.once('exit',r));}

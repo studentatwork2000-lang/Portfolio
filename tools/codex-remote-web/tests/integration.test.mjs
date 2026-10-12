@@ -90,6 +90,19 @@ test('submitted prompts survive sparse turn events and stored-history reload',as
   assert.equal(items[0].content[0].text,text);
   const reload=await json('/api/threads/'+t.id);assert.equal(reload.thread.turns.at(-1).items[0].content[0].text,text);
 });
+test('native turn timestamps and duration survive sparse events, history, and restart',async()=>{
+  const t=await make();const before=performance.now();
+  const accepted=await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text:'sparse-events timing check',mode:'readOnly'});
+  const acceptanceMs=Math.round(performance.now()-before);
+  assert.ok(accepted.turn.startedAt>0);assert.equal(accepted.turn.durationMs,null);
+  const completed=(await finished(t.id)).thread.turns.at(-1);assert.equal(completed.startedAt,accepted.turn.startedAt);
+  assert.ok(completed.durationMs>=0);assert.ok(completed.completedAt>=completed.startedAt);
+  const timing=turn=>({startedAt:turn.startedAt,completedAt:turn.completedAt,durationMs:turn.durationMs});
+  await stop();await start();await login();await ready();
+  assert.deepEqual(timing((await json('/api/threads/'+t.id)).thread.turns.at(-1)),timing(completed));
+  assert.deepEqual(timing((await json('/api/threads/'+t.id+'/history?before=1')).turns[0]),timing(completed));
+  console.log(JSON.stringify({controllerFixtureAcceptanceMs:acceptanceMs,nativeFixtureDurationMs:completed.durationMs}));
+});
 test('accepted prompt records survive service restarts, repeated text, and retries',async()=>{
   const t=await make();const text='sparse-events sparse-history\nThe same prompt, twice — keep both turns.';
   const payload={requestId:randomUUID(),text,model:'test-model',mode:'readOnly'};

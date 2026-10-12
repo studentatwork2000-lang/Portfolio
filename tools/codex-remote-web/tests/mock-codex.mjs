@@ -2,7 +2,7 @@
 // Protocol fixture ONLY. Production configuration must point to the installed codex binary.
 import {createInterface} from 'node:readline';
 import {readFileSync,writeFileSync} from 'node:fs';
-const path=process.env.MOCK_STORE;let threads={};let counter=0;const timers=new Map();
+const path=process.env.MOCK_STORE;let threads={};let counter=0;const timers=new Map();const turnStarts=new Map();
 try{threads=JSON.parse(readFileSync(path,'utf8'));}catch{threads={'saved_cli':{id:'saved_cli',name:'Saved CLI fixture',preview:'A saved test conversation',cwd:process.env.MOCK_WORKSPACE,createdAt:1,updatedAt:1,status:{type:'notLoaded'},turns:[{id:'old-turn',status:'completed',items:[{id:'old-user',type:'userMessage',content:[{type:'text',text:'Previous CLI prompt'}]},{id:'old-agent',type:'agentMessage',text:'Stored CLI fixture response.'}]}]}};}
 const persist=()=>{if(path)writeFileSync(path,JSON.stringify(threads));};
 const send=m=>process.stdout.write(JSON.stringify(m)+'\n');
@@ -24,7 +24,7 @@ async function handle(m){
     }
     case 'thread/resume':thread.status={type:'idle'};thread.fixturePermissions={method:m.method,approvalPolicy:p.approvalPolicy,sandbox:p.sandbox};persist();event('thread/started',{thread});answer(m.id,{thread});break;
     case 'turn/start':{
-      const turn={id:'turn_'+counter++,status:'inProgress',items:[],fixturePermissions:{approvalPolicy:p.approvalPolicy,sandboxPolicy:p.sandboxPolicy}};thread.turns.push(turn);thread.preview=p.input[0].text;thread.updatedAt=Date.now()/1000;persist();
+      const startedAtMs=Date.now();const turn={id:'turn_'+counter++,status:'inProgress',startedAt:Math.floor(startedAtMs/1000),completedAt:null,durationMs:null,items:[],fixturePermissions:{approvalPolicy:p.approvalPolicy,sandboxPolicy:p.sandboxPolicy}};turnStarts.set(turn.id,startedAtMs);thread.turns.push(turn);thread.preview=p.input[0].text;thread.updatedAt=Date.now()/1000;persist();
       const entry={thread,turn,text:p.input[0].text};event('turn/started',{threadId:thread.id,turn});answer(m.id,{turn});
       const user={id:turn.id+'_user',type:'userMessage',clientId:p.clientUserMessageId || null,content:p.input};turn.items.push(user);
       if(!entry.text.includes('sparse-events')){event('item/started',{threadId:thread.id,turnId:turn.id,item:user});event('item/completed',{threadId:thread.id,turnId:turn.id,item:user});}
@@ -34,11 +34,11 @@ async function handle(m){
       }else if(entry.text.includes('unsupported')){
         send({id:900,method:'item/permissions/requestApproval',params:{threadId:thread.id,turnId:turn.id,itemId:'unsupported',permissions:{network:{enabled:true}}}});
         finish(entry,'Unsupported approval fixture finished.');
-      }else{const slow=entry.text.includes('slow');const chunks=entry.text.includes('long')?Array.from({length:150},(_,i)=>'Stream '+i+' · ').concat(['\n\nFinished.']):['Here is a ','streamed test response.\n\n','```javascript\nconst value = 42;\n```\n\n','| Check | Result |\n|---|---|\n| Streaming | Works |\n\n','<img src=x onerror="window.pwned=1"><script>window.pwned=2</script>'];stream(entry,chunks,slow?350:10);}
+      }else{const slow=entry.text.includes('slow');const chunks=entry.text.includes('long')?Array.from({length:150},(_,i)=>'Stream '+i+' · ').concat(['\n\nFinished.']):['Here is a ','streamed test response.\n\n','```javascript\nconst value = 42;\n```\n\n','| Check | Result |\n|---|---|\n| Streaming | Works |\n\n','<img src=x onerror="window.pwned=1"><script>window.pwned=2</script>'];stream(entry,chunks,entry.text.includes('timer')?600:slow?350:10);}
       break;
     }
     case 'turn/interrupt':{
-      clearTimeout(timers.get(p.turnId));const turn=thread.turns.find(t=>t.id===p.turnId);turn.status='interrupted';persist();event('turn/completed',{threadId:thread.id,turn});answer(m.id,{});break;
+      clearTimeout(timers.get(p.turnId));const turn=thread.turns.find(t=>t.id===p.turnId);turn.status='interrupted';completeTiming(turn);persist();event('turn/completed',{threadId:thread.id,turn});answer(m.id,{});break;
     }
     case 'thread/name/set':thread.name=p.name;persist();event('thread/name/updated',{threadId:thread.id,threadName:p.name});answer(m.id,{});break;
     case 'thread/archive':delete threads[p.threadId];persist();event('thread/archived',{threadId:p.threadId});answer(m.id,{});break;
@@ -46,6 +46,7 @@ async function handle(m){
   }
 }
 function finish(entry,text){stream(entry,[text],10);}
+function completeTiming(turn){const now=Date.now();turn.completedAt=Math.floor(now/1000);turn.durationMs=Math.max(0,now-(turnStarts.get(turn.id) || turn.startedAt*1000));turnStarts.delete(turn.id);}
 function stream(entry,chunks,delay){const {thread,turn}=entry;const item={id:turn.id+'_agent',type:'agentMessage',text:''};turn.items.push(item);event('item/started',{threadId:thread.id,turnId:turn.id,item});let i=0;
- const tick=()=>{if(turn.status!=='inProgress')return;if(i<chunks.length){const delta=chunks[i++];item.text+=delta;event('item/agentMessage/delta',{threadId:thread.id,turnId:turn.id,itemId:item.id,delta});persist();timers.set(turn.id,setTimeout(tick,delay));}else{turn.status='completed';persist();event('item/completed',{threadId:thread.id,turnId:turn.id,item});event('turn/completed',{threadId:thread.id,turn:entry.text.includes('sparse-events')?{...turn,items:turn.items.filter(i=>i.type!=='userMessage')}:turn});}};timers.set(turn.id,setTimeout(tick,delay));}
+ const tick=()=>{if(turn.status!=='inProgress')return;if(i<chunks.length){const delta=chunks[i++];item.text+=delta;event('item/agentMessage/delta',{threadId:thread.id,turnId:turn.id,itemId:item.id,delta});persist();timers.set(turn.id,setTimeout(tick,delay));}else{turn.status='completed';completeTiming(turn);persist();event('item/completed',{threadId:thread.id,turnId:turn.id,item});event('turn/completed',{threadId:thread.id,turn:entry.text.includes('sparse-events')?{...turn,items:turn.items.filter(i=>i.type!=='userMessage')}:turn});}};timers.set(turn.id,setTimeout(tick,delay));}
 createInterface({input:process.stdin}).on('line',line=>{try{void handle(JSON.parse(line));}catch(e){send({id:0,error:{code:-32000,message:e.message}});}});

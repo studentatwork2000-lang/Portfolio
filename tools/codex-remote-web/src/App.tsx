@@ -1,10 +1,12 @@
-import {useCallback,useEffect,useRef,useState,memo,FormEvent} from 'react';
+import {useCallback,useEffect,useRef,useState,memo,FormEvent,Fragment} from 'react';
 import {api,ApiError,save,saved,setCsrf} from './api';
 import {Icon} from './icons';
 import {Copy,Markdown} from './Markdown';
 import {Approval,Item,Model,Status,Thread,Turn,WireEvent} from './types';
 import {reduceEvents} from './timeline';
 import {userText} from '../server/messages';
+import {turnElapsedMs} from '../server/timing';
+import {TurnDuration} from './TurnDuration';
 
 const title=(t:Thread)=>t.name || t.preview?.slice(0,90) || 'New conversation';
 const threadPath=(id:string)=>'/threads/'+encodeURIComponent(id);
@@ -139,6 +141,7 @@ export default function App() {
   const currentModel=models.find(m=>m.model===model || m.id===model);
   const workspaceInfo=status?.workspaces.find(w=>w.path===(thread?.cwd || cwd));
   const running=selected?active[selected]:null;
+  const runningTurn=running?turns.find(t=>t.id===running.turnId):undefined;
   const ready=connected && status?.state==='ready' && status.account?.authenticated!==false;
   const needsConsent=selected && thread && !loadedByController && !resumeConsent;
   async function send(){
@@ -179,9 +182,9 @@ export default function App() {
         <div className="messages">{loading && !items.length && <p className="muted loading-text">Loading conversation…</p>}
           {before>0 && <button className="load-more older" onClick={()=>void loadOlder()} disabled={loading}>Load earlier turns</button>}
           {items.length>visible && <button className="load-more older" onClick={()=>setVisible(v=>v+80)}>Show earlier messages</button>}
-          {shown.map(({item,turn})=><Message key={turn.id+':'+item.id} item={item} streaming={turn.status==='inProgress' && (item.type==='agentMessage' || item.type==='plan')}/>)}
+          {shown.map(({item,turn},index)=><Fragment key={turn.id+':'+item.id}><Message item={item} streaming={turn.status==='inProgress' && (item.type==='agentMessage' || item.type==='plan')}/>{turn.status!=='inProgress' && shown[index+1]?.turn.id!==turn.id && turnElapsedMs(turn)!=null && <div className="worked"><Icon name="bolt" size={14}/><TurnDuration turn={turn}/></div>}</Fragment>)}
           {turns.filter(t=>t.status==='failed' || t.status==='interrupted').map(t=><div className="turn-notice" key={t.id}>{t.status==='failed'?'Turn failed: '+(t.error?.message || 'Codex could not finish this turn.'):'You stopped this response.'}</div>)}
-          {running && <div className="working"><span className="working-dot"/>{running.status==='unknown'?'Execution state is uncertain after a disconnection. Check history before retrying.':approvals.some(a=>a.params.threadId===selected)?'Waiting for your input':'Codex is working…'}</div>}
+          {running && <div className="working"><span className="working-dot"/>{running.status==='unknown'?'Execution state is uncertain after a disconnection. Check history before retrying.':<><span>{runningTurn?.status==='inProgress' && turnElapsedMs(runningTurn)!=null?<TurnDuration turn={runningTurn}/>:'Codex is working…'}</span>{approvals.some(a=>a.params.threadId===selected) && <span>· Waiting for your input</span>}</>}</div>}
           {approvals.filter(a=>a.params.threadId===selected).map(a=><ApprovalCard key={a.key} approval={a} complete={approve}/>)}
           {!items.length && !loading && !running && <p className="muted loading-text">This conversation is ready for your next prompt.</p>}
         </div>}

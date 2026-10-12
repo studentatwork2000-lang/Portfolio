@@ -59,6 +59,8 @@ Submitted prompts remain visible in the conversation after replies. Accepted pro
 
 Models and reasoning levels come from the installed App Server catalog. A successful inference turn confirms model access; appearing in the menu does not establish entitlement.
 
+While a turn runs, **Working for 1m 02s** shows its elapsed wall time and updates once per second. It continues while waiting for your input. Completed turns show **Worked for …**; interrupted or failed turns show **Stopped after …** or **Failed after …**. The timer uses Codex's native start/completion timestamps and duration, so reconnecting or reloading does not reset it. Older turns with no recorded timing omit the duration instead of inventing one. Timer updates are isolated from the conversation rendering and do not change execution or streaming speed.
+
 ## Start, stop, and recover
 
 From the controller directory:
