@@ -93,3 +93,13 @@ The fix merges lifecycle items, preserves native stored history when overlaying 
 The expanded unit/integration suite passed all 12 tests, including sparse completion, multiline content, duplicate echo prevention, repeated prompt text, idempotent retries, older-history reads, and service restart with sparse stored-history responses. Production TypeScript checks and Vite build passed.
 
 The browser regression run also passed: the submitted multiline prompt remained visible after completion and reload, with exactly one user bubble. All 10 browser scenarios passed, including the earlier login, sanitization, draft, approval, reconnection, streaming, and phone-layout checks. Updated initial JavaScript is 103.85 KB gzipped. The running user Codespace still needs to pull this commit and restart its service to activate the fix.
+
+## Full Access permission option
+
+Added an explicit **Full access** menu option using the installed protocol's `danger-full-access` sandbox and `never` approval policy. New and resumed threads receive those settings; each turn also receives `dangerFullAccess` so a mode switch takes effect on the next prompt. Read-only remains the initial default, and restricted modes retain their existing approval/network settings. No unsupported policy silently falls back to a different mode.
+
+All 14 unit/integration tests passed. Protocol fixtures verify the exact outgoing settings for thread creation, turn submission, resumption after service restart, and downgrading back to read-only/workspace edits. Missing Full Access protocol support and invalid modes fail visibly. Authentication, origin, CSRF, workspace selection, approval routing, and prompt-history regression checks still pass. TypeScript checks and the production Vite build passed.
+
+All 11 browser scenarios passed, including selecting Full Access, submitting that mode, preserving the selection after reload, and switching back to workspace edits with approval prompts. Existing streaming, prompt visibility, sanitization, reconnection, and 390px layout checks still pass. Initial JavaScript is 103.91 KB gzipped.
+
+These are controller/protocol tests, not proof of unrestricted execution in the user's running Codespace. Codex-managed requirements and operating-system permissions remain authoritative. Pull the updated branch and restart the service to activate the new option.

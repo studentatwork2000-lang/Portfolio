@@ -67,6 +67,21 @@ test('model/effort validation and interruption',async()=>{
   await json('/api/threads/'+t.id+'/interrupt',{});assert.equal((await json('/api/threads/'+t.id)).thread.turns.at(-1).status,'interrupted');
 });
 test('rename and archive use supported protocol methods',async()=>{const t=await make();await json('/api/threads/'+t.id+'/rename',{name:'Renamed fixture'});assert.equal((await json('/api/threads/'+t.id)).thread.name,'Renamed fixture');await json('/api/threads/'+t.id+'/archive',{});assert.ok(!(await json('/api/threads')).data.some(x=>x.id===t.id));});
+test('full access applies on creation, each turn, resumption, and can be downgraded',async()=>{
+  const t=(await json('/api/threads',{requestId:randomUUID(),cwd:workspace,model:'test-model',mode:'fullAccess'})).thread;
+  assert.deepEqual(t.fixturePermissions,{method:'thread/start',approvalPolicy:'never',sandbox:'danger-full-access'});
+  const turn=async(mode,text='permission check')=>{await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text,mode,model:'test-model'});return (await finished(t.id)).thread.turns.at(-1).fixturePermissions;};
+  assert.deepEqual(await turn('fullAccess','approval full access fixture'),{approvalPolicy:'never',sandboxPolicy:{type:'dangerFullAccess'}});
+  assert.deepEqual(await turn('readOnly'),{approvalPolicy:'untrusted',sandboxPolicy:{type:'readOnly',networkAccess:false}});
+  assert.deepEqual(await turn('workspaceWrite'),{approvalPolicy:'untrusted',sandboxPolicy:{type:'workspaceWrite',writableRoots:[workspace],networkAccess:false,excludeTmpdirEnvVar:true,excludeSlashTmp:true}});
+  await stop();await start();await login();await ready();
+  await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text:'resume full access',mode:'fullAccess',model:'test-model',confirmSavedSession:true});
+  const resumed=(await finished(t.id)).thread;
+  assert.deepEqual(resumed.fixturePermissions,{method:'thread/resume',approvalPolicy:'never',sandbox:'danger-full-access'});
+  assert.deepEqual(resumed.turns.at(-1).fixturePermissions,{approvalPolicy:'never',sandboxPolicy:{type:'dangerFullAccess'}});
+  assert.equal((await call('/api/threads',{requestId:randomUUID(),cwd:workspace,mode:'madeUp'})).status,400);
+  assert.equal((await call('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text:'invalid mode',mode:'madeUp'})).status,400);
+});
 test('submitted prompts survive sparse turn events and stored-history reload',async()=>{
   const t=await make();const text='sparse-events\nKeep this entire prompt, including punctuation: <code> & "quotes".';
   await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text,model:'test-model',mode:'readOnly'});

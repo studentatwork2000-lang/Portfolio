@@ -33,6 +33,16 @@ try{
   assert.equal(await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).count(),1);
   await page.reload();await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).waitFor();
   assert.equal(await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).innerText(),sparsePrompt);
+  await page.getByLabel('Permission mode').selectOption('fullAccess');
+  assert.match(await page.getByLabel('Permission mode').getAttribute('title'),/without approval prompts/);
+  const fullRequest=page.waitForRequest(r=>r.method()==='POST' && r.url().endsWith('/turn'));
+  await page.getByLabel('Message Codex').fill('approval full access browser fixture');await page.getByLabel('Send message').click();
+  assert.equal((await fullRequest).postDataJSON().mode,'fullAccess');
+  await page.locator('.user-bubble').filter({hasText:'approval full access browser fixture'}).waitFor();
+  await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  assert.equal(await page.getByRole('button',{name:'Approve once',exact:true}).count(),0);
+  await page.reload();await page.getByLabel('Permission mode').waitFor();assert.equal(await page.getByLabel('Permission mode').inputValue(),'fullAccess');
+  await page.getByLabel('Permission mode').selectOption('workspaceWrite');
   await page.getByLabel('Message Codex').fill('approval test');await page.getByLabel('Send message').click();
   await page.getByRole('button',{name:'Approve once',exact:true}).waitFor();await page.getByRole('button',{name:'Reject',exact:true}).click();await page.getByText('Rejected test command.').waitFor();
   await page.getByLabel('Message Codex').fill('slow browser reconnect');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
@@ -47,5 +57,5 @@ try{
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile layout overflows horizontally');
   await page.getByLabel('Open sidebar').click();await page.getByRole('button',{name:'New chat',exact:false}).first().click();await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.screenshot({path:resolve(root,'.runtime/browser/mobile-home.png')});
   assert.equal(errors.length,0,errors.join('\n'));
-  console.log(JSON.stringify({passed:['desktop login and new conversation','submitted prompts remain visible after replies','sparse-event multiline prompt survives reload without duplicates','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
+  console.log(JSON.stringify({passed:['desktop login and new conversation','submitted prompts remain visible after replies','sparse-event multiline prompt survives reload without duplicates','Full Access selection, submission, persistence, and downgrade','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
 }finally{await browser?.close();child.kill('SIGTERM');await new Promise(r=>child.once('exit',r));}

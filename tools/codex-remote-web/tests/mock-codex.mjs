@@ -20,15 +20,15 @@ async function handle(m){
     case 'thread/list':answer(m.id,{data:Object.values(threads).map(t=>({...t,turns:[]})),nextCursor:null});break;
     case 'thread/read':if(thread)answer(m.id,{thread:{...thread,turns:p.includeTurns?thread.turns.map(t=>({...t,items:t.items[0]?.content?.[0]?.text?.includes('sparse-history')?t.items.filter(i=>i.type!=='userMessage'):t.items})):[]}});else send({id:m.id,error:{code:-32000,message:'Thread not found.'}});break;
     case 'thread/start':{
-      const id='created_'+Date.now()+'_'+counter++;const t={id,name:null,preview:'',cwd:p.cwd,createdAt:Date.now()/1000,updatedAt:Date.now()/1000,status:{type:'idle'},turns:[]};threads[id]=t;persist();event('thread/started',{thread:t});answer(m.id,{thread:t,model:p.model || 'test-model'});break;
+      const id='created_'+Date.now()+'_'+counter++;const t={id,name:null,preview:'',cwd:p.cwd,createdAt:Date.now()/1000,updatedAt:Date.now()/1000,status:{type:'idle'},turns:[],fixturePermissions:{method:m.method,approvalPolicy:p.approvalPolicy,sandbox:p.sandbox}};threads[id]=t;persist();event('thread/started',{thread:t});answer(m.id,{thread:t,model:p.model || 'test-model'});break;
     }
-    case 'thread/resume':thread.status={type:'idle'};event('thread/started',{thread});answer(m.id,{thread});break;
+    case 'thread/resume':thread.status={type:'idle'};thread.fixturePermissions={method:m.method,approvalPolicy:p.approvalPolicy,sandbox:p.sandbox};persist();event('thread/started',{thread});answer(m.id,{thread});break;
     case 'turn/start':{
-      const turn={id:'turn_'+counter++,status:'inProgress',items:[]};thread.turns.push(turn);thread.preview=p.input[0].text;thread.updatedAt=Date.now()/1000;persist();
+      const turn={id:'turn_'+counter++,status:'inProgress',items:[],fixturePermissions:{approvalPolicy:p.approvalPolicy,sandboxPolicy:p.sandboxPolicy}};thread.turns.push(turn);thread.preview=p.input[0].text;thread.updatedAt=Date.now()/1000;persist();
       const entry={thread,turn,text:p.input[0].text};event('turn/started',{threadId:thread.id,turn});answer(m.id,{turn});
       const user={id:turn.id+'_user',type:'userMessage',clientId:p.clientUserMessageId || null,content:p.input};turn.items.push(user);
       if(!entry.text.includes('sparse-events')){event('item/started',{threadId:thread.id,turnId:turn.id,item:user});event('item/completed',{threadId:thread.id,turnId:turn.id,item:user});}
-      if(entry.text.includes('approval')){
+      if(entry.text.includes('approval') && p.approvalPolicy!=='never'){
         const item={id:turn.id+'_cmd',type:'commandExecution',command:'printf harmless',cwd:thread.cwd,status:'inProgress',aggregatedOutput:''};turn.items.push(item);event('item/started',{threadId:thread.id,turnId:turn.id,item});
         const id=500+counter++;requests.set(id,entry);send({id,method:'item/commandExecution/requestApproval',params:{kind:'command',threadId:thread.id,turnId:turn.id,itemId:item.id,startedAtMs:Date.now(),environmentId:null,command:item.command,cwd:thread.cwd,reason:'Harmless protocol-fixture approval.'}});
       }else if(entry.text.includes('unsupported')){

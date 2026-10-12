@@ -133,16 +133,20 @@ export class Bridge extends EventEmitter {
     // No auth tokens, raw account notifications, or undocumented legacy envelopes reach the browser.
     if(/^(thread\/|turn\/|item\/|error$|serverRequest\/resolved$)/.test(m.method)) this.emit('event',{method:m.method,params});
   }
-  get approvalPolicy() {
+  approvalPolicy(mode:string='readOnly') {
     const definition=this.schema?.definitions?.AskForApproval;
     const text=JSON.stringify(definition || '');
+    if(mode==='fullAccess') {
+      if(text.includes('"never"'))return 'never';
+      throw new HttpError(501,'This installed Codex does not advertise Full Access approvals.');
+    }
     if(text.includes('"untrusted"'))return 'untrusted';
     if(text.includes('"unlessTrusted"'))return 'unlessTrusted';
     throw new HttpError(501,'This installed Codex does not advertise the required approval policy.');
   }
   sandboxMode(mode:string) {
     const values=this.schema?.definitions?.SandboxMode?.enum || [];
-    const choices=mode==='readOnly'?['read-only','readOnly']:['workspace-write','workspaceWrite'];
+    const choices=mode==='fullAccess'?['danger-full-access','dangerFullAccess']:mode==='readOnly'?['read-only','readOnly']:['workspace-write','workspaceWrite'];
     const value=choices.find(c=>values.includes(c));if(!value)throw new HttpError(501,'Unsupported sandbox mode in installed Codex.');return value;
   }
   reviewer(method:string) {

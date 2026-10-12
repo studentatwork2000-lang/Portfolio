@@ -44,8 +44,8 @@ async function workspaceInfo(path:string) {
   return {path,name:basename(path),branch};
 }
 function permissions(mode:any) {
-  if(!['readOnly','workspaceWrite'].includes(mode)) throw new HttpError(400,'Select read-only or workspace edits.');
-  return {approvalPolicy:bridge.approvalPolicy,sandbox:bridge.sandboxMode(mode)};
+  if(!['readOnly','workspaceWrite','fullAccess'].includes(mode)) throw new HttpError(400,'Select read-only, workspace edits, or full access.');
+  return {approvalPolicy:bridge.approvalPolicy(mode),sandbox:bridge.sandboxMode(mode)};
 }
 async function requireAgentAuth() {
   const account=await bridge.rpc('account/read',{refreshToken:false});
@@ -134,7 +134,7 @@ async function handler(req:IncomingMessage,res:ServerResponse) {
                 if(b.confirmSavedSession!==true)throw new HttpError(409,'Confirm that no other CLI or controller is using this saved conversation.');
                 await bridge.rpc('thread/resume',{threadId:id,cwd,...policy,...bridge.reviewer('thread/resume')});bridge.loaded.add(id);
               }
-              const started=await bridge.rpc('turn/start',{threadId:id,input:[{type:'text',text:b.text,text_elements:[]}],...(bridge.supportsParam('turn/start','clientUserMessageId')?{clientUserMessageId:b.requestId}:{}),cwd,approvalPolicy:policy.approvalPolicy,...bridge.reviewer('turn/start'),sandboxPolicy:b.mode==='readOnly'?{type:'readOnly',networkAccess:false}:{type:'workspaceWrite',writableRoots:[cwd],networkAccess:false,excludeTmpdirEnvVar:true,excludeSlashTmp:true},...(b.model?{model:b.model}:{}),...(b.effort?{effort:b.effort}:{})});
+              const started=await bridge.rpc('turn/start',{threadId:id,input:[{type:'text',text:b.text,text_elements:[]}],...(bridge.supportsParam('turn/start','clientUserMessageId')?{clientUserMessageId:b.requestId}:{}),cwd,approvalPolicy:policy.approvalPolicy,...bridge.reviewer('turn/start'),sandboxPolicy:b.mode==='fullAccess'?{type:'dangerFullAccess'}:b.mode==='readOnly'?{type:'readOnly',networkAccess:false}:{type:'workspaceWrite',writableRoots:[cwd],networkAccess:false,excludeTmpdirEnvVar:true,excludeSlashTmp:true},...(b.model?{model:b.model}:{}),...(b.effort?{effort:b.effort}:{})});
               const prompt=await savePrompt(id,started.turn.id,b.requestId,b.text);
               bridge.promptAccepted(id,started.turn.id,prompt);
               return {...started,prompt};
