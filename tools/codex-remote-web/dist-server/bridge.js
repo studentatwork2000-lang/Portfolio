@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
 import { HttpError, ROOT, STATE } from './config.js';
 import { Ajv } from 'ajv';
+import { mergeItems } from './messages.js';
 const APPROVAL_METHODS = new Set(['item/commandExecution/requestApproval', 'item/fileChange/requestApproval']);
 const INPUT_METHODS = new Set(['item/tool/requestUserInput', 'tool/requestUserInput']);
 const execute = promisify(execFile);
@@ -254,11 +255,27 @@ export class Bridge extends EventEmitter {
         const name = entry?.properties?.params?.$ref?.split('/').pop();
         return this.schema?.definitions?.[name]?.properties?.approvalsReviewer ? { approvalsReviewer: 'user' } : {};
     }
+    supportsParam(method, name) {
+        const entry = this.schema?.oneOf?.find((e) => e.properties?.method?.enum?.includes(method));
+        const definition = entry?.properties?.params?.$ref?.split('/').pop();
+        return !!this.schema?.definitions?.[definition]?.properties?.[name];
+    }
+    promptAccepted(threadId, turnId, item) {
+        let turn = this.liveTurns.get(threadId);
+        if (!turn || turn.id !== turnId) {
+            turn = { id: turnId, status: this.active.has(threadId) ? 'inProgress' : 'completed', items: [] };
+            this.liveTurns.set(threadId, turn);
+        }
+        turn.items = mergeItems(turn.items, [item]);
+        this.emit('event', { method: 'bridge/promptAccepted', params: { threadId, turnId, item } });
+    }
     capture(method, p) {
         if (!p.threadId)
             return;
-        if (method === 'turn/started')
-            this.liveTurns.set(p.threadId, { ...p.turn, items: p.turn.items || [] });
+        if (method === 'turn/started') {
+            const old = this.liveTurns.get(p.threadId);
+            this.liveTurns.set(p.threadId, { ...p.turn, items: mergeItems(old?.id === p.turn.id ? old.items : [], p.turn.items || []) });
+        }
         let turn = this.liveTurns.get(p.threadId);
         if (!turn && method === 'item/started') {
             turn = { id: p.turnId, status: 'inProgress', items: [] };
@@ -267,7 +284,7 @@ export class Bridge extends EventEmitter {
         if (!turn)
             return;
         if (method === 'turn/completed') {
-            Object.assign(turn, p.turn, { items: p.turn.items?.length ? p.turn.items : turn.items });
+            Object.assign(turn, p.turn, { items: mergeItems(turn.items, p.turn.items || []) });
             return;
         }
         if (p.turnId !== turn.id)
@@ -278,10 +295,7 @@ export class Bridge extends EventEmitter {
             const item = { ...p.item };
             if (typeof item.aggregatedOutput === 'string')
                 item.aggregatedOutput = item.aggregatedOutput.slice(-100_000);
-            if (index < 0)
-                turn.items.push(item);
-            else
-                turn.items[index] = item;
+            turn.items = mergeItems(turn.items, [item]);
         }
         else if (index >= 0) {
             const item = turn.items[index];

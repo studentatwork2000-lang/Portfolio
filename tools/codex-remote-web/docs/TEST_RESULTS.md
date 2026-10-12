@@ -82,3 +82,14 @@ An initialized Node bridge with a fixture child used **51.9 MiB RSS**. Over a 3.
 | J: Production access | Built production assets served/tested locally | Actual private forwarded URL |
 
 Run `npm run verify` and `npm run verify -- --live` after installation, then complete the manual checklist in README. The deployment, authentication, and Codespace-dependent rows remain pending; they were not marked passed without evidence.
+
+
+## Prompt-history regression fix
+
+The disappearing prompt was reproduced with a fixture that omits user-message events and includes only assistant items in turn completion. The original code returned zero user messages even though the native stored turn contained the prompt.
+
+The fix merges lifecycle items, preserves native stored history when overlaying live state, and records accepted prompts privately for reload/restart recovery. Real Codex user-message IDs take precedence over supplemental records; identical prompts in distinct turns remain distinct.
+
+The expanded unit/integration suite passed all 12 tests, including sparse completion, multiline content, duplicate echo prevention, repeated prompt text, idempotent retries, older-history reads, and service restart with sparse stored-history responses. Production TypeScript checks and Vite build passed.
+
+The browser regression run also passed: the submitted multiline prompt remained visible after completion and reload, with exactly one user bubble. All 10 browser scenarios passed, including the earlier login, sanitization, draft, approval, reconnection, streaming, and phone-layout checks. Updated initial JavaScript is 103.85 KB gzipped. The running user Codespace still needs to pull this commit and restart its service to activate the fix.

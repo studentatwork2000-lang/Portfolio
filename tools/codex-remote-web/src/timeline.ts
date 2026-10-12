@@ -1,4 +1,5 @@
 import {Turn,WireEvent} from './types';
+import {mergeItems} from '../server/messages';
 const LIMIT=100_000;
 export function reduceEvents(previous:Turn[],events:WireEvent[],threadId:string) {
   let turns=previous.slice();
@@ -7,16 +8,16 @@ export function reduceEvents(previous:Turn[],events:WireEvent[],threadId:string)
     if(method==='turn/started' || method==='turn/completed') {
       const index=turns.findIndex(t=>t.id===p.turn.id);
       if(index<0)turns.push({...p.turn,items:p.turn.items || []});
-      else turns[index]={...turns[index],...p.turn,items:p.turn.items?.length?p.turn.items:turns[index].items};
+      else turns[index]={...turns[index],...p.turn,items:mergeItems(turns[index].items,p.turn.items || [])};
       continue;
     }
-    if(!method.startsWith('item/'))continue;
+    if(!method.startsWith('item/') && method!=='bridge/promptAccepted')continue;
     let index=turns.findIndex(t=>t.id===p.turnId);
     if(index<0) {turns.push({id:p.turnId,status:'inProgress',items:[]});index=turns.length-1;}
     const turn={...turns[index],items:turns[index].items.slice()};turns[index]=turn;
     const itemId=p.item?.id || p.itemId;let i=turn.items.findIndex(item=>item.id===itemId);
-    if(method==='item/started' || method==='item/completed') {
-      if(i<0)turn.items.push(p.item);else turn.items[i]={...turn.items[i],...p.item};continue;
+    if(method==='item/started' || method==='item/completed' || method==='bridge/promptAccepted') {
+      turn.items=mergeItems(turn.items,[p.item]);continue;
     }
     if(i<0 && method==='item/agentMessage/delta') {turn.items.push({id:itemId,type:'agentMessage',text:''});i=turn.items.length-1;}
     if(i<0)continue;

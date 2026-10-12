@@ -4,6 +4,7 @@ import {Icon} from './icons';
 import {Copy,Markdown} from './Markdown';
 import {Approval,Item,Model,Status,Thread,Turn,WireEvent} from './types';
 import {reduceEvents} from './timeline';
+import {userText} from '../server/messages';
 
 const title=(t:Thread)=>t.name || t.preview?.slice(0,90) || 'New conversation';
 const threadPath=(id:string)=>'/threads/'+encodeURIComponent(id);
@@ -31,7 +32,7 @@ const ToolItem=memo(function ToolItem({item}:{item:Item}) {
   </div></details>;
 });
 const Message=memo(function Message({item,streaming}:{item:Item;streaming:boolean}) {
-  if(item.type==='userMessage') {const text=item.content?.filter(c=>c.type==='text').map(c=>c.text).join('\n') || '';return <article className="message user"><div className="user-bubble">{text}</div><Copy text={text}/></article>;}
+  if(item.type==='userMessage') {const text=userText(item);return <article className="message user"><div className="user-bubble">{text}</div><Copy text={text}/></article>;}
   if(item.type==='agentMessage' || item.type==='plan')return <article className={'message assistant '+(streaming?'streaming':'')}><Markdown text={item.text || ''} streaming={streaming}/>{!streaming && <Copy text={item.text || ''}/>}</article>;
   return <ToolItem item={item}/>;
 });
@@ -149,8 +150,9 @@ export default function App() {
       if(!id)throw new Error('Conversation was not created.');
       if(!pendingSubmission.current || pendingSubmission.current.text!==text || pendingSubmission.current.threadId!==id)pendingSubmission.current={id:crypto.randomUUID(),text,threadId:id};
       const requestId=pendingSubmission.current.id;save('pending:'+id,pendingSubmission.current);
-      await api(threadPath(id)+'/turn',{requestId,text,model,effort,mode,confirmSavedSession:resumeConsent});setLoadedByController(true);
-      save('draft:'+id,'');save('draft:null','');setDraft('');pendingSubmission.current=null;save('pending:'+id,null);await list();
+      const accepted=await api(threadPath(id)+'/turn',{requestId,text,model,effort,mode,confirmSavedSession:resumeConsent});
+      if(selectedRef.current===id){setLoadedByController(true);setTurns(t=>reduceEvents(t,[{method:'bridge/promptAccepted',params:{threadId:id,turnId:accepted.turn.id,item:accepted.prompt}}],id!));setDraft('');pendingSubmission.current=null;}
+      save('draft:'+id,'');save('draft:null','');save('pending:'+id,null);await list();
     }catch(e){handleError(e);}finally{setBusy(false);}
   }
   async function stop(){if(!selected)return;try{await api(threadPath(selected)+'/interrupt',{});}catch(e){handleError(e);}}

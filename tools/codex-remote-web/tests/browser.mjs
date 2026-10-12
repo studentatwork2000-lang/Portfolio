@@ -18,11 +18,21 @@ try{
   await page.getByLabel('Message Codex').fill('hello from browser');await page.getByLabel('Send message').click();
   await page.getByText('streamed test response.',{exact:false}).waitFor();
   await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  assert.equal(await page.locator('.user-bubble').filter({hasText:'hello from browser'}).count(),1);
   assert.equal(await page.evaluate(()=>window.pwned),undefined);
   assert.equal(await page.locator('.markdown script,.markdown img').count(),0);
   await page.getByRole('button',{name:'Copy code',exact:true}).waitFor();
   await page.screenshot({path:resolve(root,'.runtime/browser/desktop-chat.png')});
   await page.getByLabel('Message Codex').fill('unsubmitted draft');await page.reload();await page.getByLabel('Message Codex').waitFor();assert.equal(await page.getByLabel('Message Codex').inputValue(),'unsubmitted draft');
+  await page.locator('.user-bubble').filter({hasText:'hello from browser'}).waitFor();
+  const sparsePrompt='sparse-events sparse-history\nShow every line of this prompt: <tag> & "quotes".';
+  await page.getByLabel('Message Codex').fill(sparsePrompt);await page.getByLabel('Send message').click();
+  await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).waitFor();
+  await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  assert.equal(await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).innerText(),sparsePrompt);
+  assert.equal(await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).count(),1);
+  await page.reload();await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).waitFor();
+  assert.equal(await page.locator('.user-bubble').filter({hasText:'Show every line of this prompt:'}).innerText(),sparsePrompt);
   await page.getByLabel('Message Codex').fill('approval test');await page.getByLabel('Send message').click();
   await page.getByRole('button',{name:'Approve once',exact:true}).waitFor();await page.getByRole('button',{name:'Reject',exact:true}).click();await page.getByText('Rejected test command.').waitFor();
   await page.getByLabel('Message Codex').fill('slow browser reconnect');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
@@ -37,5 +47,5 @@ try{
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile layout overflows horizontally');
   await page.getByLabel('Open sidebar').click();await page.getByRole('button',{name:'New chat',exact:false}).first().click();await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.screenshot({path:resolve(root,'.runtime/browser/mobile-home.png')});
   assert.equal(errors.length,0,errors.join('\n'));
-  console.log(JSON.stringify({passed:['desktop login and new conversation','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
+  console.log(JSON.stringify({passed:['desktop login and new conversation','submitted prompts remain visible after replies','sparse-event multiline prompt survives reload without duplicates','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
 }finally{await browser?.close();child.kill('SIGTERM');await new Promise(r=>child.once('exit',r));}

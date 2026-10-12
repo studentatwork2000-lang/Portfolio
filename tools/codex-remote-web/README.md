@@ -55,6 +55,8 @@ Saved CLI, VS Code, and App Server conversations appear in history. Opening one 
 
 Command output, file diffs, and supported activity appear in collapsible panels. Command/file approvals support **Approve once**, **Reject**, or **Cancel turn**. Supported user-input requests have answer controls. Unsupported permissions, dynamic tool calls, token-refresh requests, or MCP elicitations receive a visible failure with no permission granted. The app does not silently bypass an interaction it cannot handle.
 
+Submitted prompts remain visible in the conversation after replies. Accepted prompts also have private recovery records in `.runtime/prompt-history`, so missing or partial Codex events cannot erase them after a reload or service restart. Native Codex history stays authoritative; matching echoed user messages are merged without duplicates. Existing prompts are recovered from Codex history wherever available.
+
 Models and reasoning levels come from the installed App Server catalog. A successful inference turn confirms model access; appearing in the menu does not establish entitlement.
 
 ## Start, stop, and recover

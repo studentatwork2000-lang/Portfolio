@@ -67,6 +67,26 @@ test('model/effort validation and interruption',async()=>{
   await json('/api/threads/'+t.id+'/interrupt',{});assert.equal((await json('/api/threads/'+t.id)).thread.turns.at(-1).status,'interrupted');
 });
 test('rename and archive use supported protocol methods',async()=>{const t=await make();await json('/api/threads/'+t.id+'/rename',{name:'Renamed fixture'});assert.equal((await json('/api/threads/'+t.id)).thread.name,'Renamed fixture');await json('/api/threads/'+t.id+'/archive',{});assert.ok(!(await json('/api/threads')).data.some(x=>x.id===t.id));});
+test('submitted prompts survive sparse turn events and stored-history reload',async()=>{
+  const t=await make();const text='sparse-events\nKeep this entire prompt, including punctuation: <code> & "quotes".';
+  await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text,model:'test-model',mode:'readOnly'});
+  const read=await finished(t.id);const items=read.thread.turns.at(-1).items;
+  assert.equal(items.filter(i=>i.type==='userMessage').length,1);
+  assert.equal(items[0].content[0].text,text);
+  const reload=await json('/api/threads/'+t.id);assert.equal(reload.thread.turns.at(-1).items[0].content[0].text,text);
+});
+test('accepted prompt records survive service restarts, repeated text, and retries',async()=>{
+  const t=await make();const text='sparse-events sparse-history\nThe same prompt, twice — keep both turns.';
+  const payload={requestId:randomUUID(),text,model:'test-model',mode:'readOnly'};
+  const accepted=await json('/api/threads/'+t.id+'/turn',payload);assert.equal(accepted.prompt.content[0].text,text);
+  await finished(t.id);await json('/api/threads/'+t.id+'/turn',payload);
+  await json('/api/threads/'+t.id+'/turn',{...payload,requestId:randomUUID()});
+  let r=await finished(t.id);assert.equal(r.thread.turns.length,2);
+  for(const turn of r.thread.turns){assert.equal(turn.items.filter(i=>i.type==='userMessage').length,1);assert.equal(turn.items[0].content[0].text,text);}
+  await stop();await start();await login();await ready();r=await json('/api/threads/'+t.id);
+  assert.equal(r.thread.turns.length,2);for(const turn of r.thread.turns)assert.equal(turn.items[0].content[0].text,text);
+  const older=await json('/api/threads/'+t.id+'/history?before=2');assert.equal(older.turns[0].items[0].content[0].text,text);
+});
 test('approval acceptance is once-only; unsupported permission methods fail visibly',async()=>{
   const t=await make();const controller=new AbortController();let data='';const stream=await fetch(base+'/api/events',{headers:{Cookie:cookie},signal:controller.signal});const reader=(async()=>{try{for await(const c of stream.body)data+=new TextDecoder().decode(c);}catch{}})();
   await json('/api/threads/'+t.id+'/turn',{requestId:randomUUID(),text:'approval accept test',model:'test-model',mode:'workspaceWrite'});

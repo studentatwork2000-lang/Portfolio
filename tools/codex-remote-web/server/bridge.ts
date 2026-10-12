@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
 import { Config, HttpError, ROOT, STATE } from './config.js';
 import { Ajv, ValidateFunction } from 'ajv';
+import {mergeItems,MessageItem} from './messages.js';
 
 type Pending = { resolve: (v:any)=>void; reject: (e:any)=>void; timer: NodeJS.Timeout };
 export type WireEvent = { method: string; params: any };
@@ -149,18 +150,32 @@ export class Bridge extends EventEmitter {
     const name=entry?.properties?.params?.$ref?.split('/').pop();
     return this.schema?.definitions?.[name]?.properties?.approvalsReviewer?{approvalsReviewer:'user'}:{};
   }
+  supportsParam(method:string,name:string) {
+    const entry=this.schema?.oneOf?.find((e:any)=>e.properties?.method?.enum?.includes(method));
+    const definition=entry?.properties?.params?.$ref?.split('/').pop();
+    return !!this.schema?.definitions?.[definition]?.properties?.[name];
+  }
+  promptAccepted(threadId:string,turnId:string,item:MessageItem) {
+    let turn=this.liveTurns.get(threadId);
+    if(!turn || turn.id!==turnId){turn={id:turnId,status:this.active.has(threadId)?'inProgress':'completed',items:[]};this.liveTurns.set(threadId,turn);}
+    turn.items=mergeItems(turn.items,[item]);
+    this.emit('event',{method:'bridge/promptAccepted',params:{threadId,turnId,item}});
+  }
   capture(method:string,p:any) {
     if(!p.threadId)return;
-    if(method==='turn/started')this.liveTurns.set(p.threadId,{...p.turn,items:p.turn.items || []});
+    if(method==='turn/started') {
+      const old=this.liveTurns.get(p.threadId);
+      this.liveTurns.set(p.threadId,{...p.turn,items:mergeItems(old?.id===p.turn.id?old.items:[],p.turn.items || [])});
+    }
     let turn=this.liveTurns.get(p.threadId);
     if(!turn && method==='item/started') {turn={id:p.turnId,status:'inProgress',items:[]};this.liveTurns.set(p.threadId,turn);}
     if(!turn)return;
-    if(method==='turn/completed'){Object.assign(turn,p.turn,{items:p.turn.items?.length?p.turn.items:turn.items});return;}
+    if(method==='turn/completed'){Object.assign(turn,p.turn,{items:mergeItems(turn.items,p.turn.items || [])});return;}
     if(p.turnId!==turn.id)return;
     const id=p.item?.id || p.itemId;let index=turn.items.findIndex((i:any)=>i.id===id);
     if(method==='item/started' || method==='item/completed') {
       const item={...p.item};if(typeof item.aggregatedOutput==='string')item.aggregatedOutput=item.aggregatedOutput.slice(-100_000);
-      if(index<0)turn.items.push(item);else turn.items[index]=item;
+      turn.items=mergeItems(turn.items,[item]);
     } else if(index>=0) {
       const item=turn.items[index];
       if(method==='item/agentMessage/delta' || method==='item/plan/delta')item.text=((item.text || '')+(p.delta || '')).slice(-1_000_000);

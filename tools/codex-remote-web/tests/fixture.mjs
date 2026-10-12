@@ -5,6 +5,7 @@ export async function fixture(name,port,password){
  const root=resolve(import.meta.dirname,'..');const dir=resolve(root,'.runtime',name);const workspace=resolve(dir,'workspace');const state=resolve(dir,'state');
  await mkdir(workspace,{recursive:true});await mkdir(resolve(state,'protocol'),{recursive:true});
  await rm(resolve(dir,'store.json'),{force:true});await rm(resolve(state,'submissions.json'),{force:true});
+ await rm(resolve(state,'prompt-history'),{recursive:true,force:true});
  const schema=JSON.parse(await readFile(resolve(root,'tests/protocol-schema.json'),'utf8'));
  await writeFile(resolve(state,'protocol/ClientRequest.json'),JSON.stringify(schema));await writeFile(resolve(state,'protocol.json'),JSON.stringify({methods:schema.oneOf.flatMap(e=>e.properties.method.enum)}));
  const salt=randomBytes(32).toString('hex');const configPath=resolve(dir,'config.json');

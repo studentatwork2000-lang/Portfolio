@@ -7,6 +7,8 @@ import { gzipSync } from 'node:zlib';
 import { Bridge } from './bridge.js';
 import { loadConfig, ROOT, HttpError, workspace } from './config.js';
 import { Security, headers, body } from './security.js';
+import {mergeItems} from './messages.js';
+import {savePrompt,restorePrompts} from './prompts.js';
 
 const exec = promisify(execFile);
 const config = await loadConfig();
@@ -53,12 +55,13 @@ async function threadRead(id:string) {
   const response=await bridge.rpc('thread/read',{threadId:id,includeTurns:true});
   const all=response.thread.turns || [];
   const live=bridge.liveTurns.get(id);
-  if(live){const i=all.findIndex((t:any)=>t.id===live.id);if(i>=0)all[i]=structuredClone(live);else all.push(structuredClone(live));}
+  if(live){const i=all.findIndex((t:any)=>t.id===live.id);if(i>=0)all[i]={...all[i],...structuredClone(live),items:mergeItems(all[i].items,live.items)};else all.push(structuredClone(live));}
   // Codex's stable full-history API is used; page only what the browser renders.
-  const count=all.length;response.thread.turns=all.slice(-30);response.totalTurns=count;
+  const eventCursor=`${bootId}:${sequence}`;
+  const count=all.length;response.thread.turns=await restorePrompts(id,all.slice(-30));response.totalTurns=count;
   response.olderTurns=count>30;response.active=bridge.active.get(id) || null;
   response.loadedByController=bridge.loaded.has(id);
-  response.eventCursor=`${bootId}:${sequence}`;
+  response.eventCursor=eventCursor;
   return response;
 }
 async function handler(req:IncomingMessage,res:ServerResponse) {
@@ -114,7 +117,7 @@ async function handler(req:IncomingMessage,res:ServerResponse) {
         if(method==='GET' && action==='history') {
           const response=await bridge.rpc('thread/read',{threadId:id,includeTurns:true});const all=response.thread.turns || [];
           const end=Number(url.searchParams.get('before'));if(!Number.isInteger(end) || end<0 || end>all.length) throw new HttpError(400,'Invalid history offset.');
-          json(res,200,{turns:all.slice(Math.max(0,end-30),end),before:Math.max(0,end-30)});return;
+          json(res,200,{turns:await restorePrompts(id,all.slice(Math.max(0,end-30),end)),before:Math.max(0,end-30)});return;
         }
         if(method==='POST' && action==='turn') {
           await requireAgentAuth();
@@ -131,9 +134,14 @@ async function handler(req:IncomingMessage,res:ServerResponse) {
                 if(b.confirmSavedSession!==true)throw new HttpError(409,'Confirm that no other CLI or controller is using this saved conversation.');
                 await bridge.rpc('thread/resume',{threadId:id,cwd,...policy,...bridge.reviewer('thread/resume')});bridge.loaded.add(id);
               }
-              return await bridge.rpc('turn/start',{threadId:id,input:[{type:'text',text:b.text,text_elements:[]}],cwd,approvalPolicy:policy.approvalPolicy,...bridge.reviewer('turn/start'),sandboxPolicy:b.mode==='readOnly'?{type:'readOnly',networkAccess:false}:{type:'workspaceWrite',writableRoots:[cwd],networkAccess:false,excludeTmpdirEnvVar:true,excludeSlashTmp:true},...(b.model?{model:b.model}:{}),...(b.effort?{effort:b.effort}:{})});
+              const started=await bridge.rpc('turn/start',{threadId:id,input:[{type:'text',text:b.text,text_elements:[]}],...(bridge.supportsParam('turn/start','clientUserMessageId')?{clientUserMessageId:b.requestId}:{}),cwd,approvalPolicy:policy.approvalPolicy,...bridge.reviewer('turn/start'),sandboxPolicy:b.mode==='readOnly'?{type:'readOnly',networkAccess:false}:{type:'workspaceWrite',writableRoots:[cwd],networkAccess:false,excludeTmpdirEnvVar:true,excludeSlashTmp:true},...(b.model?{model:b.model}:{}),...(b.effort?{effort:b.effort}:{})});
+              const prompt=await savePrompt(id,started.turn.id,b.requestId,b.text);
+              bridge.promptAccepted(id,started.turn.id,prompt);
+              return {...started,prompt};
             } finally {bridge.busy.delete(id);}
-          });json(res,200,result);return;
+          });
+          if(!result.prompt && result.turn?.id){result.prompt=await savePrompt(id,result.turn.id,b.requestId,b.text);bridge.promptAccepted(id,result.turn.id,result.prompt);await bridge.journal();}
+          json(res,200,result);return;
         }
         if(method==='POST' && action==='interrupt') {
           const active=bridge.active.get(id);if(!active || active.status==='unknown') throw new HttpError(409,'No interruptible turn is running in this service.');
