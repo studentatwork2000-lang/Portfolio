@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import {spawn} from 'node:child_process';
+import {resolve} from 'node:path';
+const {chromium}=await import('playwright');
+import {fixture} from './fixture.mjs';
+const root=resolve(import.meta.dirname,'..');
+const setup=await fixture('browser',8787,'browser-test-passphrase');
+const child=spawn(process.execPath,['dist-server/index.js'],{cwd:root,env:setup.env});
+let browser;const errors=[];let base='http://127.0.0.1:8787';
+try{
+  for(let i=0;i<80;i++){try{if((await fetch(base+'/health')).ok)break;}catch{}await new Promise(r=>setTimeout(r,50));}
+  browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+  const context=await browser.newContext({viewport:{width:1440,height:900}});let page=await context.newPage();
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base);await page.getByLabel('App passphrase').fill('browser-test-passphrase');await page.getByRole('button',{name:'Continue',exact:true}).click();
+  await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.getByLabel('Model',{exact:true}).selectOption('test-model');
+  await page.screenshot({path:resolve(root,'.runtime/browser/desktop-home.png')});
+  await page.getByLabel('Message Codex').fill('hello from browser');await page.getByLabel('Send message').click();
+  await page.getByText('streamed test response.',{exact:false}).waitFor();
+  await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  assert.equal(await page.evaluate(()=>window.pwned),undefined);
+  assert.equal(await page.locator('.markdown script,.markdown img').count(),0);
+  await page.getByRole('button',{name:'Copy code',exact:true}).waitFor();
+  await page.screenshot({path:resolve(root,'.runtime/browser/desktop-chat.png')});
+  await page.getByLabel('Message Codex').fill('unsubmitted draft');await page.reload();await page.getByLabel('Message Codex').waitFor();assert.equal(await page.getByLabel('Message Codex').inputValue(),'unsubmitted draft');
+  await page.getByLabel('Message Codex').fill('approval test');await page.getByLabel('Send message').click();
+  await page.getByRole('button',{name:'Approve once',exact:true}).waitFor();await page.getByRole('button',{name:'Reject',exact:true}).click();await page.getByText('Rejected test command.').waitFor();
+  await page.getByLabel('Message Codex').fill('slow browser reconnect');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
+  const started=performance.now();await page.close();page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base);await page.getByText('streamed test response.',{exact:false}).first().waitFor();
+  await page.getByLabel('Stop generation').waitFor({state:'hidden'});const reconnectMs=Math.round(performance.now()-started);
+  // A long response remains responsive, while updates are batched at 20 Hz.
+  await page.getByLabel('Message Codex').fill('long stream');await page.getByLabel('Send message').click();await page.getByLabel('Stop generation').waitFor();
+  const timings=[];for(let i=0;i<12;i++){const start=performance.now();await page.evaluate(()=>document.querySelector('textarea').focus());timings.push(performance.now()-start);await new Promise(r=>setTimeout(r,50));}
+  await page.getByLabel('Stop generation').waitFor({state:'hidden'});
+  await page.setViewportSize({width:390,height:844});await page.getByLabel('Close sidebar',{exact:true}).first().click();
+  await page.screenshot({path:resolve(root,'.runtime/browser/mobile-chat.png')});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile layout overflows horizontally');
+  await page.getByLabel('Open sidebar').click();await page.getByRole('button',{name:'New chat',exact:false}).first().click();await page.getByRole('heading',{name:'What are we working on?'}).waitFor();await page.screenshot({path:resolve(root,'.runtime/browser/mobile-home.png')});
+  assert.equal(errors.length,0,errors.join('\n'));
+  console.log(JSON.stringify({passed:['desktop login and new conversation','streamed Markdown, tables, lazy code highlighting','unsafe HTML sanitized','draft survives reload','approval rejection','browser closure and reconnect','long streaming responsiveness','390px mobile layout'],reconnectMs,maxBrowserRoundTripMs:Math.round(Math.max(...timings)),screenshots:'Internal QA only'},null,2));
+}finally{await browser?.close();child.kill('SIGTERM');await new Promise(r=>child.once('exit',r));}

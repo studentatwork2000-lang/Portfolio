@@ -1,0 +1,7 @@
+export type Model = {id:string;model:string;displayName:string;isDefault?:boolean;defaultReasoningEffort?:string;supportedReasoningEfforts:{reasoningEffort:string;description:string}[]};
+export type Item = {id:string;type:string;text?:string;phase?:string;content?:{type:string;text?:string}[];command?:string;cwd?:string;status?:string;aggregatedOutput?:string;exitCode?:number;changes?:{path:string;diff:string;kind:any}[];summary?:string[];tool?:string;server?:string;query?:string;arguments?:unknown;result?:unknown;error?:unknown};
+export type Turn = {id:string;status:string;items:Item[];error?:{message:string}|null};
+export type Thread = {id:string;name?:string|null;preview:string;cwd:string;createdAt:number;updatedAt:number;turns?:Turn[];status?:{type:string}};
+export type Approval = {key:string;method:string;params:{threadId:string;itemId:string;reason?:string;command?:string;cwd?:string;networkApprovalContext?:{host:string;protocol:string};availableDecisions?:string[];questions?:{id:string;header:string;question:string;isSecret?:boolean;options?:{label:string;description:string}[]}[]}};
+export type Status = {state:string;agent:string;error:string;account?:{type:string|null;planType?:string;requiresOpenaiAuth?:boolean;authenticated?:boolean;error?:string};workspaces:{path:string;name:string;branch:string|null}[];protocolChecked:boolean;active:Record<string,{turnId:string;status:string}>};
+export type WireEvent = {method:string;params:any;cursor?:string};
