@@ -1,5 +1,7 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import type { KeyboardEvent, PointerEvent } from 'react'
+import '@fontsource/ibm-plex-mono/latin-400.css'
+import '@fontsource/manrope/latin-600.css'
 import styles from './WorkGlimpses.module.css'
 
 import milkyWayAtmosphere from '../../assets/work/milky-way-atmosphere.webp'
@@ -149,7 +151,11 @@ export default function WorkGlimpses() {
       }
 
       startScale = window.innerWidth <= 700 ? 1.34 : 1.42
-      startY = window.innerHeight / 2 - headingStage.offsetTop - heading.offsetHeight / 2
+      startY =
+        window.innerHeight / 2 -
+        headingStage.offsetTop -
+        heading.offsetTop -
+        heading.offsetHeight / 2
     }
 
     const update = () => {
@@ -655,25 +661,15 @@ export default function WorkGlimpses() {
           />
         </div>
 
-        {/* ── Heading zone: large counter + section heading ── */}
+        {/* ── Section heading ── */}
         <header ref={headingStageRef} className={styles.headingStage}>
-          <span className={styles.backgroundCounter} aria-hidden="true">
-            {activeProject.index}&thinsp;/&thinsp;0{projects.length}
-          </span>
           <h2 ref={headingRef} id="work-heading" data-font-lab-target="work-heading">
-            Glimpses of My Work
+            Glimpses of my work.
           </h2>
         </header>
 
-        {/* ── Exhibition: project label + carousel ── */}
+        {/* ── Exhibition: carousel + active project information ── */}
         <div ref={exhibitionStageRef} className={styles.exhibitionStage}>
-          <div className={styles.activeProjectMeta} aria-hidden="true">
-            <div className={styles.activeProjectMetaContent} key={activeProject.title}>
-              <h3 data-font-lab-target="work-project">{activeProject.title}</h3>
-              {/* <p>{activeProject.category}</p> */}
-            </div>
-          </div>
-
           <div className={styles.visualStage}>
             <button
               className={`${styles.sideArrow} ${styles.previousArrow}`}
@@ -731,6 +727,7 @@ export default function WorkGlimpses() {
                           src={project.image} 
                           alt="" 
                           className={styles.previewImage}
+                          draggable={false}
                           loading={clone ? "lazy" : "eager"}
                           decoding="async"
                         />
@@ -753,19 +750,33 @@ export default function WorkGlimpses() {
             </button>
           </div>
 
+          <div className={styles.activeProjectMeta}>
+            <div className={styles.activeProjectMetaContent} key={activeProject.title}>
+              <h3 data-font-lab-target="work-project">{activeProject.title}</h3>
+              <p>{activeProject.category.split(' / ')[0]}</p>
+            </div>
+          </div>
+
           {/* ── Pagination indicator ── */}
           <nav className={styles.carouselPagination} aria-label="Carousel pagination">
-            {projects.map((project, i) => (
-              <button
-                key={project.title}
-                className={styles.paginationTick}
-                type="button"
-                data-active={activeIndex === i ? 'true' : 'false'}
-                aria-label={`Go to ${project.title}`}
-                aria-current={activeIndex === i ? 'true' : undefined}
-                onClick={() => scrollToPhysical(canonicalPhysicalFromLogical(i))}
-              />
-            ))}
+            <div className={styles.paginationSegments}>
+              {projects.map((project, i) => (
+                <button
+                  key={project.title}
+                  className={styles.paginationTick}
+                  type="button"
+                  data-active={activeIndex === i ? 'true' : 'false'}
+                  aria-label={`Go to ${project.title}`}
+                  aria-current={activeIndex === i ? 'true' : undefined}
+                  onClick={() => scrollToPhysical(canonicalPhysicalFromLogical(i))}
+                />
+              ))}
+            </div>
+            <p className={styles.slideCounter} aria-hidden="true">
+              <span className={styles.currentSlide}>{activeProject.index}</span>
+              <span> / </span>
+              <span>{String(projects.length).padStart(2, '0')}</span>
+            </p>
           </nav>
 
           <p className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">

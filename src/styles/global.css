@@ -32,6 +32,12 @@ a {
   color: inherit;
 }
 
+.work-placeholder {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--bg-page);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

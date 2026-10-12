@@ -1,6 +1,5 @@
 import Hero from './components/Hero/Hero'
 import IntroStatement from './components/IntroStatement/IntroStatement'
-import WorkGlimpses from './components/WorkGlimpses/WorkGlimpses'
 import Aesthetics from './components/Aesthetics/Aesthetics'
 
 export default function App() {
@@ -8,7 +7,8 @@ export default function App() {
     <>
       <Hero />
       <IntroStatement />
-      <WorkGlimpses />
+      {/* WorkGlimpses and its assets are preserved for when Work returns. */}
+      <section id="work" className="work-placeholder" aria-label="Work" />
       <Aesthetics />
     </>
   )
