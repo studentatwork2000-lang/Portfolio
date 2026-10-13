@@ -2,16 +2,12 @@ import { useEffect, useRef } from 'react'
 import styles from './WorkStarField.module.css'
 
 type Star = {
-  u: number
-  v: number
+  readonly u: number
+  readonly v: number
   radius: number
   opacity: number
   depth: number
   frost: boolean
-  clusterX: number
-  clusterY: number
-  layer: 'core' | 'ring' | 'outer'
-  clusterLight: number
 }
 
 function createStars(): Star[] {
@@ -42,49 +38,33 @@ function createStars(): Star[] {
     const bright = random() > 0.955
     stars.push({
       u, v, depth,
-      clusterX: 0, clusterY: 0, layer: 'core', clusterLight: 1,
-      radius: bright ? 0.8 + random() * 0.3 : 0.42 + random() * 0.27,
-      opacity: bright ? 0.65 + random() * 0.12 : 0.3 + random() * 0.3,
+      radius: bright ? 0.72 + random() * 0.2 : 0.42 + random() * 0.25,
+      opacity: bright ? 0.8 + random() * 0.12 : 0.52 + random() * 0.24,
       frost: random() > 0.62,
     })
-  }
-  // Use a separate seed so formation changes never alter the resting field.
-  let formationSeed = 0x73617475
-  const variation = () => {
-    formationSeed = (Math.imul(formationSeed, 1664525) + 1013904223) >>> 0
-    return formationSeed / 4294967296
-  }
-  const slots = { core: 0, ring: 0, outer: 0 }
-  const tilt = -20 * Math.PI / 180
-  for (const star of stars) {
-    const layer = variation()
-    star.layer = layer < 0.42 ? 'core' : layer < 0.78 ? 'ring' : 'outer'
-    // Low-discrepancy angles with fixed jitter leave organic gaps and overlaps.
-    // Every star keeps its own slot, even as the influence population changes.
-    const angle = slots[star.layer]++ * 2.399963229728653 + (variation() - 0.5) * 0.28
-    let x: number
-    let y: number
-    if (star.layer === 'core') {
-      const radius = 24 * Math.sqrt(variation()) * (0.88 + star.depth * 0.12)
-      x = Math.cos(angle) * radius
-      y = Math.sin(angle) * radius * 0.96
-      star.clusterLight = 0.96 + star.depth * 0.04
-    } else {
-      const outer = star.layer === 'outer'
-      const radial = 1 + (variation() - 0.5) * (outer ? 0.085 : 0.075)
-        + Math.sin(angle * 3 + 0.7) * 0.018
-      x = Math.cos(angle) * (outer ? 108 : 78) * radial
-      y = Math.sin(angle) * (outer ? 49 : 35) * radial + (star.depth - 0.5) * 3
-      // Far-side layers are subtly dimmer; the outer ring stays subordinate.
-      star.clusterLight = (outer ? 0.52 : 0.84) + (Math.sin(angle) + 1) * 0.045
-    }
-    star.clusterX = x * Math.cos(tilt) - y * Math.sin(tilt)
-    star.clusterY = x * Math.sin(tilt) + y * Math.cos(tilt)
   }
   return stars
 }
 
 const stars = createStars()
+
+// Cache two tiny, soft point sprites once per mount. Interaction neither grows
+// stars nor allocates gradients/buffers each frame, even on modest hardware.
+function createPointSprite(frost: boolean) {
+  const sprite = document.createElement('canvas')
+  sprite.width = sprite.height = 32
+  const context = sprite.getContext('2d')!
+  const color = frost ? '242, 245, 245' : '255, 255, 255'
+  const glow = context.createRadialGradient(16, 16, 0, 16, 16, 16)
+  glow.addColorStop(0, `rgba(${color}, 1)`)
+  glow.addColorStop(0.22, `rgba(${color}, 0.85)`)
+  glow.addColorStop(0.5, `rgba(${color}, 0.32)`)
+  glow.addColorStop(0.75, `rgba(${color}, 0.07)`)
+  glow.addColorStop(1, `rgba(${color}, 0)`)
+  context.fillStyle = glow
+  context.fillRect(0, 0, 32, 32)
+  return sprite
+}
 
 type MovingStar = { star: Star; x: number; y: number; influence: number }
 
@@ -95,7 +75,7 @@ function visibleCount(width: number, height: number) {
   const vertical = Math.tan(29 * Math.PI / 180)
   const horizontal = vertical * aspect
   const coverage = Math.atan(horizontal * vertical / Math.sqrt(1 + horizontal ** 2 + vertical ** 2)) / Math.PI
-  return Math.min(stars.length, Math.max(70, Math.round(2476 * coverage * 1.40 * (0.84 + 0.105 * aspect))))
+  return Math.min(stars.length, Math.max(70, Math.round(2476 * coverage * 1.55 * (0.84 + 0.105 * aspect))))
 }
 
 export default function WorkStarField() {
@@ -112,11 +92,11 @@ export default function WorkStarField() {
     let frame: number | null = null
     let lastTime = 0
     let movingStars: MovingStar[] = []
-    const pointer = { x: 0, y: 0, targetX: 0, targetY: 0, active: false }
+    const pointer = { x: 0, y: 0, active: false }
+    const pointSprites = [createPointSprite(false), createPointSprite(true)]
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const touchPointer = window.matchMedia('(any-pointer: coarse)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const canInteract = () => finePointer.matches && !touchPointer.matches && !reducedMotion.matches
+    const canInteract = () => finePointer.matches && !reducedMotion.matches
     const isVisible = () => inView && !document.hidden
 
     // An opaque canvas has a black initial buffer: match the section before its
@@ -130,19 +110,9 @@ export default function WorkStarField() {
       context.fillStyle = '#030405'
       context.fillRect(0, 0, width, height)
       for (const { star, x, y, influence } of movingStars) {
-        const growth = star.layer === 'core' ? 0.3 : star.layer === 'ring' ? 0.18 : 0.08
-        const radius = star.radius * (1 + influence * (growth + star.depth * 0.12))
-        const gatheredOpacity = Math.min(0.95, star.opacity + 0.22 + star.depth * 0.1) * star.clusterLight
-        const opacity = star.opacity + (gatheredOpacity - star.opacity) * influence
-        context.fillStyle = star.frost ? '#f2f5f5' : '#ffffff'
-        context.globalAlpha = opacity * (0.12 + influence * 0.1)
-        context.beginPath()
-        context.arc(x, y, radius * (1.7 + influence * 0.55), 0, Math.PI * 2)
-        context.fill()
-        context.globalAlpha = opacity
-        context.beginPath()
-        context.arc(x, y, radius, 0, Math.PI * 2)
-        context.fill()
+        const extent = star.radius * 2
+        context.globalAlpha = star.opacity + influence * 0.04
+        context.drawImage(pointSprites[Number(star.frost)], x - extent, y - extent, extent * 2, extent * 2)
       }
       context.globalAlpha = 1
     }
@@ -190,18 +160,8 @@ export default function WorkStarField() {
       if (!isVisible()) return
       const delta = Math.min(0.05, Math.max(0, (now - lastTime) / 1000))
       lastTime = now
-      // Damping the formation's center keeps fast pointer travel composed.
-      if (pointer.active) {
-        const follow = 1 - Math.exp(-9 * delta)
-        pointer.x += (pointer.targetX - pointer.x) * follow
-        pointer.y += (pointer.targetY - pointer.y) * follow
-        if (Math.hypot(pointer.targetX - pointer.x, pointer.targetY - pointer.y) < 0.015) {
-          pointer.x = pointer.targetX
-          pointer.y = pointer.targetY
-        }
-      }
-      const radius = Math.min(560, Math.max(320, Math.min(width * 0.38, height * 0.6)))
-      let settled = !pointer.active || (pointer.x === pointer.targetX && pointer.y === pointer.targetY)
+      const radius = Math.min(480, Math.max(320, Math.min(width * 0.36, height * 0.55)))
+      let settled = true
       for (const state of movingStars) {
         const { star } = state
         const restX = star.u * width
@@ -209,13 +169,18 @@ export default function WorkStarField() {
         const dx = pointer.x - restX
         const dy = pointer.y - restY
         const distance = pointer.active ? Math.min(1, Math.hypot(dx, dy) / radius) : 1
-        // A broad plateau fully repacks nearby stars; a soft outer boundary
-        // recruits/releases stars continuously without reassigning their slots.
-        const gathering = Math.max(0, Math.min(1, (1 - distance) / 0.2))
-        const influence = gathering * gathering * (3 - 2 * gathering)
-        const targetX = restX + (pointer.x + star.clusterX - restX) * influence
-        const targetY = restY + (pointer.y + star.clusterY - restY) * influence
-        const response = pointer.active ? 7 + star.depth * 1.5 : 8 + star.depth * 2
+        // Always measure ORIGINAL position against the CURRENT cursor. Smooth,
+        // bounded compression preserves the sky's irregular spacing; no slots,
+        // rings, accumulated forces, or stars pinned to a travelling center.
+        // r' = r * (1 - a * (1 - (r/R)^3)^2) is monotonic: no ring caustic
+        // or collapsed central knot. Attraction and its slope vanish at R.
+        const influence = (1 - distance ** 3) ** 2
+        const attraction = 0.9 * (0.98 + star.depth * 0.02) * influence
+        const targetX = restX + dx * attraction
+        const targetY = restY + dy * attraction
+        // Release faster as the cursor leaves a star's HOME region, even while
+        // the pointer remains active elsewhere. No oscillating spring or tail.
+        const response = influence < state.influence ? 20 : 11
         const ease = 1 - Math.exp(-response * delta)
         state.x += (targetX - state.x) * ease
         state.y += (targetY - state.y) * ease
@@ -242,12 +207,8 @@ export default function WorkStarField() {
     const onPointerMove = (event: PointerEvent) => {
       if (event.pointerType === 'touch' || !canInteract() || !isVisible()) return
       const bounds = section.getBoundingClientRect()
-      pointer.targetX = event.clientX - bounds.left
-      pointer.targetY = event.clientY - bounds.top
-      if (!pointer.active) {
-        pointer.x = pointer.targetX
-        pointer.y = pointer.targetY
-      }
+      pointer.x = event.clientX - bounds.left
+      pointer.y = event.clientY - bounds.top
       pointer.active = true
       wake()
     }
@@ -286,7 +247,7 @@ export default function WorkStarField() {
     window.addEventListener('scroll', releasePointer, { passive: true })
     window.addEventListener('resize', resize, { passive: true })
     document.addEventListener('visibilitychange', syncVisibility)
-    for (const query of [finePointer, touchPointer, reducedMotion]) query.addEventListener('change', syncInput)
+    for (const query of [finePointer, reducedMotion]) query.addEventListener('change', syncInput)
     return () => {
       cancelFrame()
       resizeObserver.disconnect()
@@ -298,7 +259,7 @@ export default function WorkStarField() {
       window.removeEventListener('scroll', releasePointer)
       window.removeEventListener('resize', resize)
       document.removeEventListener('visibilitychange', syncVisibility)
-      for (const query of [finePointer, touchPointer, reducedMotion]) query.removeEventListener('change', syncInput)
+      for (const query of [finePointer, reducedMotion]) query.removeEventListener('change', syncInput)
     }
   }, [])
 
