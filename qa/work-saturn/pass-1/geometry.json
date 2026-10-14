@@ -1,0 +1,128 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "name": "pocket",
+    "counts": {
+      "core": 74,
+      "ring": 60,
+      "outer": 33,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.6430252998340735,
+    "meanOuterAlpha": 0.3956910694727874,
+    "reaction": {
+      "moved": 211,
+      "maxDisplacement": 526.832756407019,
+      "maxRadiusGrowth": 0.4192148857936262,
+      "maxAlphaGrowth": 0.31918022623920156,
+      "pixelsEqual": false
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "name": "center",
+    "counts": {
+      "core": 82,
+      "ring": 65,
+      "outer": 38,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.6581382651516197,
+    "meanOuterAlpha": 0.4083242050186944,
+    "reaction": {
+      "moved": 247,
+      "maxDisplacement": 510.94802094429537,
+      "maxRadiusGrowth": 0.4182812769524753,
+      "maxAlphaGrowth": 0.3181788596789652,
+      "pixelsEqual": false
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "height": 900,
+    "name": "lower",
+    "counts": {
+      "core": 63,
+      "ring": 45,
+      "outer": 31,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.6514019569136744,
+    "meanOuterAlpha": 0.4076434420910939,
+    "reaction": {
+      "moved": 192,
+      "maxDisplacement": 526.687217274981,
+      "maxRadiusGrowth": 0.41915325558744376,
+      "maxAlphaGrowth": 0.3190932888056799,
+      "pixelsEqual": false
+    },
+    "errors": []
+  },
+  {
+    "width": 1366,
+    "height": 640,
+    "name": "pocket",
+    "counts": {
+      "core": 71,
+      "ring": 57,
+      "outer": 28,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.6503972893920462,
+    "meanOuterAlpha": 0.39761037733099885,
+    "reaction": {
+      "moved": 210,
+      "maxDisplacement": 385.6332772392631,
+      "maxRadiusGrowth": 0.4192148857936262,
+      "maxAlphaGrowth": 0.31918022623920156,
+      "pixelsEqual": false
+    },
+    "errors": []
+  },
+  {
+    "width": 1366,
+    "height": 640,
+    "name": "center",
+    "counts": {
+      "core": 76,
+      "ring": 69,
+      "outer": 35,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.6563987778327456,
+    "meanOuterAlpha": 0.40453047129499836,
+    "reaction": {
+      "moved": 240,
+      "maxDisplacement": 410.63396872252605,
+      "maxRadiusGrowth": 0.4182812769524753,
+      "maxAlphaGrowth": 0.3181788596789652,
+      "pixelsEqual": false
+    },
+    "errors": []
+  },
+  {
+    "width": 1366,
+    "height": 640,
+    "name": "lower",
+    "counts": {
+      "core": 57,
+      "ring": 46,
+      "outer": 28,
+      "unassigned": 0
+    },
+    "meanRingAlpha": 0.648075448271087,
+    "meanOuterAlpha": 0.4246554340193101,
+    "reaction": {
+      "moved": 193,
+      "maxDisplacement": 377.83476719816,
+      "maxRadiusGrowth": 0.4183563405554742,
+      "maxAlphaGrowth": 0.3181788596789652,
+      "pixelsEqual": false
+    },
+    "errors": []
+  }
+]

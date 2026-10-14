@@ -1,0 +1,16 @@
+{
+  "sampleCount": 120,
+  "maxParticleStepPx": 32.60886228018349,
+  "maxSampleGapMs": 26.699999999720603,
+  "maxStepPer60HzFrame": 32.60886228018349,
+  "entrance": {
+    "moved": 247,
+    "maxDisplacement": 309.68996023660765,
+    "maxRadiusGrowth": 0.26277107998287086,
+    "maxAlphaGrowth": 0.19988511844162582,
+    "pixelsEqual": false
+  },
+  "stableSlots": true,
+  "restorationExact": true,
+  "errors": []
+}

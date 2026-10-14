@@ -1,0 +1,110 @@
+{
+  "attraction": {
+    "moved": 211,
+    "maxDisplacement": 216.69220506672806,
+    "maxRadiusGrowth": 0.5765305573688684,
+    "maxAlphaGrowth": 0.3268753255708226,
+    "pixelsEqual": false
+  },
+  "inner85px": {
+    "rest": 13,
+    "cluster": 87
+  },
+  "inner45px": {
+    "rest": 4,
+    "cluster": 67
+  },
+  "farAttraction": 105,
+  "partialReturn": {
+    "moved": 228,
+    "maxDisplacement": 50.077122387298836,
+    "maxRadiusGrowth": 0.11211673364166908,
+    "maxAlphaGrowth": 0.06362347350917341,
+    "pixelsEqual": false
+  },
+  "returnExact": true,
+  "bufferAllocationsDuringInteraction": 0,
+  "stationaryAndOffscreenIdle": true,
+  "simulatedHiddenTabIdle": true,
+  "reducedMotion": true,
+  "lifecycle": {
+    "listeners": [
+      {
+        "type": "pointermove",
+        "name": "onPointerMove"
+      },
+      {
+        "type": "pointerleave",
+        "name": "releasePointer"
+      },
+      {
+        "type": "pointercancel",
+        "name": "releasePointer"
+      },
+      {
+        "type": "blur",
+        "name": "releasePointer"
+      },
+      {
+        "type": "scroll",
+        "name": "releasePointer"
+      },
+      {
+        "type": "resize",
+        "name": "resize"
+      },
+      {
+        "type": "visibilitychange",
+        "name": "syncVisibility"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      }
+    ],
+    "observers": 2
+  },
+  "cleanup": {
+    "startingListeners": 10,
+    "startingObservers": 2,
+    "cycles": [
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      },
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      },
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      }
+    ]
+  },
+  "drawDurationMs": {
+    "median": 1.800000000745058,
+    "p95": 3.5,
+    "max": 4.8999999994412065
+  },
+  "movingFrameIntervalsMs": {
+    "median": 16.59999999962747,
+    "p95": 19,
+    "max": 23.699999999254942
+  },
+  "errors": []
+}

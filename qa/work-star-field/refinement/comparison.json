@@ -1,0 +1,112 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "stars": {
+      "before": 336,
+      "after": 364
+    },
+    "densityRatio": 1.0833333333333333,
+    "attraction": {
+      "moved": 211,
+      "maxDisplacement": 216.69220506672806,
+      "maxRadiusGrowth": 0.5765305573688684,
+      "maxAlphaGrowth": 0.3268753255708226,
+      "pixelsEqual": false
+    },
+    "responseRatio": 0.7169012654878789,
+    "spacing": {
+      "rest": 118.70417223187117,
+      "cluster": 27.162885581873724
+    },
+    "cores": [
+      {
+        "radius": 30,
+        "beforeRest": 1,
+        "beforeCluster": 7,
+        "afterRest": 1,
+        "afterCluster": 52
+      },
+      {
+        "radius": 45,
+        "beforeRest": 4,
+        "beforeCluster": 11,
+        "afterRest": 4,
+        "afterCluster": 67
+      },
+      {
+        "radius": 85,
+        "beforeRest": 12,
+        "beforeCluster": 17,
+        "afterRest": 13,
+        "afterCluster": 87
+      },
+      {
+        "radius": 150,
+        "beforeRest": 23,
+        "beforeCluster": 30,
+        "afterRest": 27,
+        "afterCluster": 111
+      }
+    ],
+    "edgeChecks": true,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 1366,
+      "height": 640
+    },
+    "stars": {
+      "before": 410,
+      "after": 445
+    },
+    "densityRatio": 1.0853658536585367,
+    "attraction": {
+      "moved": 210,
+      "maxDisplacement": 155.94116280331,
+      "maxRadiusGrowth": 0.5652960536820328,
+      "maxAlphaGrowth": 0.3205057030012571,
+      "pixelsEqual": false
+    },
+    "responseRatio": 0.7991042330689916,
+    "spacing": {
+      "rest": 126.44059843283496,
+      "cluster": 25.63645185565585
+    },
+    "cores": [
+      {
+        "radius": 30,
+        "beforeRest": 2,
+        "beforeCluster": 11,
+        "afterRest": 2,
+        "afterCluster": 52
+      },
+      {
+        "radius": 45,
+        "beforeRest": 8,
+        "beforeCluster": 15,
+        "afterRest": 8,
+        "afterCluster": 66
+      },
+      {
+        "radius": 85,
+        "beforeRest": 19,
+        "beforeCluster": 26,
+        "afterRest": 19,
+        "afterCluster": 85
+      },
+      {
+        "radius": 150,
+        "beforeRest": 43,
+        "beforeCluster": 47,
+        "afterRest": 46,
+        "afterCluster": 110
+      }
+    ],
+    "edgeChecks": true,
+    "errors": []
+  }
+]

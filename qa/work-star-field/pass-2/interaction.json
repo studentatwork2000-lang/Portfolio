@@ -1,0 +1,105 @@
+{
+  "attraction": {
+    "moved": 48,
+    "maxDisplacement": 36.537621334099555,
+    "maxRadiusGrowth": 0.27903659630548683,
+    "maxAlphaGrowth": 0.1993118545039192,
+    "pixelsEqual": false
+  },
+  "inner85px": {
+    "rest": 12,
+    "cluster": 17
+  },
+  "partialReturn": {
+    "moved": 85,
+    "maxDisplacement": 6.619744105464853,
+    "maxRadiusGrowth": 0.05019920886305118,
+    "maxAlphaGrowth": 0.03585657775932227,
+    "pixelsEqual": false
+  },
+  "returnExact": true,
+  "bufferAllocationsDuringInteraction": 0,
+  "stationaryAndOffscreenIdle": true,
+  "simulatedHiddenTabIdle": true,
+  "reducedMotion": true,
+  "lifecycle": {
+    "listeners": [
+      {
+        "type": "pointermove",
+        "name": "onPointerMove"
+      },
+      {
+        "type": "pointerleave",
+        "name": "releasePointer"
+      },
+      {
+        "type": "pointercancel",
+        "name": "releasePointer"
+      },
+      {
+        "type": "blur",
+        "name": "releasePointer"
+      },
+      {
+        "type": "scroll",
+        "name": "releasePointer"
+      },
+      {
+        "type": "resize",
+        "name": "resize"
+      },
+      {
+        "type": "visibilitychange",
+        "name": "syncVisibility"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      },
+      {
+        "type": "change",
+        "name": "syncInput"
+      }
+    ],
+    "observers": 2
+  },
+  "cleanup": {
+    "startingListeners": 10,
+    "startingObservers": 2,
+    "cycles": [
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      },
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      },
+      {
+        "pendingBefore": 1,
+        "pendingAfter": 0,
+        "listeners": 10,
+        "observers": 2
+      }
+    ]
+  },
+  "drawDurationMs": {
+    "median": 1.1000000005587935,
+    "p95": 1.8999999994412065,
+    "max": 3.2000000001862645
+  },
+  "movingFrameIntervalsMs": {
+    "median": 16.699999999254942,
+    "p95": 17,
+    "max": 23.799999999813735
+  },
+  "errors": []
+}

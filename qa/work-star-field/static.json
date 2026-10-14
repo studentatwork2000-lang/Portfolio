@@ -1,0 +1,95 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "hero": {
+      "count": 266,
+      "litPixels": 439,
+      "max": 189,
+      "luminance": 32952
+    },
+    "work": {
+      "count": 334,
+      "litPixels": 734,
+      "luminance": 42030,
+      "exactBackgroundPercent": 99.87083333333334,
+      "sectors": [
+        38,
+        42,
+        27,
+        26,
+        28,
+        29,
+        24,
+        33,
+        14,
+        27,
+        31,
+        15
+      ]
+    },
+    "countRatio": 1.255639097744361
+  },
+  {
+    "width": 1366,
+    "height": 640,
+    "hero": {
+      "count": 315,
+      "litPixels": 517,
+      "max": 177,
+      "luminance": 39688
+    },
+    "work": {
+      "count": 404,
+      "litPixels": 936,
+      "luminance": 52704,
+      "exactBackgroundPercent": 99.76493868960469,
+      "sectors": [
+        46,
+        49,
+        34,
+        28,
+        37,
+        35,
+        28,
+        42,
+        16,
+        32,
+        40,
+        17
+      ]
+    },
+    "countRatio": 1.2825396825396826
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "hero": {
+      "count": 87,
+      "litPixels": 147,
+      "max": 172,
+      "luminance": 10762
+    },
+    "work": {
+      "count": 109,
+      "litPixels": 230,
+      "luminance": 12523,
+      "exactBackgroundPercent": 99.8377688662049,
+      "sectors": [
+        9,
+        8,
+        8,
+        12,
+        11,
+        8,
+        11,
+        14,
+        6,
+        7,
+        11,
+        4
+      ]
+    },
+    "countRatio": 1.2528735632183907
+  }
+]

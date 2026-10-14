@@ -1,0 +1,312 @@
+[
+  {
+    "name": "1440x900",
+    "layout": {
+      "top": 0,
+      "height": 900,
+      "width": 1440,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 1440,
+      "canvasPixels": 1296000,
+      "canvasScale": 1,
+      "finePointer": true,
+      "coarsePointer": false
+    },
+    "stars": 364,
+    "reaction": {
+      "moved": 211,
+      "maxDisplacement": 526.832756407019,
+      "maxRadiusGrowth": 0.4192148857936262,
+      "maxAlphaGrowth": 0.31918022623920156,
+      "pixelsEqual": false
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "1366x640",
+    "layout": {
+      "top": 0,
+      "height": 640,
+      "width": 1366,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 1366,
+      "canvasPixels": 874240,
+      "canvasScale": 1,
+      "finePointer": true,
+      "coarsePointer": false
+    },
+    "stars": 445,
+    "reaction": {
+      "moved": 210,
+      "maxDisplacement": 385.6332772392631,
+      "maxRadiusGrowth": 0.4192148857936262,
+      "maxAlphaGrowth": 0.31918022623920156,
+      "pixelsEqual": false
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "1280x720",
+    "layout": {
+      "top": 0,
+      "height": 720,
+      "width": 1280,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 1280,
+      "canvasPixels": 921600,
+      "canvasScale": 1,
+      "finePointer": true,
+      "coarsePointer": false
+    },
+    "stars": 393,
+    "reaction": {
+      "moved": 215,
+      "maxDisplacement": 412.3673625835043,
+      "maxRadiusGrowth": 0.4192148857936262,
+      "maxAlphaGrowth": 0.31918022623920156,
+      "pixelsEqual": false
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "390x844-touch",
+    "layout": {
+      "top": 0,
+      "height": 844,
+      "width": 390,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 390,
+      "canvasPixels": 740610,
+      "canvasScale": 1.5,
+      "finePointer": false,
+      "coarsePointer": true
+    },
+    "stars": 118,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "360x800-touch",
+    "layout": {
+      "top": 0,
+      "height": 800,
+      "width": 360,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 360,
+      "canvasPixels": 648000,
+      "canvasScale": 1.5,
+      "finePointer": false,
+      "coarsePointer": true
+    },
+    "stars": 115,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "320x568-touch",
+    "layout": {
+      "top": 0,
+      "height": 568,
+      "width": 320,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 320,
+      "canvasPixels": 408960,
+      "canvasScale": 1.5,
+      "finePointer": false,
+      "coarsePointer": true
+    },
+    "stars": 144,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "768x800-touch",
+    "layout": {
+      "top": 0,
+      "height": 800,
+      "width": 768,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 768,
+      "canvasPixels": 1382400,
+      "canvasScale": 1.5,
+      "finePointer": false,
+      "coarsePointer": true
+    },
+    "stars": 239,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "844x390-touch",
+    "layout": {
+      "top": 0,
+      "height": 390,
+      "width": 844,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 844,
+      "canvasPixels": 740610,
+      "canvasScale": 1.5,
+      "finePointer": false,
+      "coarsePointer": true
+    },
+    "stars": 449,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "1440x900-reduced",
+    "layout": {
+      "top": 0.46875,
+      "height": 900,
+      "width": 1440,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 1440,
+      "canvasPixels": 1296000,
+      "canvasScale": 1,
+      "finePointer": true,
+      "coarsePointer": false
+    },
+    "stars": 364,
+    "reaction": {
+      "moved": 0,
+      "maxDisplacement": 0,
+      "maxRadiusGrowth": 0,
+      "maxAlphaGrowth": 0,
+      "pixelsEqual": true
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0.46875
+    },
+    "errors": []
+  },
+  {
+    "name": "2560x1440",
+    "layout": {
+      "top": 0,
+      "height": 1440,
+      "width": 2560,
+      "background": "rgb(3, 4, 5)",
+      "nextGap": 0,
+      "children": 1,
+      "text": "",
+      "controls": 0,
+      "documentWidth": 2560,
+      "canvasPixels": 2999391,
+      "canvasScale": 0.901953125,
+      "finePointer": true,
+      "coarsePointer": false
+    },
+    "stars": 393,
+    "reaction": {
+      "moved": 122,
+      "maxDisplacement": 514.9478821491915,
+      "maxRadiusGrowth": 0.4153913010377437,
+      "maxAlphaGrowth": 0.31497051845736174,
+      "pixelsEqual": false
+    },
+    "navigation": {
+      "hash": "#work",
+      "top": 0
+    },
+    "errors": []
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "skyReady": "true",
+    "stars": {
+      "count": 266,
+      "litPixels": 439,
+      "max": 189,
+      "luminance": 32952
+    },
+    "work": {
+      "height": 900,
+      "children": 0,
+      "background": "rgb(3, 4, 5)"
+    }
+  },
+  {
+    "width": 1366,
+    "height": 640,
+    "skyReady": "true",
+    "stars": {
+      "count": 315,
+      "litPixels": 517,
+      "max": 177,
+      "luminance": 39688
+    },
+    "work": {
+      "height": 640,
+      "children": 0,
+      "background": "rgb(3, 4, 5)"
+    }
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "skyReady": "true",
+    "stars": {
+      "count": 87,
+      "litPixels": 147,
+      "max": 172,
+      "luminance": 10762
+    },
+    "work": {
+      "height": 844,
+      "children": 0,
+      "background": "rgb(3, 4, 5)"
+    }
+  }
+]
