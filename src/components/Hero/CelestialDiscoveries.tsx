@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { extend, useThree } from '@react-three/fiber'
 import { Sprite, SpriteMaterial, SRGBColorSpace, Texture, TextureLoader } from 'three'
 import earthSource from '../../assets/celestial/earth-source.png'
 import astronautSource from '../../assets/celestial/astronaut-source.png'
 
 extend({ Sprite, SpriteMaterial })
+
+// Opt in per development tab; the editor import is eliminated from production.
+const TuningPanel = import.meta.env.DEV
+  ? lazy(() => import('../../../devtools/celestial-tuning/CelestialTuningPanel'))
+  : null
+const tuningEnabled = import.meta.env.DEV &&
+  new URLSearchParams(window.location.search).get('celestialTuning') === '1'
 
 const DEG = Math.PI / 180
 
@@ -108,16 +115,22 @@ function Discovery({ source, position, distance, angularSize, axis, center, visi
 }
 
 export default function CelestialDiscoveries() {
-  return discoveries.map((discovery) => {
-    const placement = defaultConfig[discovery.name]
+  const [config, setConfig] = useState(defaultConfig)
+  return <>
+    {tuningEnabled && TuningPanel && <Suspense fallback={null}>
+      <TuningPanel config={config} defaults={defaultConfig} onChange={setConfig} />
+    </Suspense>}
+    {discoveries.map((discovery) => {
+    const placement = config[discovery.name]
     return <Discovery
       key={discovery.source}
       {...discovery}
       position={worldDirection(placement.yaw, placement.elevation, placement.distance)}
       distance={placement.distance}
       angularSize={placement.angularSize}
-      center={discovery.center}
+      center={discovery.name === 'earth' ? [0.5, config.earth.centerY] : discovery.center}
       rotation={placement.rotation}
     />
-  })
+  })}
+  </>
 }

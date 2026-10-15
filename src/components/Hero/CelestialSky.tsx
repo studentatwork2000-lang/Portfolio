@@ -136,6 +136,10 @@ function StarScene({ pointer, onReady }: SkyProps & { onReady: () => void }) {
   }, [gl, invalidate, pointer, setFrameloop, texture])
 
   useFrame(() => {
+    if (import.meta.env.DEV && camera.userData.celestialDevFrozen) {
+      motion.current.awake = false
+      return
+    }
     const input = pointer.current
     const x = input.enabled ? input.x : 0
     const y = input.enabled ? -input.y : 0
